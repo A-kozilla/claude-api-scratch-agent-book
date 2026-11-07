@@ -1,0 +1,46 @@
+<svg width="605" height="450" viewBox="0 0 605 450"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f4_4_arr44" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f4_4_arr44a" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="605" height="450" fill="#ffffff"/>
+  <rect x="150" y="25" width="215" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="257.5" y="42.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">message_start</text>
+  <text x="385" y="42" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">中身が空のメッセージの骨組み</text>
+  <path d="M257 59 L257 98" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f4_4_arr44)"/>
+  <rect x="95" y="75" width="280" height="190" rx="6" fill="none" stroke="#2b6cb0" stroke-width="1.2" stroke-dasharray="5,3"/>
+  <text x="105" y="88" text-anchor="start" dominant-baseline="central" font-size="11" fill="#2b6cb0" font-weight="bold">ブロックごとの3点セット</text>
+  <rect x="150" y="100" width="215" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="257.5" y="117.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">content_block_start</text>
+  <text x="385" y="117" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">index とブロックの初期値</text>
+  <path d="M257 134 L257 153" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f4_4_arr44)"/>
+  <rect x="150" y="155" width="215" height="34" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="257.5" y="172.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">content_block_delta ×N</text>
+  <text x="385" y="172" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">index 別の箱に断片を足し込む</text>
+  <path d="M257 189 L257 208" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f4_4_arr44)"/>
+  <rect x="150" y="210" width="215" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="257.5" y="227.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">content_block_stop</text>
+  <text x="385" y="227" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">ブロックを確定（JSONはここでパース）</text>
+  <path d="M150 227 L120 227 L120 117 L148 117" fill="none" stroke="#2b6cb0" stroke-width="1.3" marker-end="url(#f4_4_arr44a)"/>
+  <text x="50" y="157" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#2b6cb0" font-weight="bold">ブロックの</text>
+  <text x="50" y="173" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#2b6cb0" font-weight="bold">数だけ</text>
+  <text x="50" y="189" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#2b6cb0" font-weight="bold">繰り返す</text>
+  <path d="M257 244 L257 283" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f4_4_arr44)"/>
+  <rect x="150" y="285" width="215" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="257.5" y="302.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">message_delta</text>
+  <text x="385" y="302" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">stop_reason と累積の usage</text>
+  <text x="385" y="318" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">（足さずに上書き）</text>
+  <path d="M257 319 L257 338" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f4_4_arr44)"/>
+  <rect x="150" y="340" width="215" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="257.5" y="357.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-family="Consolas,monospace">message_stop</text>
+  <text x="385" y="357" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">完了の印</text>
+  <text x="302" y="400" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">※ ping（接続維持用）は途中に挟まることがあり、無視する。error は例外にして投げる</text>
+</svg>

@@ -1,0 +1,48 @@
+<svg width="605" height="452" viewBox="0 0 605 452"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f6_5_arr65" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f6_5_arr65a" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="605" height="452" fill="#ffffff"/>
+  <rect x="172" y="15" width="260" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="302.0" y="32.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a">assistant 応答の tool_use（複数）</text>
+  <path d="M302 49 L302 67" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <polygon points="302,68.0 412.0,95 302,122.0 192.0,95" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="302" y="87.3" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">副作用ツール？</text>
+  <text x="302" y="102.7" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">is_side_effect()</text>
+  <path d="M192 95 L97 95 L97 148" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <text x="140" y="86" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">いいえ</text>
+  <rect x="15" y="150" width="165" height="50" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="97.5" y="167.3" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">読み取り系</text>
+  <text x="97.5" y="182.7" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">スレッドプールで並列実行</text>
+  <path d="M302 122 L302 154" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <text x="310" y="138" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">はい</text>
+  <polygon points="302,153.0 420.0,183 302,213.0 184.0,183" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="302" y="175.3" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">ask_approval()</text>
+  <text x="302" y="190.7" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">実行してよい？ [y/N]</text>
+  <path d="M420 183 L505 183 L505 233" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <text x="462" y="174" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">N（拒否）</text>
+  <rect x="420" y="235" width="170" height="62" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="505.0" y="250.6" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">is_error 付きの</text>
+  <text x="505.0" y="266.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">tool_result を返す</text>
+  <text x="505.0" y="281.4" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">（拒否したと伝える）</text>
+  <path d="M302 213 L302 243" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <text x="310" y="227" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">y（承認）</text>
+  <rect x="200" y="245" width="205" height="50" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="302.5" y="262.3" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">承認済みの副作用系</text>
+  <text x="302.5" y="277.7" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">1件ずつ順番に実行</text>
+  <path d="M97 200 L97 343" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <path d="M302 295 L302 343" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <path d="M505 297 L505 343" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f6_5_arr65)"/>
+  <rect x="60" y="345" width="485" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="302.5" y="365.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a">元の tool_use の順番に並べ直し、1つの user メッセージで返す</text>
+  <text x="302" y="410" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">拒否しても例外で止めない（tool_result が欠けると次のリクエストが400エラーになる）</text>
+</svg>

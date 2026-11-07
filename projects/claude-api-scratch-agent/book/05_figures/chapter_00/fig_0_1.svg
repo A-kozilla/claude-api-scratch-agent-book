@@ -1,0 +1,55 @@
+<svg width="605" height="360" viewBox="0 0 605 360"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f0_1_arrow" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f0_1_arrowA" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="605" height="360" fill="#ffffff"/>
+  <path d="M302 20 L302 320" fill="none" stroke="#bbb" stroke-width="1.0" stroke-dasharray="4 3"/>
+  <text x="155" y="28" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#1a1a1a" font-weight="bold">フレームワークを使う</text>
+  <rect x="55" y="48" width="200" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="155.0" y="65.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a">あなたのコード（数行）</text>
+  <path d="M155 82 L155 100" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_1_arrow)"/>
+  <rect x="30" y="100" width="250" height="140" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="155" y="116" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">フレームワーク（中身は見えない）</text>
+  <rect x="60" y="130" width="190" height="22" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="155.0" y="141.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">履歴の管理</text>
+  <rect x="60" y="156" width="190" height="22" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="155.0" y="167.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">リトライ</text>
+  <rect x="60" y="182" width="190" height="22" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="155.0" y="193.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">ツールのループ</text>
+  <rect x="60" y="208" width="190" height="22" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2" stroke-dasharray="5 3"/>
+  <text x="155.0" y="219.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">stop_reason の分岐</text>
+  <path d="M155 240 L155 262" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_1_arrow)"/>
+  <rect x="55" y="262" width="200" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="155.0" y="279.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a">Claude API</text>
+  <text x="155" y="312" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#555">内部処理が箱の中に隠れている</text>
+  <text x="450" y="28" text-anchor="middle" dominant-baseline="central" font-size="13" fill="#2b6cb0" font-weight="bold">スクラッチで作る（本書）</text>
+  <rect x="325" y="48" width="250" height="192" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="450" y="64" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">自分で書くコード（すべて見える）</text>
+  <rect x="340" y="80" width="220" height="30" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="350" y="95" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">messages 配列で履歴を管理</text>
+  <text x="552" y="95" text-anchor="end" dominant-baseline="central" font-size="11" fill="#2b6cb0">第3章</text>
+  <rect x="340" y="118" width="220" height="30" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="350" y="133" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">リトライ・ストリーミング</text>
+  <text x="552" y="133" text-anchor="end" dominant-baseline="central" font-size="11" fill="#2b6cb0">第4章</text>
+  <rect x="340" y="156" width="220" height="30" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="350" y="171" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">while ループでツールを実行</text>
+  <text x="552" y="171" text-anchor="end" dominant-baseline="central" font-size="11" fill="#2b6cb0">第5章</text>
+  <rect x="340" y="194" width="220" height="30" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="350" y="209" text-anchor="start" dominant-baseline="central" font-size="11" fill="#1a1a1a">stop_reason で分岐</text>
+  <text x="552" y="209" text-anchor="end" dominant-baseline="central" font-size="11" fill="#2b6cb0">第3・5章</text>
+  <path d="M450 240 L450 262" fill="none" stroke="#2b6cb0" stroke-width="1.3" marker-end="url(#f0_1_arrowA)"/>
+  <text x="462" y="251" text-anchor="start" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#2b6cb0">httpx（HTTP）</text>
+  <rect x="350" y="262" width="200" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="450.0" y="279.0" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a">Claude API（Messages API）</text>
+  <text x="450" y="312" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#555">送る JSON・返る JSON を自分の目で確かめられる</text>
+  <text x="302" y="346" text-anchor="middle" font-size="11" fill="#666">図0.1 フレームワーク利用とスクラッチ開発の違い</text>
+</svg>

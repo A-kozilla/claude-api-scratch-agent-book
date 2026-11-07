@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="genspark-artifact-type" content="paged_book" />
+  <title>技術書デザイン実践テンプレート（A5縦）</title>
+  
+  <!-- paged.js Polyfill & Viewer Assets -->
+  <script src="/api/docs_agent/paged_assets/paged.polyfill.js"></script>
+  <link rel="stylesheet" href="/api/docs_agent/paged_assets/paged_book_viewer.css" />
+  <script src="/api/docs_agent/paged_assets/paged_book_viewer.js" defer></script>
+
+  <!-- 外部CSSスタイルシート読み込み -->
+  <link rel="stylesheet" href="style-a5.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. 【表紙】 (Cover Page)
+       ========================================================================== -->
+  <section class="cover-page">
+    <div class="cover-top">
+      <div class="cover-series-badge sans">実践技術書シリーズ 01</div>
+      <div class="cover-subtitle sans">初心者向け技術書の決定版！</div>
+      <h1 class="cover-main-title sans">
+        ゼロからわかる<br />
+        <span class="highlight">技術書デザイン</span><br />
+        実践テンプレート
+      </h1>
+      <p class="sans cover-desc no-indent">
+        見出し・ボックス・図版配置を極めるA5縦の完全フォーマット
+      </p>
+    </div>
+
+    <div class="cover-middle sans">
+      ● POINT・NOTE・WARNINGの専用ボックス完備<br />
+      ● 読みやすい明朝体本文 × 視認性の高いゴシック見出し<br />
+      ● A5判の印刷・PDF出力に完全最適化
+    </div>
+
+    <div class="cover-bottom sans">
+      <div><span style="font-size:7pt; color:#cbd5e0; display:block;">著者</span>技術書制作部 編</div>
+      <div class="cover-publisher">TECH PRESS</div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       2. 【目次】 (TOC Page)
+       ========================================================================== -->
+  <section class="toc-section">
+    <div class="toc-header sans">
+      <div class="toc-main-title">目次</div>
+      <span style="font-size:8pt; color:#a0aec0; font-weight:700;">CONTENTS</span>
+    </div>
+
+    <!-- 第1章 目次ブロック -->
+    <div class="toc-chapter-block sans">
+      <div class="toc-chap-row">
+        <span class="toc-chap-num">第 1 章</span>
+        <span class="toc-chap-name">Webのしくみと基本概念</span>
+        <span class="toc-chap-page">P. 3</span>
+      </div>
+      <div class="toc-sec-list">
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">1-1</span>
+          <span>Webブラウザとサーバーの関係を理解しよう</span>
+          <span class="toc-sec-page">P. 4</span>
+        </div>
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">1-2</span>
+          <span>HTML / CSS / JavaScriptの役割分担</span>
+          <span class="toc-sec-page">P. 4</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第2章 目次ブロック -->
+    <div class="toc-chapter-block sans">
+      <div class="toc-chap-row">
+        <span class="toc-chap-num">第 2 章</span>
+        <span class="toc-chap-name">HTMLで文書の構造を作ろう</span>
+        <span class="toc-chap-page">P. 7</span>
+      </div>
+      <div class="toc-sec-list">
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">2-1</span>
+          <span>タグの基本構造と入れ子のルール</span>
+          <span class="toc-sec-page">P. 8</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       3. 【章トビラ】 (Chapter Divider Page)
+       ========================================================================== -->
+  <section class="chapter-divider-page">
+    <div class="divider-header sans">
+      <div>
+        <span class="divider-badge-chap">第 1 章</span>
+        <span class="divider-badge-en">CHAPTER 01 · INTRODUCTION</span>
+      </div>
+      <h1 class="divider-title">Webのしくみと基本概念</h1>
+      <div style="margin-top:4px;">
+        <span class="concept-tag">#クライアント</span>
+        <span class="concept-tag">#Webサーバー</span>
+        <span class="concept-tag">#HTTP通信</span>
+      </div>
+    </div>
+
+    <div class="divider-lead-box sans">
+      <span class="lead-box-title">● この章で学ぶこと</span>
+      <p class="no-indent" style="font-size:7.8pt; line-height:1.6; color:#2d3748;">
+        私たちが普段使っているWebサイトはどのような仕組みで表示されているのでしょうか？
+        プログラミングを始める前に知っておきたい通信の基本と3大言語の役割を学びます。
+      </p>
+    </div>
+
+    <div class="divider-goals-card sans">
+      <span class="goals-card-title">🎯 この章の学習ゴール</span>
+      <div class="goal-item"><span class="goal-check">✔</span>Webブラウザがページを表示する通信フローを説明できる</div>
+      <div class="goal-item"><span class="goal-check">✔</span>HTML・CSS・JavaScriptの役割の違いを理解する</div>
+    </div>
+
+    <div class="dialogue-box sans">
+      <div style="margin-bottom:3px;">
+        <span class="avatar-badge avatar-student">生徒</span>
+        Webサイトのデータって、自分のパソコンの中にあるわけじゃないんですね？
+      </div>
+      <div>
+        <span class="avatar-badge avatar-teacher">先生</span>
+        その通り！世界中のサーバーから送ってもらっているんだよ。次ページから詳しく見ていこう！
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       4. 【本文】 (Body Pages)
+       ========================================================================== -->
+  <section class="body-section">
+
+    <h2 class="sec-h2 sans"><span class="sec-h2-badge">1-1</span>Webブラウザとサーバーの関係を理解しよう</h2>
+    <p>
+      私たちがWebサイトを見るとき、裏側では「<strong>クライアント（Webブラウザ）</strong>」と「<strong>サーバー</strong>」と呼ばれるコンピュータが常に通信を行っています。
+    </p>
+
+    <figure class="doc-figure">
+      <div class="figure-frame">
+        <svg viewBox="0 0 500 100" style="width:100%; height:auto; display:block;">
+          <rect x="10" y="15" width="120" height="70" rx="6" fill="#ebf8ff" stroke="#3182ce" stroke-width="1.5" />
+          <text x="70" y="48" font-family="sans-serif" font-size="10" font-weight="bold" fill="#2b6cb0" text-anchor="middle">クライアント</text>
+          <text x="70" y="65" font-family="sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">(ブラウザ)</text>
+
+          <path d="M 140 38 L 350 38" stroke="#3182ce" stroke-width="1.5" />
+          <polygon points="355,38 347,34 347,42" fill="#3182ce" />
+          <text x="245" y="32" font-family="sans-serif" font-size="8" font-weight="bold" fill="#2b6cb0" text-anchor="middle">① リクエスト</text>
+
+          <path d="M 350 68 L 140 68" stroke="#38a169" stroke-width="1.5" stroke-dasharray="3,2" />
+          <polygon points="135,68 143,64 143,72" fill="#38a169" />
+          <text x="245" y="82" font-family="sans-serif" font-size="8" font-weight="bold" fill="#22543d" text-anchor="middle">② レスポンス</text>
+
+          <rect x="365" y="15" width="120" height="70" rx="6" fill="#f0fff4" stroke="#38a169" stroke-width="1.5" />
+          <text x="425" y="48" font-family="sans-serif" font-size="10" font-weight="bold" fill="#22543d" text-anchor="middle">Webサーバー</text>
+          <text x="425" y="65" font-family="sans-serif" font-size="8" fill="#4a5568" text-anchor="middle">(データ配信)</text>
+        </svg>
+      </div>
+      <figcaption class="figure-caption sans">
+        <span class="caption-num">図 1-1:</span>ブラウザとサーバー間の通信の流れ
+      </figcaption>
+    </figure>
+
+    <div class="doc-box box-point sans">
+      <span class="doc-box-title"><span class="box-tag">POINT</span>ここだけは覚える！ Web通信のキーワード</span>
+      <p class="no-indent">
+        <strong>クライアント：</strong> サービスを利用する側（ブラウザ）。<br />
+        <strong>サーバー：</strong> データを保管し、要求に応じて提供する側。
+      </p>
+    </div>
+
+    <h2 class="sec-h2 sans"><span class="sec-h2-badge">1-2</span>HTML / CSS / JavaScriptの役割分担</h2>
+    <p>
+      Webの見た目を作る技術は、主に3つの言語で成り立っています。
+    </p>
+
+    <table class="tech-table sans">
+      <thead>
+        <tr>
+          <th style="width:25%">言語</th>
+          <th style="width:40%">役割</th>
+          <th style="width:35%">建物に例えると</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>HTML</strong></td>
+          <td>骨組み・文書構造</td>
+          <td>柱や壁・部屋の構造</td>
+        </tr>
+        <tr>
+          <td><strong>CSS</strong></td>
+          <td>装飾・レイアウト</td>
+          <td>壁紙・インテリア</td>
+        </tr>
+        <tr>
+          <td><strong>JavaScript</strong></td>
+          <td>動き・対話機能</td>
+          <td>自動ドア・照明スイッチ</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="code-container">
+      <div class="code-header sans"><span class="file-tag">HTML</span> index.html</div>
+      <pre class="code-body"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;body&gt;
+  &lt;h1&gt;こんにちは！&lt;/h1&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+    <div class="doc-box box-note sans">
+      <span class="doc-box-title"><span class="box-tag">NOTE</span>HTMLはダブルクリックで開ける！</span>
+      <p class="no-indent">作成したHTMLファイルは、ブラウザにドラッグ＆ドロップするだけですぐに表示できます。</p>
+    </div>
+
+    <div class="doc-box box-warning sans">
+      <span class="doc-box-title"><span class="box-tag">WARNING</span>全角スペースに注意！</span>
+      <p class="no-indent">コード内に全角スペースが入るとエラーの原因になります。必ず半角を使用してください。</p>
+    </div>
+
+    <div class="box-column sans">
+      <span class="doc-box-title"><span class="box-tag">COLUMN</span>F12キーで裏側が見える？</span>
+      <p class="no-indent">ブラウザで「F12」キーを押すと「デベロッパーツール」が起動し、どんなWebサイトでもHTMLやCSSの構造を覗き見ることができます。</p>
+    </div>
+
+  </section>
+
+</body>
+</html>

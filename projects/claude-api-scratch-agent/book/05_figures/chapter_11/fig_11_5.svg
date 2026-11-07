@@ -1,0 +1,62 @@
+<svg width="605" height="360" viewBox="0 0 605 360"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+
+  <!-- トレースID（依頼1件） -->
+  <rect x="167" y="16" width="270" height="56" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="302" y="38" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">依頼1件 ＝ トレースID</text>
+  <text x="302" y="60" text-anchor="middle" font-size="11" fill="#2b6cb0" font-family="Consolas,monospace" font-weight="bold">trace_id: a1b2c3d4e5f6</text>
+
+  <!-- 枝 -->
+  <path d="M302 72 L302 96" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 96 L523 96" stroke="#333" stroke-width="1.2" fill="none"/>
+  <path d="M82 96 L82 112 M229 96 L229 112 M376 96 L376 112 M523 96 L523 112" stroke="#333" stroke-width="1.2" fill="none"/>
+
+  <!-- エージェント -->
+  <rect x="20" y="112" width="125" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="82" y="137" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">オーケストレーター</text>
+  <rect x="167" y="112" width="125" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="229" y="137" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">リサーチャー</text>
+  <rect x="314" y="112" width="125" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="376" y="137" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">ライター</text>
+  <rect x="461" y="112" width="125" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="523" y="137" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">レビュアー</text>
+
+  <!-- request-id（API呼び出し1回ごと） -->
+  <g stroke="#333" stroke-width="1" fill="none">
+    <path d="M36 152 L36 250 M36 182 L50 182 M36 216 L50 216 M36 250 L50 250"/>
+    <path d="M183 152 L183 250 M183 182 L197 182 M183 216 L197 216 M183 250 L197 250"/>
+    <path d="M330 152 L330 216 M330 182 L344 182 M330 216 L344 216"/>
+    <path d="M477 152 L477 216 M477 182 L491 182 M477 216 L491 216"/>
+  </g>
+  <g fill="#fff" stroke="#333" stroke-width="1">
+    <rect x="50" y="171" width="90" height="22" rx="4"/>
+    <rect x="50" y="205" width="90" height="22" rx="4"/>
+    <rect x="50" y="239" width="90" height="22" rx="4"/>
+    <rect x="197" y="171" width="90" height="22" rx="4"/>
+    <rect x="197" y="205" width="90" height="22" rx="4"/>
+    <rect x="197" y="239" width="90" height="22" rx="4"/>
+    <rect x="344" y="171" width="90" height="22" rx="4"/>
+    <rect x="344" y="205" width="90" height="22" rx="4"/>
+    <rect x="491" y="171" width="90" height="22" rx="4"/>
+    <rect x="491" y="205" width="90" height="22" rx="4"/>
+  </g>
+  <g font-size="10" fill="#1a1a1a" font-family="Consolas,monospace" text-anchor="middle">
+    <text x="95" y="186">req_…01</text>
+    <text x="95" y="220">req_…05</text>
+    <text x="95" y="254">req_…07</text>
+    <text x="242" y="186">req_…02</text>
+    <text x="242" y="220">req_…03</text>
+    <text x="242" y="254">req_…04</text>
+    <text x="389" y="186">req_…06</text>
+    <text x="389" y="220">…</text>
+    <text x="536" y="186">req_…08</text>
+    <text x="536" y="220">…</text>
+  </g>
+
+  <!-- 凡例 -->
+  <rect x="20" y="282" width="12" height="12" rx="2" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="38" y="292" font-size="10" fill="#1a1a1a">トレースID：依頼全体を表す（自分で発行し、全ログに付ける）</text>
+  <rect x="20" y="302" width="12" height="12" rx="2" fill="#fff" stroke="#333" stroke-width="1"/>
+  <text x="38" y="312" font-size="10" fill="#1a1a1a">request-id：API呼び出し1回ごとにAnthropicが付与する（番号は時系列の例）</text>
+</svg>

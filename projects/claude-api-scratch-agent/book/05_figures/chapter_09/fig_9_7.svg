@@ -1,0 +1,51 @@
+<svg width="605" height="325" viewBox="0 0 605 325" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f9_7_ar97" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 目標 -->
+  <rect x="200" y="10" width="205" height="32" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="302" y="31" text-anchor="middle" font-size="12" fill="#1a1a1a">目標（<tspan font-family="Consolas,monospace">goal</tspan>）</text>
+  <path d="M302 42 L302 63" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+
+  <!-- オーケストレーター -->
+  <rect x="130" y="65" width="345" height="55" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.4"/>
+  <text x="302" y="87" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">オーケストレーター（<tspan font-family="Consolas,monospace">MODEL</tspan>）</text>
+  <text x="302" y="108" text-anchor="middle" font-size="11" fill="#1a1a1a">サブタスクの数と内容を実行時に決めて分解する</text>
+
+  <!-- 配る -->
+  <path d="M200 120 L95 163" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M260 120 L245 163" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M345 120 L395 163" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M420 120 L532 163" stroke="#333" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#f9_7_ar97)"/>
+  <text x="20" y="140" font-size="11" fill="#1a1a1a">サブタスクを配る</text>
+
+  <!-- ワーカー -->
+  <rect x="30" y="165" width="130" height="45" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="95" y="184" text-anchor="middle" font-size="12" fill="#1a1a1a">ワーカー1</text>
+  <text x="95" y="200" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">FAST_MODEL</text>
+  <rect x="180" y="165" width="130" height="45" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="245" y="184" text-anchor="middle" font-size="12" fill="#1a1a1a">ワーカー2</text>
+  <text x="245" y="200" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">FAST_MODEL</text>
+  <rect x="330" y="165" width="130" height="45" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="395" y="184" text-anchor="middle" font-size="12" fill="#1a1a1a">ワーカー3</text>
+  <text x="395" y="200" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">FAST_MODEL</text>
+  <rect x="480" y="165" width="105" height="45" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="532" y="184" text-anchor="middle" font-size="12" fill="#1a1a1a">…</text>
+  <text x="532" y="200" text-anchor="middle" font-size="10" fill="#1a1a1a">上限はコードで</text>
+
+  <!-- 返す -->
+  <path d="M95 210 L200 253" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M245 210 L260 253" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M395 210 L345 253" stroke="#333" stroke-width="1.3" marker-end="url(#f9_7_ar97)"/>
+  <path d="M532 210 L420 253" stroke="#333" stroke-width="1.3" stroke-dasharray="4,3" marker-end="url(#f9_7_ar97)"/>
+  <text x="20" y="240" font-size="11" fill="#1a1a1a">結果を返す</text>
+
+  <!-- 統合 -->
+  <rect x="130" y="255" width="345" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.4"/>
+  <text x="302" y="280" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">統合：結果をまとめて最終回答にする</text>
+
+  <text x="302" y="316" text-anchor="middle" font-size="11" fill="#666">セクショニングとの違い：分担を決めるのはコードではなくモデル</text>
+</svg>

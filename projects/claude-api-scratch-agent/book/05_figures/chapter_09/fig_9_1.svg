@@ -1,0 +1,37 @@
+<svg width="605" height="350" viewBox="0 0 605 350" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f9_1_ar91" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 第1段階 -->
+  <rect x="25" y="230" width="170" height="70" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="110" y="252" text-anchor="middle" font-size="14" fill="#1a1a1a" font-weight="bold">単一呼び出し</text>
+  <text x="110" y="272" text-anchor="middle" font-size="11" fill="#1a1a1a">API呼び出し1回で完結</text>
+  <text x="110" y="290" text-anchor="middle" font-size="11" fill="#1a1a1a">例：要約・翻訳・分類</text>
+
+  <!-- 第2段階 -->
+  <rect x="215" y="160" width="170" height="140" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="300" y="182" text-anchor="middle" font-size="14" fill="#1a1a1a" font-weight="bold">ワークフロー</text>
+  <text x="300" y="202" text-anchor="middle" font-size="11" fill="#1a1a1a">手順をコードで決める</text>
+  <text x="300" y="220" text-anchor="middle" font-size="11" fill="#1a1a1a">例：抽出→執筆→翻訳</text>
+  <text x="300" y="240" text-anchor="middle" font-size="10" fill="#666">（9.2〜9.5節）</text>
+
+  <!-- 第3段階 -->
+  <rect x="405" y="90" width="175" height="210" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.4"/>
+  <text x="492" y="112" text-anchor="middle" font-size="14" fill="#1a1a1a" font-weight="bold">エージェント</text>
+  <text x="492" y="132" text-anchor="middle" font-size="11" fill="#1a1a1a">次の一手をモデルが決める</text>
+  <text x="492" y="150" text-anchor="middle" font-size="11" fill="#1a1a1a">例：ツール使用ループ</text>
+  <text x="492" y="170" text-anchor="middle" font-size="10" fill="#666">（第5〜8章）</text>
+
+  <text x="110" y="222" text-anchor="middle" font-size="11" fill="#666">第1段階</text>
+  <text x="300" y="152" text-anchor="middle" font-size="11" fill="#666">第2段階</text>
+  <text x="492" y="82" text-anchor="middle" font-size="11" fill="#2b6cb0" font-weight="bold">第3段階</text>
+
+  <!-- 軸 -->
+  <path d="M25 318 L578 318" stroke="#333" stroke-width="1.3" marker-end="url(#f9_1_ar91)"/>
+  <text x="25" y="338" font-size="11" fill="#1a1a1a">予測しやすい・安い</text>
+  <text x="302" y="338" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">複雑さと自律性</text>
+  <text x="580" y="338" text-anchor="end" font-size="11" fill="#1a1a1a">柔軟・高コスト</text>
+</svg>

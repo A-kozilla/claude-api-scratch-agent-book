@@ -1,0 +1,58 @@
+<svg width="605" height="345" viewBox="0 0 605 345" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f8_2_ar82" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f8_2_ar82b" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 親ループ -->
+  <text x="20" y="110" font-size="12" fill="#1a1a1a" font-weight="bold">親ループ（orchestrator）</text>
+  <rect x="20" y="40" width="150" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="95" y="65" text-anchor="middle" font-size="12" fill="#1a1a1a">親：モデルを呼ぶ</text>
+  <rect x="220" y="40" width="160" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="300" y="57" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">tool_use</text>
+  <text x="300" y="72" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">delegate_research</text>
+  <rect x="430" y="40" width="145" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="502" y="65" text-anchor="middle" font-size="12" fill="#1a1a1a">ツール関数を実行</text>
+  <path d="M170 60 L218 60" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+  <path d="M380 60 L428 60" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+
+  <!-- 親へ戻る -->
+  <path d="M592 265 L598 265 L598 22 L95 22 L95 38" fill="none" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#f8_2_ar82b)"/>
+  <text x="300" y="16" text-anchor="middle" font-size="11" fill="#2b6cb0" font-weight="bold">tool_result（報告のテキストだけ）</text>
+
+  <!-- 子ループの枠 -->
+  <rect x="185" y="130" width="400" height="200" rx="6" fill="none" stroke="#2b6cb0" stroke-width="1.2" stroke-dasharray="5,4"/>
+  <text x="200" y="150" font-size="12" fill="#2b6cb0" font-weight="bold">子ループ（researcher）</text>
+
+  <!-- ツール関数から子ループを起動 -->
+  <path d="M485 80 L485 163" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+  <text x="478" y="118" text-anchor="end" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">researcher.run(task)</text>
+
+  <rect x="400" y="165" width="170" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="485" y="182" text-anchor="middle" font-size="11" fill="#1a1a1a">新しい messages を作成</text>
+  <text x="485" y="197" text-anchor="middle" font-size="10" fill="#1a1a1a">（指示を最初の user に）</text>
+
+  <rect x="200" y="165" width="160" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="280" y="190" text-anchor="middle" font-size="12" fill="#1a1a1a">子：モデルを呼ぶ</text>
+  <path d="M400 185 L362 185" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+
+  <rect x="200" y="245" width="160" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="280" y="262" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">list_files / read_file</text>
+  <text x="280" y="277" text-anchor="middle" font-size="11" fill="#1a1a1a">を実行</text>
+  <path d="M255 205 L255 243" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+  <text x="250" y="228" text-anchor="end" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_use</text>
+  <path d="M305 245 L305 207" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+  <text x="310" y="228" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_result</text>
+
+  <rect x="400" y="245" width="170" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="485" y="262" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">end_turn</text>
+  <text x="485" y="277" text-anchor="middle" font-size="11" fill="#1a1a1a">最後のテキストを報告</text>
+  <path d="M360 195 L410 243" stroke="#333" stroke-width="1.3" marker-end="url(#f8_2_ar82)"/>
+  <path d="M570 265 L592 265" stroke="#2b6cb0" stroke-width="1.5"/>
+
+  <text x="385" y="315" text-anchor="middle" font-size="11" fill="#666">終了後、子の messages は捨てられる（親の履歴には入らない）</text>
+</svg>

@@ -1,0 +1,254 @@
+{
+  "main": {
+    "id": "1560c061f9b19506",
+    "type": "split",
+    "children": [
+      {
+        "id": "df70553d1e0f739a",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "fa0d63bdd4ea91a6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "projects/claude-agent-dev-intro/book/06_final/chapter_04.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "chapter_04"
+            }
+          },
+          {
+            "id": "dc7d34f78a5cd399",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "projects/claude-agent-dev-intro/book/06_final/chapter_07.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "chapter_07"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "216d5cc105b2d643",
+    "type": "split",
+    "children": [
+      {
+        "id": "be2eecf7d1a943cb",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0d001dc4f179330b",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "ファイルエクスプローラ"
+            }
+          },
+          {
+            "id": "847cb304763c2a8e",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "検索"
+            }
+          },
+          {
+            "id": "40aa158a954ab935",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "ブックマーク"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 325.16668701171875
+  },
+  "right": {
+    "id": "52b90aabfaf8f441",
+    "type": "split",
+    "children": [
+      {
+        "id": "09f64e3a78167534",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "e87267189775094e",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "projects/claude-agent-dev-intro/book/05_figures/chapter_01/fig_1_3.svg",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "バックリンク"
+            }
+          },
+          {
+            "id": "3bec3af4b75643a0",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "projects/claude-agent-dev-intro/book/05_figures/chapter_01/fig_1_3.svg",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "アウトゴーイングリンク"
+            }
+          },
+          {
+            "id": "b2ca0facaaa30239",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "タグ"
+            }
+          },
+          {
+            "id": "e0d9593b63518cf4",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "すべてのプロパティ"
+            }
+          },
+          {
+            "id": "de9c855c62805cf2",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "projects/claude-agent-dev-intro/book/05_figures/chapter_01/fig_1_3.svg",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "アウトライン"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:クイックスイッチャーを開く": false,
+      "graph:グラフビューを開く": false,
+      "canvas:新規キャンバスを作成": false,
+      "daily-notes:今日のデイリーノートを開く": false,
+      "templates:テンプレートを挿入": false,
+      "command-palette:コマンドパレットを開く": false,
+      "bases:新規ベースを作成": false
+    }
+  },
+  "active": "fa0d63bdd4ea91a6",
+  "lastOpenFiles": [
+    "projects/claude-agent-dev-intro/book/06_final/chapter_01.md",
+    "projects/claude-agent-dev-intro/book/book_info.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_07.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_06.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_05.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_04.md",
+    "projects/claude-agent-dev-intro/book/06_final/sedaTgmjv",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_4_b.svg",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_4.png",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_3_b.svg",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_3.png",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_2_b.svg",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_2.png",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_1_b.svg",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_04/fig_4_1.png",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_04.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_03.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_03.md",
+    "projects/claude-agent-dev-intro/book/06_final/sedpuOMQy",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_03/fig_3_5_b.svg",
+    "projects/claude-agent-dev-intro/book/05_figures/chapter_03/fig_3_5.png",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_02.md",
+    "projects/claude-agent-dev-intro/book/06_final/sedXKhQuG",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_01.md",
+    "projects/claude-agent-dev-intro/book/06_final/chapter_00.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_00.md",
+    "projects/claude-agent-dev-intro/book/06_final/sedsOK7HS",
+    "projects/claude-agent-dev-intro/book/06_final/sedcHSXpi",
+    "projects/claude-agent-dev-intro/book/07_publish/A4/pdf/book.pdf",
+    "projects/claude-agent-dev-intro/book/06_final/sedkmGRob",
+    "projects/claude-agent-dev-intro/book/06_final/sedexhhhF",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_00_factcheck.md",
+    "projects/claude-agent-dev-intro/book/02_toc/toc.md",
+    "references/book-markup.md",
+    "projects/claude-agent-dev-intro/book/sedzzhS1Q",
+    "docs/usage-guide.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_02.md",
+    "projects/claude-agent-dev-intro/factcheck_report.md",
+    "projects/claude-agent-dev-intro/factcheck_report.md.tmp.70212.ab56d3b31675",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_06_code_verify.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_01_factcheck.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_06_factcheck.md",
+    "projects/claude-agent-dev-intro/book/03_manuscripts/chapter_04_code_verify.md",
+    "projects/claude-agent-dev-intro/udemy/03_scripts/section_05/lecture_04_factcheck.md",
+    "projects/claude-agent-dev-intro/udemy/03_scripts/section_05/lecture_03_code_verify.md",
+    "projects/claude-agent-dev-intro/udemy/03_scripts/section_05/lecture_03_factcheck.md"
+  ]
+}

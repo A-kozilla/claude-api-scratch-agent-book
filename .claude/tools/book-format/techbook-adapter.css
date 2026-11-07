@@ -1,0 +1,167 @@
+/* ==========================================================================
+   techbook-adapter.css — format-template のCSS（style-a4.css / style-a5.css）の「後」に読み込む補正
+   ・デザインの基本（配色・フォント・見出し・囲み記事・表・コード・章扉・表紙・目次）はテンプレートのCSSが担う
+   ・ここには、テンプレートにない要素と、Chrome で PDF 印刷するための補正だけを置く
+   ・文字サイズの差（A4/A5）は、book.css 先頭で自動生成される変数（--small-fs など）で吸収する
+   ========================================================================== */
+
+html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+body { line-break: strict; }
+a { color: inherit; text-decoration: none; }
+h1, h2, h3, h4, .doc-box-title, .toc-chap-name { word-break: auto-phrase; }   /* 見出しは文節で折り返す */
+p { orphans: 2; widows: 2; }
+
+/* ---- 表紙：1ページに収める（テンプレートの min-height は Chrome では2ページ目にはみ出すことがあるため） */
+.cover-page {
+  width: var(--page-w);
+  height: calc(var(--page-h) - 0.5mm);
+  min-height: 0;
+  break-after: page;
+}
+.cover-feature-item::before { content: "✔ "; }
+.cover-feature-item + .cover-feature-item { margin-top: 6px; }
+.cover-author-label { display: block; font-size: var(--author-fs); color: #cbd5e0; }
+.cover-date { display: block; font-size: var(--author-fs); color: #cbd5e0; margin-top: 2px; }
+
+/* ---- 目次：テンプレートの div 構造をリンク（a）で組むための補正 */
+.toc-section a { display: block; color: inherit; }
+.toc-chap-row { display: block; }
+.toc-page-pending { visibility: hidden; }
+.toc-sec-item.toc-summary, .toc-sec-item.toc-column { font-style: normal; }
+
+/* ---- 章扉 */
+.chapter-divider-page { break-after: page; }
+.concept-tags { margin-top: 6px; }
+.divider-badge-en[data-en]::before { content: attr(data-en); }
+.goals-card-title::before { content: "🎯 "; }
+.lead-box-title::before { content: "● "; }
+.divider-lead-box, .divider-goals-card { font-size: var(--small-fs); line-height: 1.7; color: #2d3748; }
+.divider-lead-box p, .divider-goals-card p { text-indent: 0; margin-bottom: 0.5em; }
+.divider-lead-box > :last-child, .divider-goals-card > :last-child { margin-bottom: 0; }
+.divider-header + .dialogue-box, .divider-lead-box + .dialogue-box, .divider-goals-card + .dialogue-box { margin-top: 0; }
+
+/* ✔ 付きリスト（学ぶこと・まとめ）：テンプレートの .goal-item / .goal-check を li に適用 */
+.check-list, .body-section .check-list { list-style: none; margin: 0; padding: 0; }
+.check-list li ul, .check-list li ol { text-indent: 0; margin: 2px 0 0; padding-left: 1.2em; list-style: disc; }
+.check-list li li { text-indent: 0; padding-left: 0; margin: 1px 0; }
+.check-list > li.goal-item { padding-left: 1.3em; text-indent: -1.3em; }
+.check-list > li.goal-item > .goal-check { display: inline-block; width: 1.3em; text-indent: 0; margin-right: 0; }
+.check-list > li.goal-item:last-child { margin-bottom: 0; }
+
+/* ---- 本文：リスト（テンプレートは * { margin:0; padding:0 } で既定の字下げが消えるため） */
+.body-section ul, .body-section ol, .doc-box ul, .doc-box ol, .box-column ul, .box-column ol { margin: 0 0 1.1em; padding-left: 1.7em; }
+.body-section li, .doc-box li, .box-column li { margin: 0.25em 0; }
+li > p { text-indent: 0; margin-bottom: 0.3em; }
+li ul, li ol { margin-bottom: 0.2em; }
+.body-section > .sec-h2:first-child { margin-top: 0; }
+.sub-h4 {
+  font-size: 1.02em;
+  font-weight: 700;
+  color: var(--color-primary-dark);
+  margin: 4mm 0 2mm;
+  break-after: avoid;
+}
+.sub-h4::before { content: "■ "; color: var(--color-accent); }
+hr.rule { border: 0; border-top: 1px dashed var(--color-border); margin: 5mm 0; }
+.keep-next { break-after: avoid; }
+strong { color: var(--color-primary-dark); }
+
+/* インラインコード */
+:not(pre) > code {
+  font-family: var(--font-code);
+  font-size: 0.9em;
+  background: #edf2f7;
+  color: #2c5282;
+  padding: 0 0.3em;
+  border-radius: 3px;
+  overflow-wrap: anywhere;
+}
+
+/* 通常の引用（種別ラベルのない引用ブロック） */
+blockquote.doc-quote {
+  border-left: 3px solid var(--color-border);
+  background: var(--color-bg-light);
+  padding: 6px 12px;
+  margin: 4mm 0;
+  color: #4a5568;
+}
+blockquote.doc-quote p { text-indent: 0; margin-bottom: 0.4em; }
+
+/* ---- 囲み記事：本文の段落は字下げなし。TIP（緑）/ DANGER（赤）はテンプレートの配色に合わせて追加 */
+.doc-box p, .box-column p, .step-card p, .dialogue-box p, .summary-card p { text-indent: 0; }
+.doc-box-body > :last-child, .step-desc > :last-child { margin-bottom: 0; }
+.doc-box-body p { margin-bottom: 0.5em; }
+.doc-box-title:has(.box-tag:only-child) { margin-bottom: 4px; }
+.box-tip { border: 1.5px solid #9ae6b4; background: #f0fff4; }
+.box-tip .box-tag { background: #38a169; }
+.box-tip .doc-box-title { color: #22543d; }
+.box-danger { border: 1.5px solid #fc8181; background: #fff5f5; }
+.box-danger .box-tag { background: #c53030; }
+.box-danger .doc-box-title { color: #742a2a; }
+
+/* 「## COLUMN: …」の節全体をコラム枠にする。長いコラムはページをまたいでよい */
+.col-section { break-inside: auto; }
+.col-section > h2.doc-box-title { break-after: avoid; }
+.col-section .doc-box-body p { margin-bottom: 0.6em; }
+
+/* ステップカード：style-a5.css には定義が無いため、A4 と同じ部品を補う。
+   :where() で詳細度0にしてあるので、テンプレートのCSSに定義があればそちらが優先される */
+:where(.step-card) {
+  background: #ffffff;
+  border: 1px solid var(--color-border);
+  border-left: 4px solid var(--color-primary);
+  border-radius: 6px;
+  padding: 6px 10px;
+  margin-bottom: 3mm;
+  font-size: var(--small-fs);
+  font-family: var(--font-sans);
+}
+:where(.step-badge) {
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: 0.85em;
+  font-weight: 800;
+  padding: 1px 6px;
+  border-radius: 3px;
+  margin-right: 8px;
+}
+
+/* ステップカードの説明 */
+.step-desc { font-size: 0.94em; color: #4a5568; margin-top: 2px; }
+.step-desc p { margin-bottom: 0.2em; }
+.step-card { break-inside: avoid; }
+
+/* 会話ボックス */
+.dialogue-box { margin: 5mm 0; break-inside: avoid; }
+.dialogue-line + .dialogue-line { margin-top: 5px; }
+
+/* 本章のまとめ（テンプレートの学習ゴール枠と同じ部品を青系で） */
+.summary-card {
+  background: #ebf8ff;
+  border: 1.5px solid #bee3f8;
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin: 0 0 6mm;
+  font-size: var(--small-fs);
+  line-height: 1.75;
+}
+.summary-card p { margin-bottom: 0.5em; }
+
+/* ---- 表：セル内は上揃え・折り返し */
+.table-wrap { margin: 6mm 0; }
+.table-wrap .tech-table { margin: 0; }
+.tech-table th, .tech-table td { vertical-align: top; overflow-wrap: anywhere; }
+.tech-table thead { display: table-header-group; }
+
+/* ---- コード：印刷では横スクロールできないので折り返す */
+.code-body { white-space: pre-wrap; overflow-wrap: anywhere; overflow: visible; }
+.code-body code { background: none; color: inherit; padding: 0; font-size: inherit; }
+.code-header .file-tag { margin-right: 8px; }
+
+/* ---- 図：1ページに収まる大きさに縮小 */
+.doc-figure svg, .doc-figure img { display: block; max-width: 100%; height: auto; max-height: calc(var(--page-h) * 0.55); margin: 0 auto; }
+.figure-missing { border: 1.5px dashed #a0aec0; background: #ffffff; padding: 18px 14px; color: var(--color-text-sub); }
+.figure-missing .ph-title { font-weight: 700; color: var(--color-text-main); }
+.figure-missing .ph-desc { margin-top: 4px; }
+.figure-missing .ph-note { margin-top: 6px; font-size: 0.9em; }
+.figure-pending { color: #c05621; margin-left: 4px; }

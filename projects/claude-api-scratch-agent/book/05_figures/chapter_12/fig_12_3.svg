@@ -1,0 +1,51 @@
+<svg width="605" height="420" viewBox="0 0 605 420"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+
+  <!-- 見出し -->
+  <rect x="15" y="16" width="280" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.3"/>
+  <text x="155" y="34" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">API連携に共通（4観点）</text>
+  <text x="155" y="49" text-anchor="middle" font-size="10" fill="#1a1a1a">どのシステムにも必要な土台</text>
+
+  <rect x="310" y="16" width="280" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="450" y="34" text-anchor="middle" font-size="13" fill="#2b6cb0" font-weight="bold">エージェント固有（5観点）</text>
+  <text x="450" y="49" text-anchor="middle" font-size="10" fill="#1a1a1a">自律的に動くからこそ必要な項目</text>
+
+  <!-- 左列 -->
+  <g stroke="#333" stroke-width="1.1" fill="#f5f5f5">
+    <rect x="15" y="68" width="280" height="54" rx="6"/>
+    <rect x="15" y="130" width="280" height="54" rx="6"/>
+    <rect x="15" y="192" width="280" height="54" rx="6"/>
+    <rect x="15" y="254" width="280" height="54" rx="6"/>
+  </g>
+  <text x="29" y="90" font-size="12" fill="#1a1a1a" font-weight="bold">1 APIキーと秘密情報</text>
+  <text x="29" y="110" font-size="10" fill="#1a1a1a">.env と .gitignore、環境ごとにキーを分ける</text>
+  <text x="29" y="152" font-size="12" fill="#1a1a1a" font-weight="bold">2 コスト上限</text>
+  <text x="29" y="172" font-size="10" fill="#1a1a1a">spend limit・1回の予算・反復回数のガード</text>
+  <text x="29" y="214" font-size="12" fill="#1a1a1a" font-weight="bold">3 信頼性</text>
+  <text x="29" y="234" font-size="10" fill="#1a1a1a">再試行の線引き・タイムアウト・stop_reason</text>
+  <text x="29" y="276" font-size="12" fill="#1a1a1a" font-weight="bold">4 ログと監視</text>
+  <text x="29" y="296" font-size="10" fill="#1a1a1a">request-id・トレースID・急変の検知</text>
+
+  <!-- 右列 -->
+  <g stroke="#2b6cb0" stroke-width="1.1" fill="#fff">
+    <rect x="310" y="68" width="280" height="54" rx="6"/>
+    <rect x="310" y="130" width="280" height="54" rx="6"/>
+    <rect x="310" y="192" width="280" height="54" rx="6"/>
+    <rect x="310" y="254" width="280" height="54" rx="6"/>
+    <rect x="310" y="316" width="280" height="54" rx="6"/>
+  </g>
+  <text x="324" y="90" font-size="12" fill="#1a1a1a" font-weight="bold">5 評価（eval）</text>
+  <text x="324" y="110" font-size="10" fill="#1a1a1a">変更のたびに eval、本番の失敗事例を追加</text>
+  <text x="324" y="152" font-size="12" fill="#1a1a1a" font-weight="bold">6 権限と人間の確認</text>
+  <text x="324" y="172" font-size="10" fill="#1a1a1a">ツールは最小限、取り消せない操作は承認</text>
+  <text x="324" y="214" font-size="12" fill="#1a1a1a" font-weight="bold">7 プロンプトインジェクション対策</text>
+  <text x="324" y="234" font-size="10" fill="#1a1a1a">外部データは資料扱い、読む役と行動する役を分離</text>
+  <text x="324" y="276" font-size="12" fill="#1a1a1a" font-weight="bold">8 モデル選定と effort</text>
+  <text x="324" y="296" font-size="10" fill="#1a1a1a">定数に集約、役割ごとにモデルと effort を配分</text>
+  <text x="324" y="338" font-size="12" fill="#1a1a1a" font-weight="bold">9 データと運用体制</text>
+  <text x="324" y="358" font-size="10" fill="#1a1a1a">責任者・停止手順・小さく試して広げる</text>
+
+  <text x="155" y="340" text-anchor="middle" font-size="10" fill="#1a1a1a">満たしていない項目は</text>
+  <text x="155" y="355" text-anchor="middle" font-size="10" fill="#1a1a1a">「意識して保留」し、段階ごとに見直す</text>
+</svg>

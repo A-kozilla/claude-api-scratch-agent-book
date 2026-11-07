@@ -1,0 +1,69 @@
+<svg width="605" height="300" viewBox="0 0 605 300" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f9_5_ar95" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 左: セクショニング -->
+  <text x="152" y="26" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">セクショニング：仕事を分ける</text>
+  <rect x="67" y="42" width="170" height="32" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="152" y="63" text-anchor="middle" font-size="12" fill="#1a1a1a">レビュー対象のコード</text>
+  <path d="M152 74 L57 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M152 74 L152 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M152 74 L247 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+
+  <rect x="15" y="115" width="85" height="46" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="57" y="135" text-anchor="middle" font-size="11" fill="#1a1a1a">セキュリティ</text>
+  <text x="57" y="152" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">security</text>
+  <rect x="110" y="115" width="85" height="46" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="152" y="135" text-anchor="middle" font-size="11" fill="#1a1a1a">性能</text>
+  <text x="152" y="152" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">performance</text>
+  <rect x="205" y="115" width="85" height="46" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="247" y="135" text-anchor="middle" font-size="11" fill="#1a1a1a">読みやすさ</text>
+  <text x="247" y="152" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">readability</text>
+
+  <path d="M57 161 L120 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M152 161 L152 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M247 161 L184 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <rect x="47" y="200" width="210" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="152" y="222" text-anchor="middle" font-size="12" fill="#1a1a1a">重要度順に統合（コード）</text>
+
+  <text x="152" y="262" text-anchor="middle" font-size="11" fill="#1a1a1a">観点ごとに別の仕事 × 3（<tspan font-family="Consolas,monospace">MODEL</tspan>）</text>
+  <text x="152" y="281" text-anchor="middle" font-size="11" fill="#666">各観点に集中でき、見落としが減る</text>
+
+  <!-- 区切り -->
+  <line x1="302" y1="12" x2="302" y2="288" stroke="#999" stroke-width="1" stroke-dasharray="4,4"/>
+
+  <!-- 右: 投票 -->
+  <text x="452" y="26" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">投票：判定者を分ける</text>
+  <rect x="347" y="42" width="210" height="32" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="452" y="63" text-anchor="middle" font-size="12" fill="#1a1a1a">同じ問い：脆弱性はある？</text>
+  <path d="M452 74 L338 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M452 74 L394 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M452 74 L450 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M452 74 L506 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M452 74 L562 113" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+
+  <rect x="313" y="115" width="50" height="46" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="338" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">攻撃者</text>
+  <rect x="369" y="115" width="50" height="46" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="394" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">入力</text>
+  <rect x="425" y="115" width="50" height="46" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="450" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">文字列</text>
+  <rect x="481" y="115" width="50" height="46" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="506" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">本番</text>
+  <rect x="537" y="115" width="50" height="46" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="562" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">チェック</text>
+
+  <path d="M338 161 L420 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M394 161 L436 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M450 161 L452 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M506 161 L468 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <path d="M562 161 L484 198" stroke="#333" stroke-width="1.2" marker-end="url(#f9_5_ar95)"/>
+  <rect x="337" y="200" width="230" height="34" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="452" y="222" text-anchor="middle" font-size="11" fill="#1a1a1a">集計：<tspan font-family="Consolas,monospace">vulnerable</tspan> が2票以上なら要対応</text>
+
+  <text x="452" y="262" text-anchor="middle" font-size="11" fill="#1a1a1a">観点の違う5人で同じ判定（<tspan font-family="Consolas,monospace">FAST_MODEL</tspan>）</text>
+  <text x="452" y="281" text-anchor="middle" font-size="11" fill="#666">誤判定に強く、票の割れ方で難しさもわかる</text>
+</svg>

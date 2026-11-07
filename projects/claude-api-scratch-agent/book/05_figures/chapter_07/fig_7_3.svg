@@ -1,0 +1,71 @@
+<svg width="605" height="430" viewBox="0 0 605 430" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f7_3_ar73" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 計測 -->
+  <rect x="140" y="10" width="270" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="27" text-anchor="middle" font-size="12" fill="#1a1a1a">トークン数を計測</text>
+  <text x="275" y="43" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">estimate_tokens()</text>
+  <path d="M275 50 L275 63" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+
+  <!-- 判定1 -->
+  <polygon points="275,64 360,82 275,100 190,82" fill="#fff" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="86" text-anchor="middle" font-size="12" fill="#1a1a1a">しきい値未満？</text>
+  <path d="M360 82 L438 82" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="399" y="76" text-anchor="middle" font-size="11" fill="#1a1a1a">はい</text>
+  <rect x="440" y="64" width="150" height="36" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="515" y="87" text-anchor="middle" font-size="11" fill="#1a1a1a">そのまま返す</text>
+  <path d="M275 100 L275 113" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="283" y="111" font-size="10" fill="#666">いいえ</text>
+
+  <!-- 段階1 -->
+  <rect x="140" y="114" width="270" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="131" text-anchor="middle" font-size="12" fill="#1a1a1a">段階1：古いツール結果を縮小・再計測</text>
+  <text x="275" y="147" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">shrink_old_tool_results()</text>
+  <path d="M275 154 L275 167" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+
+  <!-- 判定2 -->
+  <polygon points="275,168 360,186 275,204 190,186" fill="#fff" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="190" text-anchor="middle" font-size="12" fill="#1a1a1a">しきい値未満？</text>
+  <path d="M360 186 L438 186" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="399" y="180" text-anchor="middle" font-size="11" fill="#1a1a1a">はい</text>
+  <rect x="440" y="168" width="150" height="36" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="515" y="191" text-anchor="middle" font-size="11" fill="#1a1a1a"><tspan font-family="Consolas,monospace">shrunk</tspan> を返す</text>
+  <path d="M275 204 L275 217" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="283" y="215" font-size="10" fill="#666">いいえ</text>
+
+  <!-- 分割 -->
+  <rect x="140" y="218" width="270" height="40" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="235" text-anchor="middle" font-size="12" fill="#1a1a1a">古い部分 old と直近 recent に分割</text>
+  <text x="275" y="251" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">_safe_cut_index(shrunk, keep_last)</text>
+  <path d="M275 258 L275 271" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+
+  <!-- 判定3 -->
+  <polygon points="275,272 360,290 275,308 190,290" fill="#fff" stroke="#333" stroke-width="1.2"/>
+  <text x="275" y="294" text-anchor="middle" font-size="12" fill="#1a1a1a"><tspan font-family="Consolas,monospace">old</tspan> は空？</text>
+  <path d="M360 290 L438 290" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="399" y="284" text-anchor="middle" font-size="11" fill="#1a1a1a">はい</text>
+  <rect x="440" y="272" width="150" height="36" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="515" y="295" text-anchor="middle" font-size="11" fill="#1a1a1a">警告して <tspan font-family="Consolas,monospace">shrunk</tspan> を返す</text>
+  <path d="M275 308 L275 321" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+  <text x="283" y="319" font-size="10" fill="#666">いいえ</text>
+
+  <!-- 段階2 -->
+  <rect x="140" y="322" width="270" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="275" y="339" text-anchor="middle" font-size="12" fill="#1a1a1a">段階2：old を FAST_MODEL で要約</text>
+  <text x="275" y="355" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">summarize_history(old)</text>
+  <path d="M275 362 L275 375" stroke="#333" stroke-width="1.3" marker-end="url(#f7_3_ar73)"/>
+
+  <!-- 組み立て -->
+  <rect x="140" y="376" width="270" height="40" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="275" y="393" text-anchor="middle" font-size="12" fill="#1a1a1a">新しい履歴を組み立てて返す</text>
+  <text x="275" y="409" text-anchor="middle" font-size="11" fill="#1a1a1a" font-family="Consolas,monospace">header + recent</text>
+
+  <text x="10" y="24" font-size="11" fill="#2b6cb0" font-weight="bold">毎ターンの</text>
+  <text x="10" y="39" font-size="11" fill="#2b6cb0" font-weight="bold">API呼び出し前</text>
+  <text x="440" y="393" font-size="10" fill="#666">header には最初の依頼を</text>
+  <text x="440" y="407" font-size="10" fill="#666">原文のまま入れる</text>
+</svg>

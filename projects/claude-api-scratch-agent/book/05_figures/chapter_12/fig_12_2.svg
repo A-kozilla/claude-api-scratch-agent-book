@@ -1,0 +1,56 @@
+<svg width="605" height="340" viewBox="0 0 605 340"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+
+  <!-- 1段目 -->
+  <rect x="15" y="20" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="29" y="44" font-size="14" fill="#2b6cb0" font-weight="bold">① 状態</text>
+  <text x="29" y="68" font-size="11" fill="#1a1a1a">状態は自分で持つ</text>
+  <text x="29" y="86" font-size="10" fill="#1a1a1a">APIはステートレス。毎回</text>
+  <text x="29" y="100" font-size="10" fill="#1a1a1a">すべてを送り直している</text>
+  <rect x="29" y="110" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="74" y="123" text-anchor="middle" font-size="10" fill="#1a1a1a">第1・3・7章</text>
+
+  <rect x="210" y="20" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="224" y="44" font-size="14" fill="#2b6cb0" font-weight="bold">② ブロック</text>
+  <text x="224" y="68" font-size="11" fill="#1a1a1a">content は type で判定し、</text>
+  <text x="224" y="84" font-size="11" fill="#1a1a1a">そのまま返す</text>
+  <text x="224" y="100" font-size="10" fill="#1a1a1a">thinking も改変せず履歴へ</text>
+  <rect x="224" y="110" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="269" y="123" text-anchor="middle" font-size="10" fill="#1a1a1a">第3・5・7章</text>
+
+  <rect x="405" y="20" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="419" y="44" font-size="14" fill="#2b6cb0" font-weight="bold">③ 失敗</text>
+  <text x="419" y="68" font-size="11" fill="#1a1a1a">失敗は種類で扱いを分ける</text>
+  <text x="419" y="86" font-size="10" fill="#1a1a1a">429・5xx は再試行、400系は</text>
+  <text x="419" y="100" font-size="10" fill="#1a1a1a">しない。ツールは is_error</text>
+  <rect x="419" y="110" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="464" y="123" text-anchor="middle" font-size="10" fill="#1a1a1a">第3・4・6章</text>
+
+  <!-- 2段目 -->
+  <rect x="15" y="152" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="29" y="176" font-size="14" fill="#2b6cb0" font-weight="bold">④ 予算</text>
+  <text x="29" y="200" font-size="11" fill="#1a1a1a">コンテキストは予算である</text>
+  <text x="29" y="218" font-size="10" fill="#1a1a1a">上限まで使わない。子には</text>
+  <text x="29" y="232" font-size="10" fill="#1a1a1a">結果だけを返させる</text>
+  <rect x="29" y="242" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="74" y="255" text-anchor="middle" font-size="10" fill="#1a1a1a">第7・8章</text>
+
+  <rect x="210" y="152" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="224" y="176" font-size="14" fill="#2b6cb0" font-weight="bold">⑤ 権限</text>
+  <text x="224" y="200" font-size="11" fill="#1a1a1a">権限は最小にし、取り消せ</text>
+  <text x="224" y="216" font-size="11" fill="#1a1a1a">ない操作は人が確認する</text>
+  <text x="224" y="232" font-size="10" fill="#1a1a1a">渡したツールは使われ得る</text>
+  <rect x="224" y="242" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="269" y="255" text-anchor="middle" font-size="10" fill="#1a1a1a">第6・8・11章</text>
+
+  <rect x="405" y="152" width="185" height="118" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="419" y="176" font-size="14" fill="#2b6cb0" font-weight="bold">⑥ 単純さ</text>
+  <text x="419" y="200" font-size="11" fill="#1a1a1a">単純な構成から始める</text>
+  <text x="419" y="218" font-size="10" fill="#1a1a1a">単一呼び出し→ワークフロー</text>
+  <text x="419" y="232" font-size="10" fill="#1a1a1a">→エージェント→マルチ</text>
+  <rect x="419" y="242" width="90" height="18" rx="9" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1"/>
+  <text x="464" y="255" text-anchor="middle" font-size="10" fill="#1a1a1a">第9章</text>
+
+  <text x="302" y="296" text-anchor="middle" font-size="11" fill="#1a1a1a">新しい機能も「状態は？ 失敗したら？ 予算は？」とこの地図に当てはめる</text>
+</svg>

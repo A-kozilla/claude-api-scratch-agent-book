@@ -1,0 +1,40 @@
+<svg width="605" height="295" viewBox="0 0 605 295" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <!-- 逐次 -->
+  <text x="20" y="75" font-size="13" fill="#1a1a1a" font-weight="bold">逐次</text>
+  <rect x="110" y="56" width="145" height="28" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="182" y="75" text-anchor="middle" font-size="11" fill="#1a1a1a">Alpha</text>
+  <rect x="255" y="56" width="145" height="28" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="327" y="75" text-anchor="middle" font-size="11" fill="#1a1a1a">Beta</text>
+  <rect x="400" y="56" width="146" height="28" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+  <text x="473" y="75" text-anchor="middle" font-size="11" fill="#1a1a1a">Gamma</text>
+  <text x="546" y="102" text-anchor="end" font-size="11" fill="#1a1a1a" font-weight="bold">合計 19.8s</text>
+
+  <!-- 並列 -->
+  <text x="20" y="168" font-size="13" fill="#1a1a1a" font-weight="bold">並列</text>
+  <text x="20" y="184" font-size="10" fill="#666">（上限3）</text>
+  <rect x="110" y="126" width="141" height="24" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="180" y="142" text-anchor="middle" font-size="11" fill="#1a1a1a">Alpha</text>
+  <rect x="110" y="154" width="156" height="24" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="188" y="170" text-anchor="middle" font-size="11" fill="#1a1a1a">Beta</text>
+  <rect x="110" y="182" width="147" height="24" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="183" y="198" text-anchor="middle" font-size="11" fill="#1a1a1a">Gamma</text>
+  <line x1="266" y1="118" x2="266" y2="225" stroke="#2b6cb0" stroke-width="1.2" stroke-dasharray="4,3"/>
+  <text x="276" y="160" font-size="11" fill="#2b6cb0" font-weight="bold">合計 7.1s</text>
+  <text x="276" y="176" font-size="10" fill="#1a1a1a">いちばん遅い子で決まる</text>
+
+  <!-- 時間軸 -->
+  <line x1="110" y1="230" x2="555" y2="230" stroke="#333" stroke-width="1.2"/>
+  <line x1="110" y1="230" x2="110" y2="236" stroke="#333" stroke-width="1"/>
+  <line x1="220" y1="230" x2="220" y2="236" stroke="#333" stroke-width="1"/>
+  <line x1="330" y1="230" x2="330" y2="236" stroke="#333" stroke-width="1"/>
+  <line x1="440" y1="230" x2="440" y2="236" stroke="#333" stroke-width="1"/>
+  <line x1="550" y1="230" x2="550" y2="236" stroke="#333" stroke-width="1"/>
+  <text x="110" y="249" text-anchor="middle" font-size="10" fill="#1a1a1a">0s</text>
+  <text x="220" y="249" text-anchor="middle" font-size="10" fill="#1a1a1a">5s</text>
+  <text x="330" y="249" text-anchor="middle" font-size="10" fill="#1a1a1a">10s</text>
+  <text x="440" y="249" text-anchor="middle" font-size="10" fill="#1a1a1a">15s</text>
+  <text x="550" y="249" text-anchor="middle" font-size="10" fill="#1a1a1a">20s</text>
+
+  <text x="20" y="30" font-size="11" fill="#1a1a1a">3製品の調査を子エージェントに任せた場合（出力例の値）</text>
+  <text x="302" y="280" text-anchor="middle" font-size="11" fill="#666">時間は約3分の1。呼び出し回数（calls=9）・トークン・コストはほぼ同じ</text>
+</svg>

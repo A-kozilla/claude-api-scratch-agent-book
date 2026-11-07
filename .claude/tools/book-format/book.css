@@ -1,0 +1,212 @@
+/*
+  book.css — 書籍原稿の装飾テーマ（/book-format が出力先の book.css に取り込みます）
+
+  設計方針: 文章の読みやすさを最優先し、装飾は最小限にする。全ページで同じ部品・同じ配色を使う。
+  * 配色を変えたいときは、下の :root の --accent 系だけ書き換えれば全体の印象が変わります。
+  * 用紙サイズ（A4/A5）に依存する @page・余白・文字サイズは book_format.py が先頭に自動生成するため、
+    ここには書きません（--fs / --code-fs / --page-w / --m-* の変数を参照するだけ）。
+*/
+
+:root {
+  --accent: #1d4f7a;
+  --accent-soft: #eef3f8;
+  --ink: #202124;
+  --muted: #666d75;
+  --rule: #d3d8de;
+  --font-serif: "Noto Serif JP", "Yu Mincho", "YuMincho", "Hiragino Mincho ProN", "BIZ UDMincho", "MS Mincho", serif;
+  --font-sans: "Noto Sans JP", "Yu Gothic", "YuGothic", "Hiragino Kaku Gothic ProN", "BIZ UDPGothic", Meiryo, sans-serif;
+  --font-mono: "Cascadia Mono", "Consolas", "Menlo", "SF Mono", "BIZ UDGothic", "MS Gothic", monospace;
+  /* 図は1ページに収まる高さまで */
+  --fig-max-h: calc(var(--page-h) - var(--m-top) - var(--m-bottom) - 28mm);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+/* ---------- 本文（日本語組版） ---------- */
+body {
+  margin: 0;
+  color: var(--ink);
+  background: #fff;
+  font-family: var(--font-serif);
+  font-size: var(--fs);
+  line-height: var(--lh);
+  text-align: justify;
+  text-justify: inter-character;
+  /* 禁則処理: 行頭に「、。）」や小書き文字（ゃ・っ等）、行末に「（」を置かない */
+  line-break: strict;
+  word-break: normal;
+  overflow-wrap: break-word;
+  font-kerning: normal;
+  hanging-punctuation: allow-end;
+}
+p, li, td, th, figcaption, .callout-body { text-wrap: pretty; } /* 最終行に1〜2文字だけ残るのを避ける */
+/* 短い見出し・表紙は文節の途中で折り返さない（対応ブラウザのみ）。
+   本文に使うと両端揃えと組み合わさって文字間が不自然に開くため、本文には使わない */
+.cover-title, .cover-subtitle, .chapter-title, h2, h3, h4, .toc-text { word-break: auto-phrase; }
+
+/* ---------- 画面表示（用紙に見立てて中央に配置） ---------- */
+@media screen {
+  body { background: #e4e7eb; padding: 24px 0; }
+  .book {
+    width: var(--page-w);
+    max-width: calc(100% - 24px);
+    margin: 0 auto;
+    background: #fff;
+    box-shadow: 0 1px 10px rgba(0, 0, 0, .15);
+  }
+  .toc, .chapter { padding: var(--m-top) var(--m-out) var(--m-bottom) var(--m-in); }
+  .cover { min-height: calc(var(--page-h) * .8); }
+}
+@media print {
+  body { padding: 0; }
+  .book { width: auto; }
+}
+
+/* ---------- 表紙 ---------- */
+.cover {
+  page: cover;
+  break-after: page;
+  display: flex;
+  align-items: center;
+  color: #fff;
+  background: var(--accent);
+  text-align: left;
+  font-family: var(--font-sans);
+}
+@media print {
+  .cover { width: var(--page-w); height: var(--page-h); }
+}
+.cover-inner { padding: 0 12%; width: 100%; }
+.cover-rule { width: 3em; height: 3pt; margin-bottom: 2em; background: #fff; }
+.cover-title { margin: 0; font-size: 2.3em; line-height: 1.4; font-weight: 700; text-wrap: balance; }
+.cover-subtitle { margin-top: 1em; font-size: 1.1em; line-height: 1.6; opacity: .92; }
+.cover-author { margin-top: 4em; font-size: 1.05em; font-weight: 700; letter-spacing: .06em; }
+.cover-date { margin-top: .4em; font-size: .85em; opacity: .8; }
+
+/* ---------- 目次 ---------- */
+.toc { break-after: page; font-family: var(--font-sans); text-align: left; }
+.toc-title { margin: 0 0 1.2em; padding-bottom: .4em; font-size: 1.7em; font-weight: 700; border-bottom: 1.5pt solid var(--accent); }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc-ch { margin-top: 1em; font-weight: 700; break-inside: avoid; }
+.toc-ch > a { display: flex; gap: .9em; align-items: baseline; color: var(--ink); text-decoration: none; }
+.toc-label { flex: none; min-width: 3.6em; color: var(--accent); }
+.toc-sub { margin: .3em 0 0 !important; padding-left: 4.5em !important; font-weight: 400; font-size: .92em; }
+.toc-sub li { margin: .15em 0; }
+.toc-sub a { color: var(--ink); text-decoration: none; }
+.toc-no { display: inline-block; min-width: 2.4em; margin-right: .4em; color: var(--accent); font-weight: 700; }
+
+/* ---------- 章扉 ---------- */
+/* 章扉: タイトルだけの独立ページ（ヘッダー・ページ番号なし。@page chN-open は自動生成部分で定義）。
+   高さは本文の領域より少し小さくし、余分な白紙ページが出ないようにする */
+.chapter { break-before: page; }
+.chapter-head {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(var(--page-h) - var(--m-top) - var(--m-bottom) - 6mm);
+  padding-bottom: 14%;
+  text-align: left;
+  font-family: var(--font-sans);
+  break-after: page;
+}
+.chapter-label { color: var(--accent); font-size: 1.25em; font-weight: 700; letter-spacing: .12em; }
+.chapter-title {
+  margin: .5em 0 0;
+  padding-top: .6em;
+  font-size: 2.1em;
+  line-height: 1.4;
+  font-weight: 700;
+  border-top: 1.5pt solid var(--accent);
+  text-wrap: balance;
+}
+
+/* ---------- 見出し ---------- */
+h2, h3, h4 { font-family: var(--font-sans); text-align: left; break-after: avoid; text-wrap: balance; }
+h2 { margin: 2em 0 .8em; padding-bottom: .3em; font-size: 1.4em; line-height: 1.4; font-weight: 700; border-bottom: .8pt solid var(--accent); }
+h2 .secno { margin-right: .6em; color: var(--accent); }
+h3 { margin: 1.6em 0 .5em; font-size: 1.15em; line-height: 1.45; font-weight: 700; }
+h4 { margin: 1.3em 0 .4em; font-size: 1em; font-weight: 700; color: var(--accent); }
+
+/* ---------- 本文 ---------- */
+p { margin: 0 0 .85em; orphans: 2; widows: 2; }
+p.keep-next { break-after: avoid; }
+a { color: var(--accent); }
+ul, ol { margin: .5em 0 .9em; padding-left: 1.7em; }
+li { margin: .25em 0; break-inside: avoid; }
+li > p { margin-bottom: .3em; }
+blockquote { margin: 1em 0; padding: .2em 1em; color: #444b53; border-left: 2.5pt solid var(--rule); break-inside: avoid; }
+hr.rule { margin: 1.6em 0; border: 0; border-top: .6pt solid var(--rule); }
+
+code { padding: .05em .3em; font-family: var(--font-mono); font-size: .88em; background: #eff1f4; border-radius: 2px; overflow-wrap: anywhere; }
+
+/* ---------- コードブロック（読みやすさ優先: 等幅・折り返し・行間） ---------- */
+/* ページ分割: 可能な限りブロックの途中で分けない。1ページに収まらない長いものだけ、やむを得ず分割される */
+.code-block { margin: 1em 0; border: .6pt solid #c9d0d7; border-radius: 3px; overflow: hidden; background: #f8f9fa; text-align: left; break-inside: avoid; }
+.code-head { display: flex; justify-content: space-between; gap: 1em; padding: .3em .8em; color: #4a525a; font: 600 .78em var(--font-mono); background: #eceff2; border-bottom: .6pt solid #c9d0d7; }
+.code-lang { color: var(--muted); letter-spacing: .05em; }
+pre.code {
+  margin: 0;
+  padding: .7em .9em;
+  font: var(--code-fs) / 1.6 var(--font-mono);
+  white-space: pre-wrap;        /* 長い行は折り返す（はみ出して切れない） */
+  overflow-wrap: anywhere;      /* 空白で折れないときだけ文字単位で折る */
+  word-break: normal;
+  tab-size: 4;
+  orphans: 3; widows: 3;
+  background: transparent;
+}
+pre.code code { padding: 0; font: inherit; background: none; }
+
+/* ---------- 表 ---------- */
+.table-wrap { margin: 1em 0; break-inside: avoid; }
+table { width: 100%; border-collapse: collapse; font-family: var(--font-sans); font-size: .92em; line-height: 1.6; text-align: left; }
+thead { display: table-header-group; }   /* ページをまたぐときは見出し行を繰り返す */
+tr { break-inside: avoid; }
+th { padding: .4em .7em; font-weight: 700; background: #eceff2; border-bottom: 1.2pt solid var(--accent); }
+td { padding: .4em .7em; vertical-align: top; border-bottom: .5pt solid var(--rule); }
+
+/* ---------- 図 ---------- */
+.figure { margin: 1.3em 0; text-align: center; break-inside: avoid; }
+.figure-body svg, .figure-body img { max-width: 100%; max-height: var(--fig-max-h); width: auto; height: auto; }
+.figure-body img { border: .5pt solid var(--rule); }
+.figure figcaption { margin-top: .6em; color: var(--muted); font: 400 .85em / 1.5 var(--font-sans); text-align: center; }
+.fig-no { margin-right: .6em; color: var(--ink); font-weight: 700; }
+.fig-pending { margin-left: .4em; color: #b45309; }
+.figure-body.missing { padding: 2em 1em; color: #7b838c; font-family: var(--font-sans); background: #fafbfc; border: 1pt dashed #b9c1c9; }
+.ph-title { font-weight: 700; }
+.ph-desc { margin-top: .4em; font-size: .85em; line-height: 1.6; }
+.ph-note { margin-top: .4em; font-size: .8em; }
+
+/* ---------- 囲み記事（POINT / TIP / NOTE / WARNING / DANGER / COLUMN）: 左の線・薄い背景・太字ラベルだけ ---------- */
+.callout {
+  --c: #1d4f7a; --bg: #eef3f8;
+  margin: 1.1em 0;
+  padding: .6em 1em .4em;
+  background: var(--bg);
+  border-left: 3pt solid var(--c);
+  break-inside: avoid;
+  text-align: left;
+}
+.callout-title { margin-bottom: .2em; color: var(--c); font: 700 .9em / 1.4 var(--font-sans); letter-spacing: .04em; }
+.callout-body > :last-child { margin-bottom: .2em; }
+.callout-body .code-block { background: #fff; }
+.callout-point   { --c: #1d4f7a; --bg: #eef3f8; }
+.callout-tip     { --c: #1e7a4a; --bg: #eef7f1; }
+.callout-note    { --c: #5b6470; --bg: #f3f4f6; }
+.callout-warning { --c: #b45309; --bg: #fff5e8; }
+.callout-danger  { --c: #b42318; --bg: #fdeeee; }
+.callout-column  { --c: #8a6d1d; --bg: #fbf6e9; }
+
+/* ---------- 特別な節（見出しの文言で判定。どれも同じ「薄い背景 + 細い線」の部品） ---------- */
+.sec-goals, .sec-summary, .sec-column { margin: 1.6em 0; padding: 0 1.3em .9em; break-inside: avoid; }
+.sec-goals   { background: var(--accent-soft); border-top: 2pt solid var(--accent); }
+.sec-summary { border: .8pt solid var(--accent); }
+.sec-column  { background: #fbf6e9; border-top: 2pt solid #8a6d1d; }
+.sec-goals h2, .sec-summary h2, .sec-column h2 { margin: .9em 0 .5em; padding: 0; font-size: 1.1em; border: 0; }
+.sec-column h2 { color: #6f5612; }
+.sec-goals p:last-child, .sec-summary p:last-child, .sec-column p:last-child { margin-bottom: 0; }

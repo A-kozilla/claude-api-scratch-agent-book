@@ -1,0 +1,51 @@
+<svg width="605" height="400" viewBox="0 0 605 400"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f0_2_arrow" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f0_2_arrowA" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="605" height="400" fill="#ffffff"/>
+  <text x="20" y="39" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第2章</text>
+  <rect x="110" y="22" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="120" y="39" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">hello_claude.py</text>
+  <text x="432" y="39" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">最初の1往復（httpx で直接呼ぶ）</text>
+  <path d="M150 56 L150 69" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="86" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第4章</text>
+  <rect x="132" y="69" width="330" height="34" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="142" y="86" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">llm_client.py</text>
+  <text x="454" y="86" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">共通クライアント（以降の全章で使う）</text>
+  <path d="M172 103 L172 116" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="133" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第5章</text>
+  <rect x="154" y="116" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="164" y="133" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">agent.py</text>
+  <text x="476" y="133" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">エージェンティックループ</text>
+  <path d="M194 150 L194 163" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="180" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第6章</text>
+  <rect x="176" y="163" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="186" y="180" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">tool_registry.py</text>
+  <text x="498" y="180" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">ツールレジストリ・並列実行</text>
+  <path d="M216 197 L216 210" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="227" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第7章</text>
+  <rect x="198" y="210" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="208" y="227" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">context.py</text>
+  <text x="520" y="227" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">トークン計測・履歴圧縮</text>
+  <path d="M238 244 L238 257" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="274" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第8章</text>
+  <rect x="220" y="257" width="330" height="34" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="230" y="274" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">multi_agent.py</text>
+  <text x="542" y="274" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">マルチエージェント</text>
+  <path d="M260 291 L260 304" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f0_2_arrow)"/>
+  <text x="20" y="321" text-anchor="start" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">第10章</text>
+  <rect x="242" y="304" width="330" height="34" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="252" y="321" text-anchor="start" dominant-baseline="central" font-size="12" font-family="Consolas,monospace" fill="#1a1a1a" font-weight="bold">report_agent</text>
+  <text x="564" y="321" text-anchor="end" dominant-baseline="central" font-size="11" fill="#1a1a1a">調査レポート自動作成（完成）</text>
+  <text x="20" y="362" text-anchor="start" dominant-baseline="central" font-size="11" fill="#555">※ 各章のファイルは前の章の成果物の上に積み上がる（土台は第4章の llm_client.py）</text>
+  <text x="302" y="386" text-anchor="middle" font-size="11" fill="#666">図0.2 コードベースが育っていく流れ</text>
+</svg>

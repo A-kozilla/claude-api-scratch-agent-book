@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="ja" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="genspark-artifact-type" content="paged_book" />
+  <title>いちばんやさしいWebプログラミングの教科書（A4縦テンプレート）</title>
+  
+  <!-- paged.js Polyfill & Viewer Assets -->
+  <script src="/api/docs_agent/paged_assets/paged.polyfill.js"></script>
+  <link rel="stylesheet" href="/api/docs_agent/paged_assets/paged_book_viewer.css" />
+  <script src="/api/docs_agent/paged_assets/paged_book_viewer.js" defer></script>
+
+  <!-- 外部CSSスタイルシート読み込み -->
+  <link rel="stylesheet" href="style-a4.css" />
+</head>
+<body>
+
+  <!-- ==========================================================================
+       1. 【表紙レイアウト】 (Cover Page)
+       ========================================================================== -->
+  <section class="cover-page">
+    <div class="cover-top">
+      <div class="cover-series-badge sans">ゼロからわかる実践シリーズ 01</div>
+      <div class="cover-subtitle sans">イラストと図解でスッキリ学べる！</div>
+      <h1 class="cover-main-title sans">
+        いちばんやさしい<br />
+        <span class="highlight">Webプログラミング</span><br />
+        の教科書
+      </h1>
+      <p class="sans cover-desc no-indent">
+        HTML・CSSからJavaScript、サーバーの基本まで<br />
+        挫折しない確かな第一歩をこの1冊で。
+      </p>
+    </div>
+
+    <div class="cover-middle sans">
+      <div class="cover-feature-item">✔ 完全初心者対応！ 専門用語を図解でスッキリ理解</div>
+      <div class="cover-feature-item">✔ 「POINT」「NOTE」「WARNING」で重要度がひと目でわかる</div>
+      <div class="cover-feature-item">✔ 手を動かしながら学べる実践サンプルコード付き</div>
+    </div>
+
+    <div class="cover-bottom sans">
+      <div class="cover-author">
+        <span style="font-size:8.5pt; color:#cbd5e0; display:block;">著者</span>
+        技術出版編集部 著
+      </div>
+      <div class="cover-publisher">TECH PRESS BOOKS</div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       2. 【目次レイアウト】 (TOC Page)
+       ========================================================================== -->
+  <section class="toc-section">
+    <div class="toc-header sans">
+      <div class="toc-main-title">目次</div>
+      <span style="font-size:10pt; color:#a0aec0; font-weight:700;">CONTENTS</span>
+    </div>
+
+    <!-- 第1章 目次ブロック -->
+    <div class="toc-chapter-block sans">
+      <div class="toc-chap-row">
+        <span class="toc-chap-num">第 1 章</span>
+        <span class="toc-chap-name">Webのしくみと基本概念</span>
+        <span class="toc-chap-page">P. 3</span>
+      </div>
+      <div class="toc-sec-list">
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">1-1</span>
+          <span>Webブラウザとサーバーの関係を理解しよう</span>
+          <span class="toc-sec-page">P. 4</span>
+        </div>
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">1-2</span>
+          <span>HTML / CSS / JavaScriptの役割分担</span>
+          <span class="toc-sec-page">P. 4</span>
+        </div>
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">1-3</span>
+          <span>開発環境（VS Code）をセットアップする</span>
+          <span class="toc-sec-page">P. 6</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 第2章 目次ブロック -->
+    <div class="toc-chapter-block sans">
+      <div class="toc-chap-row">
+        <span class="toc-chap-num">第 2 章</span>
+        <span class="toc-chap-name">HTMLで文書の構造を作ろう</span>
+        <span class="toc-chap-page">P. 7</span>
+      </div>
+      <div class="toc-sec-list">
+        <div class="toc-sec-item">
+          <span class="toc-sec-num">2-1</span>
+          <span>タグの基本構造と入れ子のルール</span>
+          <span class="toc-sec-page">P. 8</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       3. 【章トビラ用レイアウト】 (Chapter Divider Page)
+       ========================================================================== -->
+  <section class="chapter-divider-page">
+    <div class="divider-header sans">
+      <div>
+        <span class="divider-badge-chap">第 1 章</span>
+        <span class="divider-badge-en">CHAPTER 01 · INTRODUCTION</span>
+      </div>
+      <h1 class="divider-title">Webのしくみと基本概念</h1>
+      <div style="margin-top:6px;">
+        <span class="concept-tag">#クライアント</span>
+        <span class="concept-tag">#Webサーバー</span>
+        <span class="concept-tag">#HTTP通信</span>
+        <span class="concept-tag">#HTML/CSS/JS</span>
+      </div>
+    </div>
+
+    <!-- この章の概要リード文 -->
+    <div class="divider-lead-box sans">
+      <span class="lead-box-title">● この章の概要</span>
+      <p class="no-indent" style="font-size:9pt; line-height:1.7; color:#2d3748;">
+        私たちが普段何気なく使っているWebサイトは、どのような仕組みで画面に表示されているのでしょうか？
+        第1章では、プログラミングの実践に入る前に知っておきたい「ブラウザとサーバーの通信」や「フロントエンド3大言語の役割分担」など、Web開発の土台となる重要基本ルールを図解で体系的に学びます。
+      </p>
+    </div>
+
+    <!-- 学習ゴール -->
+    <div class="divider-goals-card sans">
+      <span class="goals-card-title">🎯 この章の学習ゴール</span>
+      <div class="goal-item"><span class="goal-check">✔</span>WebブラウザがWebページを表示する全体フロー（リクエスト・レスポンス）を説明できる</div>
+      <div class="goal-item"><span class="goal-check">✔</span>フロントエンドを構成する主要な3言語（HTML・CSS・JS）の役割の違いを理解する</div>
+      <div class="goal-item"><span class="goal-check">✔</span>自分のPCに快適なコード開発環境（VS Code）を正しくセットアップできる</div>
+    </div>
+
+    <!-- 導入対話 -->
+    <div class="dialogue-box sans">
+      <div style="margin-bottom:5px;">
+        <span class="avatar-badge avatar-student">生徒</span>
+        先生、Webサイトを見るのって、自分のPCの中にファイルを保存しているわけではないんですよね？
+      </div>
+      <div>
+        <span class="avatar-badge avatar-teacher">先生</span>
+        その通り！世界中にある「サーバー」という倉庫にファイルが置いてあって、ブラウザが「見せて！」とお願いして送ってもらっているんだよ。次ページから詳しく見ていこう！
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==========================================================================
+       4. 【本文用レイアウト】 (Body Pages)
+       ========================================================================== -->
+  <section class="body-section">
+
+    <!-- 節見出し H2 (1-1) -->
+    <h2 class="sec-h2 sans"><span class="sec-h2-badge">1-1</span>Webブラウザとサーバーの関係を理解しよう</h2>
+    <p>
+      Webプログラミングの世界へようこそ！ 私たちのスマートフォンやパソコンでWebサイトを見るとき、裏側では「<strong>クライアント（Webブラウザ）</strong>」と「<strong>サーバー</strong>」と呼ばれるコンピュータが常に会話（通信）を行っています。
+    </p>
+    <p>
+      この「リクエスト（要求）」と「レスポンス（応答）」のキャッチボールこそが、Webの基本となる仕組みです。
+    </p>
+
+    <!-- 図解配置スペース -->
+    <figure class="doc-figure">
+      <div class="figure-frame">
+        <!-- SVGまたは画像を配置 -->
+        <svg viewBox="0 0 650 140" style="width:100%; height:auto; max-height:140px; display:block;">
+          <rect x="20" y="20" width="140" height="90" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2" />
+          <text x="90" y="55" font-family="sans-serif" font-size="12" font-weight="bold" fill="#2b6cb0" text-anchor="middle">クライアント</text>
+          <text x="90" y="75" font-family="sans-serif" font-size="9.5" fill="#4a5568" text-anchor="middle">(PC / スマホ / ブラウザ)</text>
+
+          <path d="M 170 45 L 470 45" stroke="#3182ce" stroke-width="2" />
+          <polygon points="475,45 465,40 465,50" fill="#3182ce" />
+          <text x="320" y="38" font-family="sans-serif" font-size="10" font-weight="bold" fill="#2b6cb0" text-anchor="middle">① リクエスト（「ページちょうだい！」）</text>
+
+          <path d="M 470 85 L 170 85" stroke="#38a169" stroke-width="2" stroke-dasharray="4,3" />
+          <polygon points="165,85 175,80 175,90" fill="#38a169" />
+          <text x="320" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#22543d" text-anchor="middle">② レスポンス（「HTMLデータを返すよ」）</text>
+
+          <rect x="480" y="20" width="150" height="90" rx="8" fill="#f0fff4" stroke="#38a169" stroke-width="2" />
+          <text x="555" y="55" font-family="sans-serif" font-size="12" font-weight="bold" fill="#22543d" text-anchor="middle">Webサーバー</text>
+          <text x="555" y="75" font-family="sans-serif" font-size="9.5" fill="#4a5568" text-anchor="middle">(データを保存・配信するマシン)</text>
+        </svg>
+      </div>
+      <figcaption class="figure-caption sans">
+        <span class="caption-num">図 1-1:</span>ブラウザとWebサーバー間のリクエスト・レスポンスの基本構造
+      </figcaption>
+    </figure>
+
+    <!-- 💡 POINT ボックス -->
+    <div class="doc-box box-point sans">
+      <span class="doc-box-title"><span class="box-tag">POINT</span>ここだけは覚える！ Web通信のキーワード</span>
+      <p class="no-indent">
+        <strong>クライアント（Client）：</strong> サービスを利用する側。Google ChromeやSafariなどのWebブラウザのこと。<br />
+        <strong>サーバー（Server）：</strong> サービスを提供する側。WebサイトのHTMLデータや画像、動画などを保管している専用コンピュータ。
+      </p>
+    </div>
+
+    <!-- 節見出し H2 (1-2) -->
+    <h2 class="sec-h2 sans"><span class="sec-h2-badge">1-2</span>HTML / CSS / JavaScriptの役割分担</h2>
+    <p>
+      Webサイトの見た目を作る技術は、主に「HTML」「CSS」「JavaScript」の3つで成り立っています。建物を建てることに例えると、非常に直感的に理解できます。
+    </p>
+
+    <!-- 比較テーブル -->
+    <table class="tech-table sans">
+      <thead>
+        <tr>
+          <th style="width: 20%">言語</th>
+          <th style="width: 35%">役割</th>
+          <th style="width: 45%">建物に例えると…</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>HTML</strong></td>
+          <td>骨組み・構造・文章</td>
+          <td>柱や床、壁などの基本構造そのもの</td>
+        </tr>
+        <tr>
+          <td><strong>CSS</strong></td>
+          <td>装飾・デザイン・配置</td>
+          <td>壁紙、塗装、インテリアなどの装飾</td>
+        </tr>
+        <tr>
+          <td><strong>JavaScript</strong></td>
+          <td>動き・対話機能</td>
+          <td>自動ドアやエレベーター、照明のスイッチ</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- 小見出し H3 & ステップ解説 -->
+    <h3 class="sub-h3 sans">コードを書いて動かすまでの3ステップ</h3>
+    <div class="step-card sans">
+      <span class="step-badge">STEP 1</span><strong>HTMLファイルを作成して基本構造を記述する</strong>
+      <div style="font-size:8.3pt; color:#4a5568; margin-top:2px;">テキストエディタを開き、拡張子「<code>.html</code>」で保存します。</div>
+    </div>
+    <div class="step-card sans">
+      <span class="step-badge">STEP 2</span><strong>CSSで文字の色やフォントサイズを指定する</strong>
+      <div style="font-size:8.3pt; color:#4a5568; margin-top:2px;">デザインを指定して、見やすく美しいレイアウトに仕上げます。</div>
+    </div>
+
+    <!-- コードブロック -->
+    <div class="code-container">
+      <div class="code-header sans"><span class="file-tag">HTML</span> index.html (シンプルなWebページの例)</div>
+      <pre class="code-body"><code>&lt;!DOCTYPE html&gt;
+&lt;html lang="ja"&gt;
+&lt;head&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;title&gt;はじめてのWebページ&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;h1&gt;こんにちは、世界！&lt;/h1&gt;
+  &lt;p&gt;Webの学習をここからスタートしましょう。&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+    </div>
+
+    <!-- 📝 NOTE ボックス -->
+    <div class="doc-box box-note sans">
+      <span class="doc-box-title"><span class="box-tag">NOTE</span>HTMLファイルはブラウザにドラッグ＆ドロップするだけで開ける！</span>
+      <p class="no-indent">
+        作成した「<code>.html</code>」ファイルは、特別なサーバーを用意しなくても、お使いのブラウザアイコンの上にドラッグ＆ドロップするだけですぐに表示確認ができます。
+      </p>
+    </div>
+
+    <!-- ⚠️ WARNING ボックス -->
+    <div class="doc-box box-warning sans">
+      <span class="doc-box-title"><span class="box-tag">WARNING</span>全角スペースとファイル名の大文字・小文字に注意！</span>
+      <p class="no-indent">
+        プログラミングで最も多い初心者のつまずきポイントは「全角スペース」の混入です。コード内の空白は必ず半角スペースを使いましょう。
+      </p>
+    </div>
+
+    <!-- 🔍 COLUMN ボックス -->
+    <div class="box-column sans">
+      <span class="doc-box-title"><span class="box-tag">COLUMN</span>開発者ツール（F12）を使えば、どんなWebサイトの裏側も見られる？</span>
+      <p class="no-indent">
+        閲覧しているWebサイトでキーボードの「F12」キーを押すと「デベロッパーツール」が開き、そのサイトがどんなHTMLとCSSで作られているかをリアルタイムで確認できます。
+      </p>
+    </div>
+
+    <!-- 節見出し H2 (1-3) -->
+    <h2 class="sec-h2 sans"><span class="sec-h2-badge">1-3</span>開発環境（VS Code）をセットアップする</h2>
+    <p>
+      本格的にプログラミングを始めるために、世界中の開発者に最も支持されている無料の高機能エディタ「<strong>Visual Studio Code（VS Code）</strong>」を導入しましょう。
+    </p>
+
+    <!-- スクリーンショット・UI画面プレビュー枠 -->
+    <figure class="doc-figure">
+      <div class="figure-frame" style="background: #1e1e1e; padding: 12px; border-radius: 8px; color: #d4d4d4;">
+        <div class="sans" style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #333; padding-bottom: 6px; margin-bottom: 10px; font-size: 8.5pt;">
+          <span style="color: #9cdcfe;">● ● ● &nbsp; Visual Studio Code - index.html</span>
+          <span style="color: #6a9955;">UTF-8 / HTML</span>
+        </div>
+        <div style="font-family: Consolas, 'Courier New', monospace; font-size: 8.8pt; line-height: 1.6; color: #d4d4d4; text-align: left;">
+          <span style="color: #858585;">1</span> &lt;!DOCTYPE html&gt;<br>
+          <span style="color: #858585;">2</span> &lt;<span style="color: #569cd6;">html</span> <span style="color: #9cdcfe;">lang</span>=<span style="color: #ce9178;">"ja"</span>&gt;<br>
+          <span style="color: #858585;">3</span> &lt;<span style="color: #569cd6;">body</span>&gt;<br>
+          <span style="color: #858585;">4</span> &nbsp;&nbsp;&lt;<span style="color: #569cd6;">h1</span>&gt;<span style="color: #dcdcaa;">Hello World</span>&lt;/<span style="color: #569cd6;">h1</span>&gt;<br>
+          <span style="color: #858585;">5</span> &lt;/<span style="color: #569cd6;">body</span>&gt;<br>
+          <span style="color: #858585;">6</span> &lt;/<span style="color: #569cd6;">html</span>&gt;
+        </div>
+      </div>
+      <figcaption class="figure-caption sans">
+        <span class="caption-num">図 1-2:</span>VS CodeでHTMLファイルを開いた編集画面イメージ
+      </figcaption>
+    </figure>
+
+  </section>
+
+</body>
+</html>

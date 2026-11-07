@@ -1,0 +1,61 @@
+<svg width="605" height="370" viewBox="0 0 605 370"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f11_1_arr11_1" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f11_1_arr11_1b" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <!-- 攻撃者 -->
+  <rect x="20" y="34" width="130" height="56" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="85" y="57" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">攻撃者</text>
+  <text x="85" y="77" text-anchor="middle" font-size="10" fill="#1a1a1a">エージェントの外にいる</text>
+
+  <!-- Webページ -->
+  <rect x="230" y="24" width="150" height="76" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="305" y="44" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">Webページ</text>
+  <rect x="244" y="54" width="122" height="36" rx="4" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1" stroke-dasharray="4,3"/>
+  <text x="305" y="69" text-anchor="middle" font-size="10" fill="#2b6cb0" font-weight="bold">隠れた指示</text>
+  <text x="305" y="83" text-anchor="middle" font-size="9" fill="#1a1a1a">（人間には見えない文字）</text>
+
+  <path d="M150 62 L228 62" stroke="#333" stroke-width="1.3" marker-end="url(#f11_1_arr11_1)"/>
+  <text x="189" y="54" text-anchor="middle" font-size="10" fill="#1a1a1a">① 仕込む</text>
+
+  <!-- 利用者 -->
+  <rect x="20" y="200" width="130" height="56" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="85" y="222" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">利用者（善意）</text>
+  <text x="85" y="243" text-anchor="middle" font-size="10" fill="#1a1a1a">「このページを要約して」</text>
+
+  <!-- エージェント -->
+  <rect x="230" y="190" width="150" height="76" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="305" y="220" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">エージェント</text>
+  <text x="305" y="242" text-anchor="middle" font-size="10" fill="#1a1a1a">LLM＋ツール＋ループ</text>
+
+  <path d="M150 228 L228 228" stroke="#333" stroke-width="1.3" marker-end="url(#f11_1_arr11_1)"/>
+  <text x="189" y="220" text-anchor="middle" font-size="10" fill="#1a1a1a">② 依頼</text>
+
+  <!-- 読み込みと混入 -->
+  <path d="M282 190 L282 102" stroke="#333" stroke-width="1.3" marker-end="url(#f11_1_arr11_1)"/>
+  <text x="275" y="150" text-anchor="end" font-size="10" fill="#1a1a1a">③ ツールで読む</text>
+  <path d="M328 102 L328 188" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#f11_1_arr11_1b)"/>
+  <text x="335" y="143" font-size="10" fill="#2b6cb0" font-weight="bold">④ 指示が文脈に</text>
+  <text x="335" y="157" font-size="10" fill="#2b6cb0" font-weight="bold">データとして混入</text>
+
+  <!-- 被害 -->
+  <rect x="445" y="190" width="140" height="76" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="515" y="212" text-anchor="middle" font-size="13" fill="#1a1a1a" font-weight="bold">意図しない動作</text>
+  <text x="515" y="233" text-anchor="middle" font-size="10" fill="#1a1a1a">レポートへの誤情報</text>
+  <text x="515" y="252" text-anchor="middle" font-size="10" fill="#1a1a1a">データの持ち出し</text>
+
+  <path d="M380 228 L443 228" stroke="#2b6cb0" stroke-width="1.5" marker-end="url(#f11_1_arr11_1b)"/>
+  <text x="412" y="220" text-anchor="middle" font-size="10" fill="#2b6cb0" font-weight="bold">⑤ 実行</text>
+
+  <text x="302" y="300" text-anchor="middle" font-size="11" fill="#1a1a1a">攻撃者はエージェントに直接触れず、読まれそうな場所に文章を置くだけ</text>
+  <text x="302" y="320" text-anchor="middle" font-size="11" fill="#2b6cb0" font-weight="bold">被害の大きさを決めるのは「エージェントが何をできるか」</text>
+</svg>

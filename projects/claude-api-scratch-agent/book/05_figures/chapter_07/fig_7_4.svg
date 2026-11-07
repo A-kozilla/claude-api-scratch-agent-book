@@ -1,0 +1,56 @@
+<svg width="605" height="300" viewBox="0 0 605 300" xmlns="http://www.w3.org/2000/svg" font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f7_4_ar74" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+
+  <text x="20" y="24" font-size="11" fill="#1a1a1a">例：<tspan font-family="Consolas,monospace">keep_last=2</tspan> で切り詰める場合</text>
+
+  <!-- ペアの括り -->
+  <path d="M120 98 L120 88 L294 88 L294 98" fill="none" stroke="#333" stroke-width="1"/>
+  <text x="207" y="82" text-anchor="middle" font-size="11" fill="#1a1a1a">ペア（t1）</text>
+  <path d="M312 98 L312 88 L486 88 L486 98" fill="none" stroke="#333" stroke-width="1"/>
+  <text x="450" y="82" text-anchor="middle" font-size="11" fill="#1a1a1a">ペア（t2）</text>
+
+  <!-- 6件の履歴 -->
+  <rect x="20" y="110" width="86" height="50" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="63" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[0] user</text>
+  <text x="63" y="147" text-anchor="middle" font-size="11" fill="#1a1a1a">依頼</text>
+
+  <rect x="116" y="110" width="86" height="50" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="159" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[1] assistant</text>
+  <text x="159" y="147" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_use t1</text>
+
+  <rect x="212" y="110" width="86" height="50" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="255" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[2] user</text>
+  <text x="255" y="147" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_result t1</text>
+
+  <rect x="308" y="110" width="86" height="50" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="351" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[3] assistant</text>
+  <text x="351" y="147" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_use t2</text>
+
+  <rect x="404" y="110" width="86" height="50" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="447" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[4] user</text>
+  <text x="447" y="147" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">tool_result t2</text>
+
+  <rect x="500" y="110" width="86" height="50" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.2"/>
+  <text x="543" y="130" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">[5] assistant</text>
+  <text x="543" y="147" text-anchor="middle" font-size="10" fill="#1a1a1a" font-family="Consolas,monospace">text 完了</text>
+
+  <!-- 危険な切断位置 -->
+  <line x1="399" y1="62" x2="399" y2="182" stroke="#333" stroke-width="1.6" stroke-dasharray="5,4"/>
+  <text x="420" y="198" text-anchor="middle" font-size="11" fill="#1a1a1a" font-weight="bold">✕ 候補の位置で切ると</text>
+  <text x="420" y="214" text-anchor="middle" font-size="11" fill="#1a1a1a">tool_result だけが残り 400 エラー</text>
+
+  <!-- 安全な切断位置 -->
+  <line x1="303" y1="62" x2="303" y2="230" stroke="#2b6cb0" stroke-width="2.4"/>
+  <text x="303" y="246" text-anchor="middle" font-size="11" fill="#2b6cb0" font-weight="bold">○ ここで切ればペアごと残る</text>
+  <text x="303" y="262" text-anchor="middle" font-size="11" fill="#1a1a1a">先頭が assistant なので目印の user を補う</text>
+
+  <!-- 前へずらす -->
+  <path d="M395 56 L308 56" stroke="#2b6cb0" stroke-width="1.4" marker-end="url(#f7_4_ar74)"/>
+  <text x="351" y="48" text-anchor="middle" font-size="10" fill="#2b6cb0">前へずらす（<tspan font-family="Consolas,monospace">_safe_cut_index</tspan>）</text>
+
+  <text x="302" y="290" text-anchor="middle" font-size="11" fill="#666">残す部分の先頭を tool_result の user にしない／履歴の先頭は必ず user</text>
+</svg>

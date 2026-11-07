@@ -1,0 +1,58 @@
+<svg width="605" height="450" viewBox="0 0 605 450"
+     xmlns="http://www.w3.org/2000/svg"
+     font-family="'Noto Sans JP',sans-serif">
+  <defs>
+    <marker id="f2_8_arrow" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#333" stroke-width="1.5"/>
+    </marker>
+    <marker id="f2_8_arrowA" viewBox="0 0 10 10" refX="8" refY="5"
+            markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M2 1L8 5L2 9" fill="none" stroke="#2b6cb0" stroke-width="1.5"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="605" height="450" fill="#ffffff"/>
+  <rect x="20" y="20" width="320" height="42" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="180.0" y="32.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">① キーを読み込む</text>
+  <text x="180.0" y="49.5" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#1a1a1a">load_dotenv() → os.environ.get()</text>
+  <path d="M180 62 L180 76" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="76" width="320" height="42" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="180.0" y="88.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">② ヘッダーとボディを組み立てる</text>
+  <text x="180.0" y="105.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">必須ヘッダー3つ ＋ model・max_tokens・messages</text>
+  <path d="M180 118 L180 132" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="132" width="320" height="42" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="180.0" y="144.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">③ 送信する</text>
+  <text x="180.0" y="161.5" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#1a1a1a">httpx.post() → raise_for_status()</text>
+  <path d="M180 174 L180 188" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="188" width="320" height="42" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="180.0" y="200.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">④ JSON を辞書に変換</text>
+  <text x="180.0" y="217.5" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#1a1a1a">data = response.json()</text>
+  <path d="M180 230 L180 244" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="244" width="320" height="42" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="180.0" y="256.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">⑤ stop_reason を確認</text>
+  <text x="180.0" y="273.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">end_turn 以外なら注意を表示</text>
+  <path d="M180 286 L180 300" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="300" width="320" height="42" rx="6" fill="#e8f0fa" stroke="#2b6cb0" stroke-width="1.3"/>
+  <text x="180.0" y="312.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">⑥ text ブロックを抽出して表示</text>
+  <text x="180.0" y="329.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">type が "text" のものだけ連結</text>
+  <path d="M180 342 L180 356" fill="none" stroke="#333" stroke-width="1.3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="20" y="356" width="320" height="42" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
+  <text x="180.0" y="368.5" text-anchor="middle" dominant-baseline="central" font-size="12" fill="#1a1a1a" font-weight="bold">⑦ 使用トークン数を表示</text>
+  <text x="180.0" y="385.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">usage の input / output</text>
+  <path d="M340 41 L380 41" fill="none" stroke="#333" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="380" y="22" width="205" height="38" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="482.5" y="33.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">キーがない</text>
+  <text x="482.5" y="48.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">→ 説明を出して終了（sys.exit）</text>
+  <path d="M340 153 L380 153" fill="none" stroke="#333" stroke-width="1.3" stroke-dasharray="5 3" marker-end="url(#f2_8_arrow)"/>
+  <rect x="380" y="118" width="205" height="70" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="482.5" y="130.5" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#1a1a1a">HTTPStatusError（4xx・5xx）</text>
+  <text x="482.5" y="145.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">→ エラーJSON・request-id を表示</text>
+  <text x="482.5" y="160.5" text-anchor="middle" dominant-baseline="central" font-size="11" font-family="Consolas,monospace" fill="#1a1a1a">RequestError</text>
+  <text x="482.5" y="175.5" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">→ 通信エラーとして終了</text>
+  <rect x="380" y="252" width="205" height="66" rx="6" fill="#ffffff" stroke="#333" stroke-width="1.2"/>
+  <text x="482.5" y="269.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">思考（thinking）ブロックが</text>
+  <text x="482.5" y="285.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a">先頭に来ることがあるので</text>
+  <text x="482.5" y="301.0" text-anchor="middle" dominant-baseline="central" font-size="11" fill="#1a1a1a" font-weight="bold">content[0] と決め打ちしない</text>
+  <path d="M380 300 L340 300" fill="none" stroke="#333" stroke-width="1.3" stroke-dasharray="5 3"/>
+  <text x="302" y="436" text-anchor="middle" font-size="11" fill="#666">図2.8 hello_claude.pyの処理の流れ</text>
+</svg>
