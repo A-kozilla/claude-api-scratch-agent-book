@@ -1,19 +1,34 @@
 # ファクトチェックレポート
 
 対象ファイル: projects/claude-api-scratch-agent/book/03_manuscripts/chapter_06.md
-検証日: 2026-11-07
-検証クレーム数: 39件
-  ✅ 検証済み: 31件
-  ⚠️ 要確認: 6件
-  ❌ 要修正: 2件（原稿修正済み）
+検証日: 2026-11-08
+検証クレーム数: 46件
+  ✅ 検証済み: 43件
+  ⚠️ 要確認: 3件
+  ❌ 要修正: 0件
 
-主な一次情報（2026-11-07 取得）:
+主な一次情報（2026-11-08 取得）:
+- Define tools（ベストプラクティス・tool_choice）: https://platform.claude.com/docs/en/agents-and-tools/tool-use/define-tools.md
+- Server tools（pause_turn・container・混在・ZDR／allowed_callers）: https://platform.claude.com/docs/en/agents-and-tools/tool-use/server-tools.md
 - Web search tool: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-search-tool.md
-- Web fetch tool: https://platform.claude.com/docs/en/agents-and-tools/tool-use/web-fetch-tool.md
-- Server tools（pause_turn・混在・ZDR と allowed_callers）: https://platform.claude.com/docs/en/agents-and-tools/tool-use/server-tools.md
-- Define tools / Handle tool calls / Parallel tool use / Strict tool use: https://platform.claude.com/docs/en/agents-and-tools/tool-use/
+- Handle tool calls / Parallel tool use / Strict tool use: https://platform.claude.com/docs/en/agents-and-tools/tool-use/
 - Structured outputs: https://platform.claude.com/docs/en/build-with-claude/structured-outputs.md
-- Pricing / Errors: https://platform.claude.com/docs/en/about-claude/pricing.md ・ api/errors.md
+- Thinking / Effort / Errors: build-with-claude/thinking.md ・ build-with-claude/effort.md ・ api/errors.md
+- Prompting best practices: https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/claude-prompting-best-practices.md
+- Python: docs.python.org（whatsnew 3.13、concurrent.futures、pathlib）
+
+## 前回（2026-11-07）の指摘の反映状況
+
+| 前回の指摘 | 状態 |
+|---|---|
+| ❌1 ツール名の長さ（本文・正規表現・メッセージ） | ✅ 42・332〜333・373行すべて `1〜128` |
+| ❌2 「最新版は `_20260209`」 | ✅ 174行で修正済み |
+| ⚠️1 動的フィルタリングと `pause_turn` の container | ✅ `allowed_callers: ["direct"]`（188行）、container の引き継ぎ（210〜211行）、再開回数の上限、NOTE（251行） |
+| ⚠️2 「原理的に起きない」 | ✅ 1063行で refusal／max_tokens を除くと限定し、1154行に補足あり |
+| ⚠️3 strict と `required` | ✅ 1162行（任意の引数はスキーマ全体で24個まで） |
+| ⚠️4 比較表 | ✅ 262〜263行 |
+| ⚠️5 `max_uses` | ✅ 187行のコメント |
+| ⚠️6 Haiku 5.5 と `max_tokens=2000` | ✅ `"effort": "low"` を追加し、1154行で説明 |
 
 ---
 
@@ -22,166 +37,180 @@
 ### 1. Claude がツールについて見えるのは `name`・`description`・`input_schema`（34行）
 **検証結果**: Define tools のツール定義パラメータ。
 
-### 2. description は詳しく、目安は3〜4文以上（62行）
-**検証結果**: Define tools「Aim for at least 3–4 sentences for each tool description」。
+### 2. ツール名は英数字・`_`・`-` の1〜128文字。合わない名前は 400（42・333・430行）
+**検証結果**: Define tools「Must match the regex `^[a-zA-Z0-9_-]{1,128}$`.」
 
-### 3. サーバーツールは Anthropic のインフラで実行、代表は `web_search` と `web_fetch`（168行）
-**検証結果**: Tool use 概要「Server tools (such as `web_search`, `web_fetch`, `code_execution`, and `tool_search`) run on Anthropic's infrastructure」。
+### 3. description は詳しく、目安は3〜4文以上（62行）
+**検証結果**: Define tools「Aim for at least 3–4 sentences」「by far the most important factor」。
 
-### 4. 応答に `server_tool_use` と結果ブロック（Web検索は `web_search_tool_result`）が入り、`tool_result` は不要（170行）
-**検証結果**: Web search「Response」の例。
+### 4. サービスを表す接頭辞で名前空間を分ける（46行）
+**検証結果**: Define tools「Use meaningful namespacing in tool names … prefix names with the service (for example, `github_list_prs`)」。
 
-### 5. `tools` に `type` と `name` を書き、`input_schema` は書かない。名前は `web_search`（174・183〜188行）
-**検証結果**: Web search「Tool definition」。
+### 5. 関連する操作を `action` 引数で1つのツールにまとめる（PR の作成・レビュー・マージの例）（136行）
+**検証結果**: Define tools「Rather than creating a separate tool for every action (`create_pr`, `review_pr`, `merge_pr`), group them into a single tool with an `action` parameter.」
 
-### 6. `text` ブロックが引用（citations）単位で分かれる（233行）
-**検証結果**: Web search の応答例で `text` が citations ごとに分割されている。
+### 6. 戻り値は意味の分かる値で、必要十分にする（142〜144行）
+**検証結果**: Define tools「Return semantic, stable identifiers … include only the fields Claude needs … Bloated responses waste context」。
 
-### 7. `usage.server_tool_use.web_search_requests` に検索回数（230・233行）
-**検証結果**: Web search「Usage and pricing」の `usage` 例。
+### 7. 強すぎる指示は過剰な呼び出しを招くので「〜のときに使ってください」程度でよい（118行）
+**検証結果**: Prompting best practices「these models might now overtrigger. The fix is to soften any aggressive language … "CRITICAL: You MUST use this tool when..." → "Use this tool when..."」。
 
-### 8. 検索結果は入力トークンとして課金され、検索回数の従量料金が別にかかる（235行）
-**検証結果**: Pricing / Web search「$10 USD per 1,000 searches, plus standard token costs … Web search results … are counted as input tokens」。失敗した検索は課金されない。
+### 8. サーバーツールは Anthropic のインフラで実行され、代表は `web_search`・`web_fetch`（168行）
+**検証結果**: Tool use 概要「Server tools (such as `web_search`, `web_fetch`, …) run on Anthropic's infrastructure」。
 
-### 9. `pause_turn` はサーバー側ループが長くなって一時停止したことを示す（239行）
+### 9. 応答に `server_tool_use` と結果ブロック（`web_search_tool_result`）が入り、`tool_result` は不要（170行）
+**検証結果**: Server tools「The server_tool_use block」と Web search の Response の例。
+
+### 10. `tools` には `type` と `name` を書き、`input_schema` は書かない。名前は `web_search`（174・183〜186行）
+**検証結果**: Web search の Tool definition。
+
+### 11. `_20260209` は動的フィルタリング対応で、より新しい `_20260318` もある（174行）
+**検証結果**: Web search「Three versions … `web_search_20260209`: adds dynamic filtering / `web_search_20260318`: adds response inclusion」。
+
+### 12. `max_uses` は1ターン内の上限で、再開をまたいで数える（187行）
+**検証結果**: Web search「limits the number of searches in a single turn … Searches from earlier requests in that turn count against the limit, unless Claude ran them from code execution」。デモは `direct` なので、再開をまたいで数えられる。
+
+### 13. `allowed_callers: ["direct"]` で動的フィルタリングを使わず直接検索する。既定ではコード実行のブロックが加わる（188・251行）
+**検証結果**: Web search「`allowed_callers` field defaults to `["code_execution_20260120"]` … To call web search directly, without dynamic filtering, set `allowed_callers: ["direct"]`」。
+
+### 14. `text` ブロックが引用（citations）の単位で分かれる（237行）
+**検証結果**: Web search の Response の例。
+
+### 15. `usage.server_tool_use.web_search_requests` に検索の回数が入る（234・237行）
+**検証結果**: Web search「Usage and pricing」の usage の例。
+
+### 16. 検索結果は入力トークンとして課金され、検索回数の従量料金が別にかかる（239行）
+**検証結果**: Web search「$10 USD per 1,000 searches, plus standard token costs … results … are counted as input tokens」。
+
+### 17. `pause_turn` はサーバー側ループの一時停止（243行）
 **検証結果**: Server tools「On a long-running turn, the API might pause that loop and return a `pause_turn` stop reason.」
 
-### 10. `pause_turn` の再開は、返ってきた assistant の `content` をそのまま追加し、同じ `tools` で再送。ツールを外すとエラー（241行・コード205〜208行・583〜585行）
-**検証結果**: Server tools「Pass the paused response back as-is in a subsequent request」「Include the same tools in the continuation request … the API returns a validation error if that tool is missing」。公式 Python 例も `messages = [user, {"role": "assistant", "content": response.content}]` を再送している。
+### 18. 再開時は assistant の content をそのまま追加し、同じ tools で送る。`container` があれば ID を送り返す（245行・コード207〜211行）
+**検証結果**: Server tools「Pass the paused response back as-is」「Include the same tools」「Keep the container: … send its ID back in the continuation request」。
 
-### 11. 最後が assistant で終わる再送は prefill ではなく正規の再開手順（243行）
-**検証結果**: Server tools の公式例が assistant で終わる messages を送っており、「you continue it by re-sending the assistant content as-is」と明記。prefill 禁止（Errors「Prefill not supported」）とは区別される。
+### 19. tools からサーバーツールを外すと、未実行の `server_tool_use` が宙に浮いてエラーになる（245行）
+**検証結果**: Server tools「A paused turn can end with a `server_tool_use` block whose tool has not run yet, and the API returns a validation error if that tool is missing from the continuation.」
 
-### 12. 続きがさらに `pause_turn` になることがあり、再開回数に上限を設ける（243行・コード191行）
-**検証結果**: Server tools「A continued turn can pause again … capping the number of continuations as you would any retry loop. Keep every paused response in `messages`, in order.」
+### 20. assistant で終わる再開は prefill ではなく正規の手順（247行）
+**検証結果**: Server tools の公式例が assistant で終わる messages を再送している。「you continue it by re-sending the assistant content as-is」。
 
-### 13. サーバーツールとクライアントツールが同時に呼ばれると、API はサーバーツールを実行せず `stop_reason: "tool_use"` で返し、`tool_result` だけの user メッセージを返すと次のリクエストでサーバーツールを実行（245行）
-**検証結果**: Server tools「Mixing server tools and client tools in one turn」、Handle tool calls「the user message must contain only `tool_result` blocks」。
+### 21. 再開がさらに `pause_turn` になることがあるので回数に上限を設ける（247行）
+**検証結果**: Server tools「A continued turn can pause again … capping the number of continuations」。
 
-### 14. `_20260209` 版は内部でコード実行を使うため、ZDR では `"allowed_callers": ["direct"]` が必要（247行）
-**検証結果**: Server tools「ZDR and allowed_callers」: `_20260209` 以降は既定で ZDR 対象外、`"allowed_callers": ["direct"]` で動的フィルタリングを無効化すると ZDR で使える。
+### 22. サーバーツールとクライアントツールが同時に呼ばれると `stop_reason: "tool_use"` で返り、tool_result だけの user メッセージを返すと保留中のサーバーツールが実行される（249行）
+**検証結果**: Server tools「Mixing server tools and client tools in one turn」。「The follow-up user message must contain nothing except `tool_result` blocks」。
 
-### 15. Web検索は引用が自動で付く（259行）
-**検証結果**: Web search「Citations are always enabled for web search」。（Web fetch は既定で無効。⚠️4 参照）
+### 23. ZDR には `allowed_callers: ["direct"]` が必要（251行）
+**検証結果**: Server tools「ZDR and allowed_callers」。
 
-### 16. 社内データには届かない／公開Web向け（257・263行）
-**検証結果**: Web fetch は会話中に現れた URL のみ取得可能、Web search は公開Web検索。社内ネットワークへの到達手段はない。
+### 24. 引用は Web 検索では自動、Web 取得では設定で有効化（263行）
+**検証結果**: Web search「Citations are always enabled for web search」。Web fetch は前回確認（既定で無効）。
 
-### 17. ツール名の制約に合わない名前は API が400で拒否（426行）
-**検証結果**: Define tools の regex 制約（長さは❌1で修正）。
+### 25. 並列ツール呼び出しは既定で有効（670行）
+**検証結果**: Parallel tool use「By default, Claude may call multiple tools in a single response.」
 
-### 18. 並列ツール呼び出しは既定で有効（666行）
-**検証結果**: Parallel tool use（`disable_parallel_tool_use: true` で無効化）。
+### 26. すべての `tool_use` に `tool_result` を返し、1つの user メッセージにまとめる。分けると以降の並列呼び出しが減る（674行）
+**検証結果**: Parallel tool use「Wrong: a separate user message for each tool result」「This "teaches" Claude to avoid parallel calls.」
 
-### 19. すべての `tool_use` に `tool_result` が必要、欠けると400（670行）
-**検証結果**: Handle tool calls。
+### 27. user メッセージの中では `tool_result` を先頭に置く。前にテキストがあると 400（676行）
+**検証結果**: Handle tool calls の 400 の例。
 
-### 20. 結果ごとに user メッセージを分けると以降の並列呼び出しが減る（670行）
-**検証結果**: Parallel tool use「This "teaches" Claude to avoid parallel calls.」
+### 28. I/O 待ちの処理には `ThreadPoolExecutor` が効果的で、`map` は入力の順に結果を返す（682・730行）
+**検証結果**: concurrent.futures「often used to overlap I/O instead of CPU work」。`map` は組み込みの `map` と同様（公式例は `zip(PRIMES, executor.map(...))` で順序に依存している）。
 
-### 21. user メッセージ内で `tool_result` を先頭に、テキストは後ろ。前に置くと400（672行）
-**検証結果**: Handle tool calls「the `tool_result` blocks must come FIRST」と 400 の例。
+### 29. API は `tool_use_id` で対応を取るので順番が違っても動く（738行）
+**検証結果**: Parallel tool use「The API doesn't prescribe an execution order」。結果は `tool_use_id` で対応付けられる。
 
-### 22. API は `tool_use_id` で対応を取るので、順番が違っても動く（734行）
-**検証結果**: Handle tool calls（`tool_use_id` で対応付け）。
+### 30. `resolve()` は `..` とシンボリックリンクを解決し、`is_relative_to()` で配下かを判定する（837行）
+**検証結果**: pathlib「Make the path absolute, resolving any symlinks … ".." components are also eliminated」、`is_relative_to` は 3.9 で追加。
 
-### 23. 承認拒否で例外にすると `tool_result` が欠けて次のリクエストが400、拒否は `is_error: true` で返す（931行）
-**検証結果**: Handle tool calls（tool_result 欠落は 400、`is_error` の用途）。
+### 31. `startswith` で判定すると `workspace_old/` が前方一致で通る。`is_relative_to` は部品単位で比べる（841行）
+**検証結果**: pathlib の等価式 `u == p or u in p.parents`。`../workspace_old/x` が拒否されることも実行で確認。
 
-### 24. 現行モデルでは assistant の prefill は400（1053行）
+### 32. 承認を拒否したときに例外で止めると `tool_result` が欠けて 400 になる。`is_error` で返す（935行）
+**検証結果**: Server tools／Handle tool calls「`tool_use` ids were found without `tool_result` blocks immediately after」。
+
+### 33. 現行モデルでは prefill が 400（1057行）
 **検証結果**: Errors「Prefill not supported」（Claude 4.6 以降）。
 
-### 25. 構造化出力は `output_config.format`（`type: "json_schema"`）に書き、制約付きデコーディングで生成（1059行・コード1105行）
-**検証結果**: Structured outputs「How it works」「Send it in output_config.format with `type: "json_schema"`」。
+### 34. 構造化出力は `output_config.format`（`json_schema`）で、文法の制約で生成される。refusal／max_tokens は例外（1063・1154行）
+**検証結果**: Structured outputs の Invalid outputs（refusal・max_tokens ではスキーマに合わないことがある）。
 
-### 26. オブジェクトには `"additionalProperties": false` が必須、`anyOf` で null を許せる（1147行）
-**検証結果**: Structured outputs「`required` and `additionalProperties` (must be set to `false` for objects)」「`anyOf` and `allOf` (with limitations)」、型 `null` をサポート。
+### 35. Haiku 5.5 は思考が既定で有効で、思考トークンも `max_tokens` に数える。`effort: "low"` が使える（1108〜1111・1154行）
+**検証結果**: Thinking の表（Haiku 5.5 は省略時 adaptive）。「they count toward `max_tokens`」。Effort「Claude Haiku 5.5 supports all five effort levels」。
 
-### 27. `minLength`・`maxLength`・`minimum`・`maximum` は使えず400（1147行）
-**検証結果**: Structured outputs「Not supported: Numerical constraints … String constraints … If you use an unsupported feature, you'll receive a 400 error」。
+### 36. オブジェクトには `additionalProperties: false` が必須で、`anyOf` で null を許せる（1076・1156行）
+**検証結果**: Structured outputs「`required` and `additionalProperties` (must be set to `false` for objects)」「`anyOf` … null」。
 
-### 28. 初回は文法作成で遅く、文法は一定期間キャッシュされる（1149行）
-**検証結果**: Structured outputs「First request latency」「Compiled grammars are cached for 24 hours from last use」。
+### 37. `minLength`・`maxLength`・`minimum`・`maximum` は使えず 400（1156行）
+**検証結果**: Structured outputs「If you use an unsupported feature, you'll receive a 400 error」。
 
-### 29. `"strict": true` でツール引数にも同じ文法制約がかかる（1153行）
-**検証結果**: Structured outputs「Strict tool use … uses the same grammar pipeline」、Strict tool use。
+### 38. 初回は文法の作成で遅く、文法は一定期間キャッシュされる（1158行）
+**検証結果**: Structured outputs「Compiled grammars are cached for 24 hours from last use」。
 
-### 30. strict ツールは1リクエスト20個まで（1201行）
-**検証結果**: Structured outputs「Explicit limits: Strict tools per request 20」。
+### 39. `strict: true` でツールの引数を保証できる。`additionalProperties: false` が必須で、任意の引数はスキーマ全体で24個まで（1162行）
+**検証結果**: Strict tool use と Structured outputs の「Optional parameters 24」。
 
-### 31. `any` / `tool` の強制は Opus 5.5・Sonnet 5.5 で400（1193行）
-**検証結果**: Errors「Forced tool use not supported」。
+### 40. `any`／`tool` による強制は Opus 5.5・Sonnet 5.5 で 400、`auto`／`none` のみ（1189・1203行）
+**検証結果**: Errors「Forced tool use not supported」。Define tools の表「`auto` with strict tool use … or structured outputs」。
+
+### 41. strict ツールは1リクエストあたり20個まで（1211行）
+**検証結果**: Structured outputs「Strict tools per request 20」。
+
+### 42. Python 3.13 の新機能に REPL の刷新がある（出力例 232行）
+**検証結果**: What's New in Python 3.13「A greatly improved interactive interpreter」。
+
+### 43. 6.2 の出力例のコスト（652〜659行）
+**検証結果**: $0.0060＋$0.0062＝$0.0122（入力 2,188／出力 170）。単価表どおり。
 
 ---
 
 ## ⚠️ 要確認（古い可能性あり）
 
-### 1. Web検索デモの出力例と `pause_turn` 再開時のコンテナ（178〜232行 `server_tools_demo.py`）
-**記述**: `"type": "web_search_20260209"`（`allowed_callers` 指定なし）で、出力例は `blocks: ['thinking', 'server_tool_use', 'web_search_tool_result', 'text', 'text', 'text']`。再開時は messages の追加のみ。
-**懸念点**: `web_search_20260209` 以降は `allowed_callers` の既定が `["code_execution_20260120"]`（動的フィルタリング）。この設定では Claude は検索をコード実行の中から呼ぶため、応答にはコード実行の `server_tool_use` と結果ブロックが加わり、入れ子の検索ブロックには `caller` が付く。出力例の「直接検索」の並びとは一致しない可能性が高い。また、コード実行を伴う場合、公式は `pause_turn` の再開で `container` の ID を送り返すよう求めている（第10章の `research_web()` は対応済み、第6章デモは未対応）。
-**検索結果**: Web search「Dynamic filtering … the tool's `allowed_callers` field defaults to `["code_execution_20260120"]` … To call web search directly, without dynamic filtering, set `allowed_callers: ["direct"]`」。Server tools「Keep the container: If the response includes a `container` … send its ID back in the continuation request.」
-**推奨対処**（いずれか）:
-- (a) デモを単純な直接検索にする: `SERVER_TOOLS` に `"allowed_callers": ["direct"],  # 動的フィルタリングを使わず直接検索する` を追加（出力例・本文はそのまま整合、ZDR の NOTE とも整合）。
-- (b) 動的フィルタリングのまま使うなら、出力例をコード実行ブロックを含む形に差し替え、`pause_turn` 時に第10章と同様 `response.get("container")` の ID を `extra={"container": ...}` で渡す。
-本書の流れ（第6章は概要、第10章で本格利用）からは (a) が最小差分。
+### 1. Windows で `/etc/passwd` を渡すと `C:\etc\passwd` に解決される（925行）
+**記述**: 「しかし連結後に `C:\etc\passwd` へ解決されるため、配下チェックで弾かれます。」
+**懸念点**: 実際には **WORKSPACE と同じドライブ** のルートに解決される。C: 以外のドライブでは `D:\etc\passwd` などになる（結論の「弾かれる」は正しい）。
+**検索結果**: pathlib「On Windows, the drive is not reset when the argument is a rooted relative path」。C: 上で実行し、`C:\etc\passwd` に解決されて拒否されることを確認した。
+**推奨対処**: 「連結後に `workspace` と同じドライブの `\etc\passwd`（例: `C:\etc\passwd`）へ解決されるため、配下チェックで弾かれます。」
 
-### 2. 構造化出力で「たまに崩れる」ことが「原理的に起きません」（1059・1145行）
-**記述**: 「そのため、「たまに崩れる」ことが原理的に起きません。」
-**懸念点**: 公式は「in most cases」とし、例外として `stop_reason: "refusal"`（スキーマ不一致の可能性）、`"max_tokens"`（途中で切れる）、文字列 `enum` の大文字・小文字の揺れを挙げている。
-**検索結果**: Structured outputs「Invalid outputs」。
-**推奨対処**: 「ただし、`stop_reason` が `refusal` や `max_tokens` の場合は形式が崩れ得るので、`json.loads()` の前に `stop_reason` が `end_turn` であることを確認します」を1文追加（`structured_output.py` でも判定するとなお良い）。
+### 2. 並列化の効果を「ログのタイムスタンプから分かります」（759行）
+**記述**: 「3件のツールがほぼ同時刻に終わっていることが、ログのタイムスタンプから分かります。」
+**懸念点**: 748〜753行の出力例はタイムスタンプを `...` で省略しており、読者は確認できない。
+**推奨対処**: 出力例の3行をタイムスタンプ付きにする（例: `2026-11-06 14:12:05,201 agent tool=get_weather elapsed=0.58s` ／ `…05,233 … elapsed=0.61s` ／ `…05,252 … elapsed=0.63s`）。または本文を「各ツールの所要時間（elapsed）が約0.6秒ずつで、全体もほぼ同じ時間で終わっています」に変える。
 
-### 3. strict ツールの条件「`additionalProperties: false` と `required` が必要」（1153行）
-**記述**: 「条件は構造化出力と同じで、`additionalProperties: false` と `required` が必要です。」
-**懸念点**: `additionalProperties: false` は必須だが、`required` に全プロパティを入れることは必須ではない（任意パラメータは許可され、strict スキーマ全体で24個までという上限がある）。
-**検索結果**: Structured outputs「Explicit limits: Optional parameters 24 — Each parameter not listed in `required` counts toward this limit.」
-**推奨対処**: 「`additionalProperties: false` が必須で、任意の引数は数に上限があるため、なるべく `required` に入れて `null` 許可で表します」などに調整。`references/claude-api-facts.md` 63行の「`required` 必須」も同様に修正推奨。
-
-### 4. サーバーツールと自作ツールの比較表（255〜261行）
-**記述**: 「結果の加工 | できない（そのまま入る）」「引用（citations） | 自動で付く」
-**懸念点**: `_20260209` 以降は Claude がコードで結果を絞り込む（動的フィルタリング）ため、「加工できない」は開発者側から見ての話。また Web fetch の引用は既定で無効（`"citations": {"enabled": true}` が必要）。
-**推奨対処**: 「（開発者は）結果を加工できない」「Web検索は自動で付く（Web取得は設定で有効化）」のように主語・対象を明確に。
-
-### 5. `max_uses` の説明「1リクエスト内の検索回数の上限」（187行コメント）
-**懸念点**: 公式は「limits the number of searches in a single turn」で、`pause_turn` からの再開を含むターン全体で数える（動的フィルタリング経由の検索を除く）。
-また、既定の動的フィルタリング（コード実行経由）の検索は、`pause_turn` からの再開をまたいでは数えられない（Web search「Searches from earlier requests in that turn count against the limit, unless Claude ran them from code execution through dynamic filtering」）。つまり既定設定のデモでは、再開のたびに最大3回ずつ検索され得る（料金は $10 / 1,000回）。
-**推奨対処**: コメントを「1ターン内の検索回数の上限（コスト対策）」に変更。⚠️1 の (a) `allowed_callers: ["direct"]` を採用すれば、再開をまたいだ合計にも上限が効く。
-
-### 6. 構造化出力・strict ツールのデモが Haiku 5.5 で `max_tokens=2000`（1103〜1104行・1181行）
-**記述**: `model=FAST_MODEL`（`claude-haiku-5-5`）、`max_tokens=2000`
-**懸念点**: Haiku 5.5 は `thinking` を省略すると adaptive thinking で動き、思考トークンも `max_tokens` に数えられる（Thinking「they count toward `max_tokens` alongside the response text」）。思考が長引くと `stop_reason: "max_tokens"` で JSON が途中で切れ、`json.loads()` が失敗し得る（⚠️2 と同根）。
-**推奨対処**: `stop_reason` の確認を入れたうえで、`max_tokens` に余裕を持たせる（例: 8000）か、定型抽出では `output_config` に `"effort": "low"` を併用する／Haiku 5.5 では `thinking: {"type": "disabled"}` も受け付けられる（Errors「Claude Haiku 5.5 accepts `thinking: {"type": "disabled"}`」）ことを NOTE で補足。
+### 3. 「第5章とまったく同じ振る舞いです」（664行）
+**記述**: 「第5章とまったく同じ振る舞いです。」
+**懸念点**: 正常系は同じだが、6.2版の `execute_tool_uses()` は `ToolError` しか捕まえない。そのため、第5章では is_error で返せていた天気ツールの `ValueError`（未知の都市）や `httpx` の接続エラーで、プログラムが落ちる（コード検証で再現。chapter_06_code_verify.md の❌1）。
+**推奨対処**: コード側を修正する（code_verify の❌1の修正案）。コードを変えない場合は本文を「正常に答えられる場面では、第5章と同じ振る舞いです（失敗の扱いは6.3節で整えます）」に変える。
 
 ---
 
 ## ❌ 要修正（誤りの可能性が高い）
 
-### 1. ツール名の長さ制限（42行・328〜329行・369行）※修正済み
-**記述**: 「英数字とアンダースコア・ハイフンの組み合わせで、64文字以内であれば受け付けられます。」／`NAME_PATTERN = re.compile(r"^[a-zA-Z0-9_-]{1,64}$")`
-**問題**: 公式の制約は 1〜128 文字。64文字超の正当な名前をレジストリが誤って拒否する。
-**正しい情報**: Define tools「Must match the regex `^[a-zA-Z0-9_-]{1,128}$`.」
-**修正内容**: 本文を「1〜128文字であれば受け付けられます」、コメントを「1〜128文字」、正規表現を `{1,128}`、`ValueError` のメッセージを「1〜128文字にしてください」に修正。
-
-### 2. 「本書執筆時点の最新版は `web_search_20260209` と `web_fetch_20260209`」（174行）※修正済み
-**問題**: 執筆時点（2026-11）では `web_search_20260318`・`web_fetch_20260318`（および `web_fetch_20260309`）が公開されており、`_20260209` は最新版ではない。
-**正しい情報**: Web search「Three versions … `web_search_20250305` / `web_search_20260209`（dynamic filtering）/ `web_search_20260318`（response inclusion）」。Web fetch「The latest web fetch tool version (`web_fetch_20260318`)…」。
-**修正内容**: 「本書では、結果の絞り込み機能（動的フィルタリング。後述のNOTEを参照）に対応した `web_search_20260209` と `web_fetch_20260209` を使います。執筆時点ではさらに新しい `_20260318` 版も公開されており、機能が追加されています。」に修正（コードは `_20260209` のまま。第10章とも整合）。
+なし。
 
 ---
 
 ## 総評
 
-`pause_turn` の再開方法（assistant の content をそのまま追加し、同じ tools で再送する／最後が assistant になる再送は正規手順）、サーバーツールとクライアントツールの混在時の挙動、ZDR の `allowed_callers`、`usage.server_tool_use.web_search_requests`、構造化出力・strict ツールの制約はいずれも公式と一致しています。誤りはツール名の長さ（コード含む）と「最新版」表記の2件で、修正済みです。
-
-最も注意すべきは⚠️1です。`web_search_20260209` の既定は動的フィルタリング（コード実行経由）なので、デモの出力例が実際と食い違う可能性が高く、`pause_turn` 再開時の `container` 引き継ぎも第10章と揃っていません。`"allowed_callers": ["direct"]` を1行足すのが最小の修正です。
+前回の❌2件と⚠️6件は、すべて原稿に正しく反映されています。サーバーツール（版・`allowed_callers`・`max_uses`・`pause_turn` の再開と container・混在時の挙動・ZDR）、並列ツール呼び出し、構造化出力・strict ツールの制約、Haiku 5.5 の思考と effort は、2026-11-08 時点の公式ドキュメントと一致します。6.1節の設計原則（名前空間・action 引数・戻り値・強い指示の回避）も、Define tools と Prompting best practices に裏付けがあります。最も注意すべきなのは⚠️3で、6.2節のコードが第5章より失敗に弱くなっている点です（コード検証の❌1）。
 
 ---
 
-## 対応（2026-11-07）
+## 再チェック（2026-11-08・修正箇所）
 
-- ⚠️1（動的フィルタリングと `pause_turn` 再開）: 推奨対処 (a) を採用。`server_tools_demo.py` の `SERVER_TOOLS` に `"allowed_callers": ["direct"]` を追加し、出力例（直接検索のブロック並び）と整合させた。再開処理は第10章 `research_web()` と同じ方式に変更（`pause_turn` 以外なら終了／assistant content をそのまま追加／同じ tools／レスポンスに `container` があれば `extra={"container": id}` で送り返す／`MAX_CONTINUATIONS` 超過で打ち切りメッセージ）。本文の pause_turn 節に container の送り返しを1文追記し、NOTE に「既定は動的フィルタリングでコード実行のブロックが加わる。デモは仕組みを単純に観察するため直接検索にしている」を追記。
-- ⚠️2（「原理的に起きない」）: 「拒否（`refusal`）や `max_tokens` による打ち切りを除けば」と限定。出力例の後に、`json.loads()` 前に停止理由を確認している理由を1文追記（コードの `refusal`／`max_tokens` 判定は既存）。
-- ⚠️3（strict と `required`）: 「`additionalProperties: false` が必須。`required` に入れない任意の引数はスキーマ全体で24個までなので、なるべく `required` に入れ、値がないことは `null` で表す」に修正。
-- ⚠️4（比較表）: 「開発者はできない（そのまま入る）」「Web検索は自動で付く（Web取得は設定で有効化）」に修正。
-- ⚠️5（`max_uses`）: コメントを「1ターン内の検索回数の上限（再開をまたいで数える。コスト対策）」に変更（`allowed_callers: ["direct"]` により再開をまたいだ合計に上限が効く）。
-- ⚠️6（Haiku 5.5 と `max_tokens=2000`）: `extract_inquiry()` の `output_config` に `"effort": "low"`（7.5節参照）を追加し、`max_tokens` に思考トークンも数える旨のコメントを付けた。`demo_strict_tool()` にも `output_config={"effort": "low"}` を追加。本文に「Haiku 5.5 は思考が既定で有効で、思考のトークンも `max_tokens` に数えられるため effort を low にしている」を追記。
+対象: `git diff` の変更 5か所（コード2か所の実行結果は chapter_06_code_verify.md の同名節）。
+
+- ✅ L559-562（6.2版 `execute_tool_uses` の `except Exception`）
+  オフライン実行で、未知の都市（ValueError）と接続エラー（httpx.ConnectError）が `is_error: true` の tool_result になり、ループが止まらないことを確認。第5章 L907 の `except Exception` と同じ振る舞いで、L664「第5章とまったく同じ振る舞いです」とも整合。
+- ⚠️ L705-706（6.3版 `run_one_tool` の `except (ToolError, ValueError)`）
+  動作は正しい（天気ツールの「英語表記で指定してください」がそのまま Claude に届く）。ただし第11章 L275「ほかの例外だと『予期しないエラー』という定型文になり」は、ValueError も文面がそのまま届くようになったため厳密でなくなった。
+  修正案（第11章）:「`ToolError`（と `ValueError`）以外の例外だと、『予期しないエラー』という定型文になり…」。
+- ✅ L738 本文「第5章の天気ツールは失敗を `ValueError` で表すので…」
+  第5章 `_geocode()` が `raise ValueError(f"都市 '{city}' が見つかりません。英語表記（例: Tokyo）で指定してください。")` であることをコードで確認。
+  （文体メモ: この1文は約85字。「…`ValueError` で表します。そこで、これも想定内として扱い、…届くようにしています。」と2文に分けると50字前後に収まる。任意）
+- ⚠️ L753-757（6.3 実行ログにタイムスタンプを付与）
+  時刻と elapsed の関係（turn=1 の 04,612 から約0.58〜0.63秒後に3件が完了）は整合し、`%(asctime)s %(name)s %(message)s` の書式とも一致。ただし、実際には `llm_client` の行も出るのに省略の注記がない（6.2節 L655 の例では `llm_client` 行を載せている）。また 6.4節 L1025 の例は `... agent` のままで、章内で表記が揃っていない。
+  修正案: L752 のコードブロックの直前に「（`agent` の行だけを抜き出しています）」を添える。6.4節の例も時刻付きに揃えるか、同じ注記を付ける。
+- ✅ L929「連結後に `workspace` と同じドライブの `\etc\passwd`（例: `C:\etc\passwd`）へ解決される」
+  `PureWindowsPath('C:/proj/workspace') / '/etc/passwd'` → `C:\etc\passwd`、`PureWindowsPath('/etc/passwd').is_absolute()` → False を実行で確認。ドライブは WORKSPACE 側のものになるので、修正後の表現が正確。

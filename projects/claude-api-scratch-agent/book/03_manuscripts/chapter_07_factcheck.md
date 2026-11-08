@@ -1,20 +1,32 @@
 # ファクトチェックレポート
 
 対象ファイル: projects/claude-api-scratch-agent/book/03_manuscripts/chapter_07.md
-検証日: 2026-11-07
-検証クレーム数: 35件
-  ✅ 検証済み: 29件
-  ⚠️ 要確認: 6件
-  ❌ 要修正: 0件
+検証日: 2026-11-08
+検証クレーム数: 37件
+  ✅ 検証済み: 31件
+  ⚠️ 要確認: 5件
+  ❌ 要修正: 1件
 
-参照した一次情報:
+参照した一次情報（2026-11-08 に WebFetch で取得）:
 - Token counting: https://platform.claude.com/docs/en/build-with-claude/token-counting.md
 - Prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md
 - Thinking: https://platform.claude.com/docs/en/build-with-claude/thinking.md
-- Steering thinking（adaptive-thinking.md のリダイレクト先）: https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost
+- Steering thinking（adaptive-thinking のリダイレクト先）: https://platform.claude.com/docs/en/build-with-claude/thinking-steering-and-cost
 - Effort: https://platform.claude.com/docs/en/build-with-claude/effort.md
 - Pricing: https://platform.claude.com/docs/en/about-claude/pricing.md
-- Models overview: https://platform.claude.com/docs/en/about-claude/models/overview.md
+- Models overview: https://platform.claude.com/docs/en/about-claude/models/overview.md（models/overview へリダイレクト）
+
+## 前回（2026-11-07）指摘の反映状況
+
+| 前回の指摘 | 状況 |
+|---|---|
+| ⚠️1 effort 変更とキャッシュ（L1125, L1386-1387） | ✅ 反映済み。「トップレベルのeffort」「モデルによってはtools・systemも」「既定値の明示は省略と同じ」がいずれも入り、Prompt caching／Steering thinking の記述と一致 |
+| ⚠️2 Haiku 5.5 の100K超料金（L612） | ✅ 反映済み。「入力10万トークン以下の場合。超えると単価が上がります」 |
+| ⚠️3 count_tokens と assistant 終わり（L831） | 未対応 → 今回も ⚠️-2 |
+| ⚠️4 count_tokens は空の messages 不可（L240） | 未対応 → 今回も ⚠️-3 |
+| ⚠️5 空の tools 配列で検証エラー（L153） | 未対応 → 今回も ⚠️-4 |
+| ⚠️6 7.4節の cache_write=1,920 の不整合（L1307） | 未対応 → 今回も ⚠️-5 |
+| 総評の signature の補足（L1351） | 未対応 → 今回 ⚠️-1 として計上 |
 
 ---
 
@@ -22,168 +34,188 @@
 
 ### 1. コンテキストと最大出力（L40）
 **記述**: 「`claude-opus-5-5`のコンテキストは100万トークン（1M）、最大出力は128Kトークン」
-**検証結果**: Models overview の表で Opus 5.5 は Context window 1M tokens / Max output 128K tokens。
+**検証結果**: Models overview の表で Claude Opus 5.5 は Context window 1M tokens／Max output 128K tokens。
 
-### 2. 新しい世代のモデルはトークン数が多めになる（L51）
-**記述**: 「新しい世代のモデルは同じ文章でも以前より多めにトークン化される」
-**検証結果**: Token counting「Claude 4.7 and later models … use a newer tokenizer. The same input text produces approximately 30 percent more tokens」。
+### 2. 新しい世代のモデルはトークン数が多め（L51）
+**検証結果**: Token counting「Claude 4.7 and later models … use a newer tokenizer. The same input text produces approximately 30 percent more tokens than on earlier models」。
 
 ### 3. エンドポイント（L80, L143, L158）
-**記述**: 「`POST /v1/messages/count_tokens`」
 **検証結果**: Token counting の curl 例と「Applicable endpoints: `/v1/messages/count_tokens`」で一致。
 
 ### 4. 渡せるフィールドとレスポンス形（L81-82, L104）
-**記述**: 「`model`・`messages`・`system`・`tools`を渡す」「`{"input_tokens": N}`」
-**検証結果**: 「accepts the same structured list of inputs for creating a message, including support for system prompts, tools, images, and PDFs」。出力例 `{ "input_tokens": 14 }`。
+**検証結果**: 「accepts the same structured list of inputs for creating a message, including support for system prompts, tools, images, and PDFs」。出力例は `{ "input_tokens": 14 }` の形。
 
-### 5. max_tokens 不要（L108）
-**記述**: 「`max_tokens`を渡す必要がない」
-**検証結果**: 公式の curl/Python 例はいずれも `max_tokens` を含まずに呼んでいる。
+### 5. max_tokens は不要（L108）
+**検証結果**: 公式の curl 例はいずれも `max_tokens` なしで呼んでいる。
 
 ### 6. 無料・別枠のレート制限（L110-111, L159, L362）
-**記述**: 「無料で、メッセージ生成とは別枠のレート制限（1分あたりのリクエスト数）」
 **検証結果**: 「Token counting is free to use but subject to requests per minute rate limits」「Token counting and message creation have separate and independent rate limits」。
 
 ### 7. 見積もり値（L112-113）
-**記述**: 「返ってくる値が見積もり…わずかにずれる場合がある」
-**検証結果**: 「The token count is an estimate. In some cases, the actual number of input tokens … might differ by a small amount.」
+**検証結果**: 「The token count is an estimate. … might differ by a small amount.」。さらに「Token counts might include tokens added automatically by Anthropic for system optimizations」とあり、L241 の「内部で付与される固定のオーバーヘッド」とも整合。
 
 ### 8. サーバーツールを含むとエラー（L115 NOTE）
-**記述**: 「サーバーツール（web_searchなど）を含むリクエストではエラー」
-**検証結果**: 「returns an invalid_request_error for … Server tools such as web search, web fetch, code execution, and tool search (every server tool except the advisor tool)」。advisor tool は例外だが本書の範囲外のため問題なし。
+**検証結果**: 「returns an invalid_request_error for … Server tools such as web search, web fetch, code execution, and tool search (every server tool except the advisor tool)」。advisor tool は本書の範囲外。
 
-### 9. 入力単価とコスト計算（L319-320）
-**記述**: 「入力単価は100万トークンあたり4ドル」「80万トークンで約3.2ドル」
-**検証結果**: Pricing で Opus 5.5 Base input $4/MTok。0.8×4＝3.2ドル。
+### 9. count_tokens に cache_control 付きのブロックを渡してよい（L1050・maybe_compact が cached_system／cached_tools の結果をそのまま数える設計）
+**検証結果**: Token counting FAQ「Although you may provide `cache_control` blocks in your token counting request, prompt caching only occurs during actual message creation.」。送る内容と数える内容をそろえる本文の方針（L1089-1090）は API 上も成り立つ。
 
-### 10. Haiku 5.5 の入力単価と比率（L612-613）
-**記述**: 「`claude-haiku-5-5`の入力単価は100万トークンあたり0.10ドル」「40分の1」
-**検証結果**: Pricing「Claude Haiku 5.5 (for prompts up to 100,000 tokens) $0.10 / MTok」。4/0.10＝40。※100K超の料金は ⚠️-2 参照。
+### 10. 入力単価とコスト計算（L319-320）
+**検証結果**: Pricing で Opus 5.5 Base input $4/MTok。0.8M×$4＝$3.2。
 
-### 11. 要約ログのコスト（L844）
-**記述**: `model=claude-haiku-5-5 … in=702 out=188 … cost=$0.0002`
-**検証結果**: 702×$0.10/M＋188×$0.50/M＝$0.000164 → 表示 $0.0002 で整合。
+### 11. Haiku 5.5 の入力単価・比率（L612-613）
+**検証結果**: Pricing「Claude Haiku 5.5 (for prompts up to 100,000 tokens) $0.10 / MTok」、100K超は $0.50。4/0.10＝40。注記も一致。
 
-### 12. キャッシュ使用時の入力合計（L302, L1116）
-**記述**: 「入力の合計は`input_tokens`・`cache_creation_input_tokens`・`cache_read_input_tokens`の3つを足した値」
-**検証結果**: Prompt caching「total_input_tokens = cache_read_input_tokens + cache_creation_input_tokens + input_tokens」。`input_tokens` は最後のブレークポイントより後ろの部分（L1115 の説明とも一致）。
+### 12. 要約ログのコスト（L844）
+**検証結果**: 702×0.10＋188×0.50（$/M）＝$0.000164 → $0.0002 表示で整合。
 
-### 13. 前方一致と tools→system→messages の順序（L922-928）
-**記述**: 「`tools`→`system`→`messages`の順」「ツール定義を1つ変えると、systemとmessagesのキャッシュも無効」
+### 13. キャッシュ使用時の入力合計（L302, L1116）
+**検証結果**: 「total_input_tokens = cache_read_input_tokens + cache_creation_input_tokens + input_tokens」。
+
+### 14. 前方一致と tools→system→messages の順序（L925-928）
 **検証結果**: 「Cache prefixes are created in the following order: tools, system, then messages」「Modifying tool definitions … invalidates the entire cache」。
 
-### 14. ephemeral と 5分 TTL・読み取りで延長（L939-943）
-**記述**: 「`cache_control: {"type": "ephemeral"}`」「既定では5分間」「読まれるたびに寿命は延長」
-**検証結果**: 「ephemeral is the only supported cache type, which by default has a 5-minute lifetime」「The cache is refreshed for no additional cost each time the cached content is used」。
+### 15. ephemeral・5分・読まれると延長（L939-943）
+**検証結果**: 「By default, the cache has a 5-minute lifetime. The cache is refreshed for no additional cost each time the cached content is used.」
 
-### 15. 最大4ブレークポイント（L941, L1094）
-**記述**: 「ブレークポイントは1リクエストに最大4つまで」
-**検証結果**: 「You can define up to 4 cache breakpoints.」
+### 16. 最大4ブレークポイント（L941, L1094）
+**検証結果**: 4 slots の記述と一致。コード検証でも実リクエストの `cache_control` は3か所。
 
-### 16. トップレベル自動キャッシュ（L945-948, L1057）
-**記述**: 「リクエストのトップレベルに`cache_control`を置く方法」「キャッシュ可能な最後のブロックに自動で置かれ、会話が伸びると後ろへ移動」「4つの枠のうち1つを使う」
-**検証結果**: 「Add a single cache_control field at the top level of your request body」「automatically applies the cache breakpoint to the last cacheable block and moves it forward as conversations grow」「the automatic cache breakpoint uses one of the 4 available breakpoint slots」。
+### 17. トップレベル自動キャッシュ（L945-948）
+**検証結果**: 「Add a single `cache_control` field at the top level … automatically applies the cache breakpoint to the last cacheable block and moves it forward as conversations grow」「the automatic cache breakpoint uses one of the 4 available breakpoint slots」。
 
-### 17. 最小キャッシュ長（L960-964）
-**記述**: 「512〜4,096トークンの範囲」「短い部分はエラーにならず黙ってキャッシュなしで処理」
-**検証結果**: 最小長表は 512（Opus 5.5/Sonnet 5.5/Haiku 5.5 ほか）〜4,096（Opus 4.6/4.5, Haiku 4.5）。「processed without caching, and no error is returned」。
+### 18. 最小キャッシュ長（L960-964）
+**検証結果**: 最小長は 512（Opus 5.5／Sonnet 5.5／Haiku 5.5 ほか）〜4,096（Opus 4.6／4.5、Haiku 4.5）。「processed without caching, and no error is returned」。
 
-### 18. 料金倍率（L967-969）
-**記述**: 「書き込み（5分）は1.25倍」「読み取りは0.1倍が基本」「`claude-opus-5-5`と`claude-sonnet-5-5`の読み取りは0.05倍」
-**検証結果**: 「Cache write tokens with a 5-minute TTL are 1.25 times」「Cache hits and refreshes on Claude Opus 5.5 and Claude Sonnet 5.5 are priced at 0.05x」。Pricing 表でも Opus 5.5 cache hit $0.20/MTok。
+### 19. 料金倍率（L967-969）
+**検証結果**: 5分書き込み1.25倍、読み取り0.1倍、「Cache hits and refreshes on Claude Opus 5.5 and Claude Sonnet 5.5 are priced at 0.05x」。Pricing 表で Opus 5.5 は $5／$0.20。
 
-### 19. キャッシュの試算（L972-976）
-**記述**: 「キャッシュなし1.6ドル」「書き込み0.1ドル、読み取り19回で約0.08ドル」「約9分の1」
-**検証結果**: 2万×20×$4/M＝$1.60、2万×$5/M＝$0.10、2万×19×$0.20/M＝$0.076。合計$0.176で約1/9。
+### 20. キャッシュの試算（L972-976）
+**検証結果**: 2万×20×$4/M＝$1.60、書き込み 2万×$5/M＝$0.10、読み取り 2万×19×$0.20/M＝$0.076。合計 $0.176 で約1/9。
 
-### 20. 実行ログのコスト（L1108-1109）
-**検証結果**: 1行目 152×4＋96×20＋3418×5（$/M）＝$0.0196、2行目 1207×4＋211×20＋3418×0.2＝$0.0097。いずれも一致。
+### 21. 7.3節ログのコスト計算（L1108-1109）
+**検証結果**: 1行目 152×4＋96×20＋3,418×5＝$0.0196、2行目 1,207×4＋211×20＋3,418×0.2＝$0.0097。算術は一致（ただし usage の内訳そのものは ❌-1 参照）。
 
-### 21. 長期メモリ実行例の合計（L1307, L1311）
-**検証結果**: $0.0140・$0.0246 とも Opus 5.5 の単価（入力4・出力20・書き込み5・読み取り0.2）で再計算して一致。
+### 22. 7.4節の合計コスト（L1307, L1311）
+**検証結果**: 250×4＋153×20＋1,920×5＋1,850×0.2＝$0.0140、1,630×4＋262×20＋2,410×5＋4,020×0.2＝$0.0246。算術は一致（値の妥当性は ⚠️-5）。
 
-### 22. キャッシュを壊す要因（L1118-1125）
-**記述**: 「systemに可変値」「ツールの並び順や定義の変化」「最小長未満」
-**検証結果**: Prompt caching の無効化表（tool definitions／system）と最小長の記述に一致。
+### 23. キャッシュを壊す要因（L1118-1123）
+**検証結果**: Prompt caching の無効化ルール（tool definitions／system の変更）と最小長の記述に一致。
 
-### 23. 圧縮でmessagesのキャッシュが作り直しになる（L888 WARNING）
-**検証結果**: 階層ルール「Changes at each level invalidate that level and all subsequent levels」から、messages だけを書き換えれば tools・system のキャッシュは保たれる。
+### 24. 圧縮で messages のキャッシュだけ作り直し（L888 WARNING）
+**検証結果**: 階層ルール（変更したレベル以降が無効）から、messages の書き換えは tools・system に影響しない。
 
-### 24. Opus 5.5 の adaptive thinking 常時有効・disabled は400（L1331-1333）
-**検証結果**: Effort「Adaptive thinking is always on and can't be turned off … Requests that set thinking: {"type": "disabled"} return a 400 error at every effort level」。Models overview「Adaptive (always on)」。
+### 25. effort 変更とキャッシュ（L1125, L1386-1387）
+**検証結果**: Prompt caching「Changing the output_config.effort value always invalidates message blocks, with the same model-specific effect on tool and system caches as thinking parameters」。Steering thinking「Setting `effort` explicitly to the model's default is equivalent to omitting it and does not break the cache.」
 
-### 25. thinking の中身は既定で空文字・課金される（L659, L1348-1349）
-**検証結果**: Thinking「display defaults to "omitted" on these models」「"omitted": thinking blocks are returned with an empty thinking field」。「the tokens Claude spends reasoning are billed as output tokens, even when the thinking text isn't returned」。
+### 26. Opus 5.5 は adaptive thinking 常時有効・disabled は400（L1331-1333）
+**検証結果**: Thinking「Claude … Opus 5.5 … reject `thinking: {type: "disabled"}`. Thinking can't be turned off on these models.」。Effort「Adaptive thinking is always on and can't be turned off」。
 
-### 26. `usage.output_tokens_details.thinking_tokens`（L1344, L1350）
-**検証結果**: Steering thinking「read usage.output_tokens_details.thinking_tokens in the response」。JSON 例も同形。
+### 27. thinking は既定で空文字・課金される（L1348-1349）
+**検証結果**: 「`display` defaults to "omitted" on these models」「"omitted": thinking blocks are returned with an empty `thinking` field」「the tokens Claude spends reasoning are billed as output tokens, even when the thinking text isn't returned」。
 
-### 27. thinking は max_tokens に含まれる（L1353-1355）
-**検証結果**: 「max_tokens is a hard cap on total output for the request, thinking and response text combined」。対処として「Raise max_tokens」「Lower the effort level」と記載があり、本文の対処と一致。
+### 28. `usage.output_tokens_details.thinking_tokens`（L1344, L1350）
+**検証結果**: Steering thinking「read `usage.output_tokens_details.thinking_tokens` in the response」。JSON 例も同形。
 
-### 28. effort の段階・既定値・各段階の説明（L1359-1370）
-**記述**: 「`low`・`medium`・`high`・`xhigh`・`max`の5つ」「`claude-opus-5-5`の既定は`medium`」、表の各説明、「目安であって必ずではない」
-**検証結果**: Effort「Claude Opus 5.5 supports all five effort levels, and medium is the default」。Steering thinking の表（low=Skips thinking for simple tasks / medium=Might skip thinking for simple queries / high=thinks on most requests / xhigh=more readily and at greater depth than at high / max=no constraint on thinking length）と一致。「Effort is a behavioral signal, not a strict token budget.」。`output_config.effort` で指定する点も一致。
+### 29. thinking は max_tokens に含まれる・対処（L1353-1355）
+**検証結果**: 「`max_tokens` is a hard cap on total output for the request, thinking and response text combined」。対処は「Raise `max_tokens`」「Lower the effort level」で本文と一致。
 
-### 29. thinking ブロックを改変せずに履歴へ戻す（L1061, L1393-1402）
-**検証結果**: Thinking「Pass every thinking block back to the API complete and unmodified, alongside the tool_use block it accompanied」「Modified thinking blocks are rejected with a 400 error」。
+### 30. effort の段階・既定値・各段階の説明（L1359-1371）
+**検証結果**: Effort「Claude Opus 5.5 supports all five effort levels, and `medium` is the default」。Steering thinking の表（low＝Skips thinking for simple tasks／medium＝Might skip thinking for simple queries／high＝thinks on most requests／xhigh＝more readily and at greater depth than at high／max＝no constraint on thinking length）。「Effort is a behavioral signal, not a strict token budget」「At every level, Claude determines for each request whether to think」。
+
+### 31. thinking ブロックを改変せずに履歴へ戻す（L1061, L1395-1403）
+**検証結果**: Thinking「Modified thinking blocks are rejected with a 400 error」「If you pass thinking blocks back in multi-turn conversations, pass them unchanged」。Steering thinking「When you have thinking blocks, pass them back unmodified, particularly during tool use」。
 
 ---
 
 ## ⚠️ 要確認（古い可能性あり／補足推奨）
 
-### 1. effort 変更とキャッシュ（L1125, L1386-1387）
-**記述**: 「effortを会話の途中で変えた場合も、messagesのキャッシュは無効になります」
-**懸念点**: 記述自体は正しいが不完全。公式では (a) トップレベルの effort 変更は messages を「always」無効化し、tools・system もモデルによっては無効化される、(b) 既定値（Opus 5.5 は medium）を明示指定するのは省略と同じでキャッシュを壊さない、(c) Opus 5.5 は per-message effort（beta, `mid-conversation-output-config-2026-07-01`）で途中変更してもキャッシュを保てる。
-**検索結果**: Prompt caching「Changing the output_config.effort value always invalidates message blocks, with the same model-specific effect on tool and system caches as thinking parameters」「Setting effort explicitly to the model's default is equivalent to omitting it and does not invalidate」。Effort「On … Claude Opus 5.5 … use a per-message effort change, which keeps the prompt cache.」
-**推奨対処**: L1386 を「1つの会話の途中でトップレベルのeffortを変えると、少なくともmessagesのキャッシュが無効になります（モデルによってはtools・systemも）。」とし、NOTE で「Opus 5.5 などはベータ機能の per-message effort で途中変更してもキャッシュを保てる（本書では扱わない）」と補足。
+### 1. signature の説明（L1351）
+**記述**: 「`signature`は、思考の内容が改ざんされていないことを確かめるための署名です。」
+**懸念点**: 公式は「検証用」だけでなく「思考全文を暗号化したもの」と説明しており、既定（omitted）で中身が空でも次のターンに推論が引き継がれる理由はこちらにある。L1398-1399 の「中身が空だからといって削除しない」の根拠として、暗号化の説明があるほうが正確。
+**検索結果**: Thinking「Each thinking block also carries a `signature` field, an encrypted copy of the full reasoning that you pass back unchanged」「The API uses the signature to verify that thinking blocks were generated by Claude when you pass them back.」
+**推奨対処**: 「`signature`には思考の全文が暗号化して入っており、APIはこれを使って、送り返されたthinkingブロックがClaude自身の生成したものかを確かめます。中身が空でも、次のターンの推論はこの署名から復元されます。」に差し替える。
 
-### 2. Haiku 5.5 の料金は 100K トークン超で上がる（L611-613）
-**記述**: 「`claude-haiku-5-5`の入力単価は100万トークンあたり0.10ドル」
-**懸念点**: Haiku 5.5 はプロンプト長で料金が変わる。100,000トークン超のリクエストは入力$0.50/出力$2.50（キャッシュ読み取り含め全体が高い単価）。本章のしきい値は15万トークンなので、要約に渡す書き起こしが10万トークンを超えると単価が5倍になる。
-**検索結果**: Pricing「Claude Haiku 5.5 (for prompts over 100,000 tokens) $0.50 / MTok … $2.50 / MTok」「a request whose prompt is over 100,000 tokens pays higher prices」。
-**推奨対処**: 「（プロンプトが10万トークン以下の場合。超えると単価が上がります）」と括弧書きを追加。`_to_transcript()` の tool_result 切り詰めで通常は10万未満に収まる旨も添えるとよい。第4章 `CostTracker` が Haiku の2段階単価に対応しているかも確認。
+### 2. count_tokens と assistant 終わりの履歴（L831）
+**記述**: 「assistantで終わる履歴はprefillとみなされ、count_tokensが400エラーを返すことがあるからです。」
+**懸念点**: Messages API で prefill（最後が assistant）が不可なのは Claude 4.6 以降のモデルの制約として事実だが、count_tokens エンドポイントで 400 になるかは一次情報に記載がない（Token counting のエラー対象リストにもない）。
+**推奨対処**: count_tokens の挙動を断定しない書き方にする。文案: 「6件目のassistantを除いたのは、実際のエージェントループと同じく『userで終わる履歴』にそろえるためです。Messages APIは、最後がassistantの履歴（prefill）を受け付けません。」 実APIで確認できた場合のみ現行の記述に戻す。
 
-### 3. count_tokens と assistant 終わりの履歴（L831）
-**記述**: 「assistantで終わる履歴はprefillとみなされ、count_tokensが400エラーを返すことがある」
-**懸念点**: Messages API での prefill 不可（2026-10-21）は facts と整合するが、count_tokens エンドポイントで 400 になるかは一次情報で確認できなかった。
-**推奨対処**: 実機で確認するか、「Messages APIではassistantで終わる履歴（prefill）が受け付けられないため、ここでもuserで終わる形にそろえます」のように、count_tokens の挙動を断定しない書き方にする。
+### 3. count_tokens は空の messages を受け付けない（L211, L240）
+**懸念点**: 一次情報で明示を確認できず（Messages API と同じ入力を受ける以上、妥当な推定ではある）。
+**推奨対処**: 「count_tokensもMessages APIと同じく、少なくとも1件のmessagesが必要なため」と根拠を Messages API 側に寄せるか、実APIで確認する。
 
-### 4. count_tokens は空の messages を受け付けない（L211, L240）
-**懸念点**: 一次情報で明示を確認できず（Messages API の仕様上は妥当）。
-**推奨対処**: `/verify-code` で実機確認。結果に応じて表現を維持または「空のmessagesは送れないため」に調整。
+### 4. 空の tools 配列で検証エラーになることがある（L153）
+**懸念点**: 一次情報で確認できず。
+**推奨対処**: 「空の配列を送っても意味がなく、リクエストが無駄に大きくなるだけなので、指定されたときだけ入れます。」と理由を差し替える（第4章 `_build_body()` の `if tools:` と同じ方針である、と添えると一貫する）。
 
-### 5. 空の tools 配列で検証エラーになることがある（L153）
-**懸念点**: 一次情報で確認できず。「ことがある」と断定は避けているが根拠が不明。
-**推奨対処**: 実機確認、または「空の配列を送っても意味がないため」と理由を差し替える。
-
-### 6. 実行例の数値の整合（L1307 と L1108 の関係）
-**懸念点**: 7.3節ではファイル操作ツールのみで tools+system のキャッシュ書き込みが3,418トークンなのに、7.4節ではメモリツールを追加したにもかかわらず2回分の書き込み合計が1,920トークンと小さい。最小長はクリアしているので誤りとまでは言えないが、読者が比べると不自然。
-**推奨対処**: 実機で再実行した値に差し替える。
+### 5. 7.4節の実行例のキャッシュ値（L1307）
+**記述**: 1回目 `calls=2 … cache_write=1,920 cache_read=1,850`
+**懸念点**: 7.3節ではファイル操作ツールだけで tools＋system の書き込みが 3,418 トークンだったのに、7.4節ではメモリツール2つと記憶入りの system を足した状態で、2回の呼び出しの書き込み合計が 1,920 トークンしかない。初回の書き込みだけで 3,418 を超えるのが自然。
+**推奨対処**: 実APIの値に差し替える。仮の値のままにするなら、たとえば1回目を `calls=2 input=16 output=153 cache_write=4,410 cache_read=3,920 total=$0.0260`（16×4＋153×20＋4,410×5＋3,920×0.2＝$0.02596）のように、7.3節より書き込みが大きい形にそろえる（2回目も同様に見直す）。
 
 ---
 
 ## ❌ 要修正（誤りの可能性が高い）
 
-該当なし。
+### 1. 7.3節「効果を測る」のログと usage の読み方（L1107-1116）
+**記述**:
+```text
+… stop=tool_use in=152 out=96 cache_write=3418 cache_read=0 cost=$0.0196
+… stop=end_turn in=1207 out=211 cache_write=0 cache_read=3418 cost=$0.0097
+```
+「2回目の`input_tokens`は、新しく足されたtool_resultなど、キャッシュされていない部分だけの量です。」
+**問題**: 本章の `run_agent()` はトップレベルの `cache_control`（自動キャッシュ）を毎回付けている（L1057）。自動キャッシュでは区切りが「キャッシュ可能な最後のブロック」に置かれ、会話が伸びると前へ移動するため、2回目のリクエストでは前回までの部分を読み取り、新しく足された assistant 応答と tool_result を **書き込む**。したがって2回目が `cache_write=0`・`in=1207` になるのは、明示的な区切りを tools・system にしか置かない構成の挙動で、本章のコードの挙動と食い違う。1回目の `in=152` も、区切りが最後の user メッセージに置かれる以上は数トークン程度になるのが自然。第8章の check_agent の出力例（`in=8 cache_write=1016` → `in=8 cache_write=185 cache_read=1016`）とも食い違っている。
+**正しい情報**: Prompt caching「The system automatically applies the cache breakpoint to the last cacheable block and moves it forward as conversations grow」、複数ターンの例「Request 2 … System through User(2) read from cache; Asst(2) + User(3) written to cache」。usage「`input_tokens`: … tokens after the last cache breakpoint」。
+**修正案**（数値は単価表で再計算済み。実APIの値があればそれに置き換える）:
+```text
+llm_client INFO request_id=req_011CZa... model=claude-opus-5-5 stream=False elapsed=2.41s stop=tool_use in=6 out=96 cache_write=3564 cache_read=0 cost=$0.0198
+llm_client INFO request_id=req_011CZb... model=claude-opus-5-5 stream=False elapsed=3.05s stop=end_turn in=6 out=211 cache_write=1353 cache_read=3564 cost=$0.0117
+```
+本文 L1113-1116 の文案:
+「1回目は`cache_creation_input_tokens`（ログのcache_write）が3,564で、tools・system・最初の依頼までがキャッシュに書き込まれています。
+2回目は`cache_read_input_tokens`（ログのcache_read）が3,564で、前回の内容がそのまま読み取られています。
+同時に、新しく足されたassistantの応答とtool_resultの1,353トークンが、次のターンのために書き込まれています。
+`input_tokens`は最後のブレークポイントより後ろの部分だけなので、自動キャッシュを使うとごく小さな値になります。
+入力の合計は、この3つを足した値です。」
+（L1118 の「2回目以降もcache_readが0のままなら…」はそのまま成り立つ）
 
 ---
 
 ## 総評
 
-第7章の API 仕様（count_tokens、Prompt caching、adaptive thinking、effort）は、一次情報とほぼ完全に一致しています。料金計算・ログのコスト表示もすべて単価から再計算して整合しました。
-要対応は、effort 変更時のキャッシュ挙動の補足（per-message effort と既定値の扱い）と、Haiku 5.5 の100Kトークン超の料金の注記の2点です。
-count_tokens のエッジケース（空 messages・空 tools・assistant 終わり）は一次情報に記述がないため、`/verify-code` での実機確認を推奨します。
-signature の説明（L1351「改ざんされていないことを確かめるための署名」）は公式の「verify that thinking blocks were generated by Claude」と趣旨が合っています。公式は「思考全文を暗号化したもの」でもあると説明しているので、必要なら一言添えてください。
+第7章の API 仕様（count_tokens、Prompt caching、adaptive thinking、effort）は一次情報とよく一致しており、前回の ⚠️1・2 は正しく反映されています。count_tokens に `cache_control` 付きのブロックを渡してよいことも公式 FAQ で確認できたため、`maybe_compact()` に送信用と同じ `system_blocks`・`tools` を渡す設計は API 上も問題ありません。
+
+唯一の要修正は、7.3節の実行例のログと「2回目の input_tokens」の説明です。本章のコードはトップレベルの自動キャッシュを使っているので、2回目以降も新しく伸びた部分が書き込まれ、`input_tokens` はごく小さくなります。いまのログは「tools・system にだけ区切りを置いた場合」の形になっており、第8章の出力例とも食い違っています。7.4節の `cache_write=1,920`（⚠️-5）も同じ観点でそろえ直すと、読者が数字を比べたときの違和感がなくなります。
+
+count_tokens のエッジケース（assistant 終わり・空 messages・空 tools）は今回も一次情報で確認できませんでした。実APIで確かめるか、挙動を断定しない書き方に改めてください。
 
 ---
 
-## 対応（2026-11-07）
+## 対応（2026-11-08）
 
-| ⚠️ | 対応 | 原稿の位置（対応後） |
-|---|---|---|
-| 1. effort 変更とキャッシュ | WARNING の末尾を「トップレベルのeffortを会話の途中で変えた場合も、messagesのキャッシュは無効になります（モデルによってはtools・systemも）。ただし既定値（Opus 5.5なら`medium`）を明示的に送るのは省略と同じ扱いで、キャッシュは壊れません。」に修正。effort の節も「トップレベルのeffortを変えると、少なくともmessagesのキャッシュが無効（モデルによってはtools・systemも）」とし、「既定値を明示的に送るだけなら省略と同じ扱いなので、キャッシュは壊れません」を1文追加。per-message effort（ベータ）は本書の範囲外のため触れていない | L1125、L1386-1387 |
-| 2. Haiku 5.5 の100K超料金 | 「（入力10万トークン以下の場合。超えると単価が上がります）」を追記（第0・2・3章の「10万トークン以下」表記に合わせた）。第4章 `CostTracker` は `LONG_PROMPT_PRICES` で2段階単価に対応済みであることを確認 | L612 |
-| 3〜6 | 今回の依頼範囲外（未対応）。実機確認待ち | — |
+- ❌ 1: 原稿を修正済み。7.3節の実行ログを自動キャッシュの挙動（in=6 / cache_write=3564 → in=6 / cache_write=1353 / cache_read=3564）に差し替え、usage の読み方の説明を書き換えた。数値は単価表で再計算した例で、実APIの実測値に差し替えることを推奨。
 
-コードの変更はないため、再実行は不要。仕様は `references/claude-api-facts.md`（L65-66・L105）と一致。
+---
+
+## 再チェック（2026-11-08・修正箇所）
+
+対象: `git diff` の変更 8か所。一次情報: build-with-claude/token-counting.md、prompt-caching.md、thinking.md、api/messages.md。数値は第4章の単価表（Opus 5.5: in $4 / out $20 / cache_write $5 / cache_read $0.20 per MTok）で検算。
+
+- ⚠️ L49「日本語ではおおむね1文字が1トークン前後です」
+  公式に日本語の換算値はないが、第2章 L135・第3章 L112 の「おおむね1文字前後」と揃い、章間の矛盾は解消。ただし同じ章の L199（コメント「日本語中心なら多めに見積もる側に倒れる」）と L236（「1文字を1トークンと数えるのは多めに見積もる側に倒れる」）は、旧記述（1〜2文字で1トークン）を前提にした説明のまま残っている。1文字≒1トークンなら、日本語部分は「ほぼ同じ」で、多めになるのは JSON の記号・キー名の分だけ。
+  修正案（L236）:「JSON の記号やキー名は1トークンあたり数文字になるので、その分だけ多めに見積もられ、おおむね安全側の近似になります。」 L199 のコメントも「（JSON の記号の分だけ多めに見積もる側に倒れる）」に。L52「『文字数÷2』のような目分量ではなく」も、例を「『1文字＝1トークン』のような目分量だけに頼らず」などに替えると本文の換算と食い違わない（任意）。
+- ✅ L153「空の配列を送っても意味がなく、リクエストが無駄に大きくなるだけなので…（第4章の`_build_body()`の`if tools:`と同じ方針です）」
+  断定できない「検証エラーになる」を外した表現で、コード L140 `if tools:` と整合。（文体メモ: 約80字。括弧部分を独立した1文にすると50字前後に収まる。任意）
+- ✅ L211 コメント／L240 本文「count_tokensもMessages APIと同じく、少なくとも1件の`messages`が必要」
+  token-counting.md は「accepts the same structured list of inputs for creating a message」と説明し、Messages API では `messages` が必須。空配列時の明文はないが、第三者のエラー集（`at least one message is required`）とも整合し、根拠を Messages API 側に寄せた書き方で問題ない。
+- ✅ L831「実際のエージェントループと同じく『userで終わる履歴』にそろえるためです。Messages APIは、最後がassistantの履歴（prefill）を受け付けません。」
+  thinking.md「Claude 4.6 and later models … reject a prefilled final assistant turn with a 400 error」、messages.md「On models that don't support prefill, … returns a 400 error」。本書のモデル（Opus 5.5・Haiku 5.5）では正しい。count_tokens の挙動を断定しなくなった。（厳密には「本書で使うモデルでは」を添えるとより正確。任意）
+- ✅ L1108-1117（7.3節の実行ログと usage の説明）
+  検算: 1回目 6×4＋96×20＋3,564×5＝$0.019764→$0.0198、2回目 6×4＋211×20＋1,353×5＋3,564×0.2＝$0.0117218→$0.0117 で一致。prompt-caching.md「the cache point moves forward automatically … Each new request caches everything up to the last cacheable block」「`input_tokens`: … tokens after the last cache breakpoint」「total = cache_read + cache_creation + input_tokens」と一致。2回目の cache_read が1回目の cache_write と同じ 3,564 で、`in=` が数トークンなのも第8章 check_agent の例（in=8）と揃っている。
+- ⚠️ L1308・L1312（7.4節のメモリ実行例）
+  算術はどちらも一致（1回目 $0.025958→$0.0260、2回目 $0.022592→$0.0226）。1回目は 7.3節より書き込みが大きく（3,920＞3,564）整合。しかし2回目は「新しい会話」でメモリ入りの system が変わるため、最初の呼び出しで tools・system・依頼（約3,900トークン以上）を書き込む必要があり、3回分の書き込み合計 2,900 はそれより小さい。成り立つのは「1回目の実行から5分以内で、tools 部分（約3,500トークン）を前回のキャッシュから読めた」場合だけで、本文にその説明がない。
+  修正案A（説明を足す）: L1316 の後に「2回目の実行でも、1回目から5分以内ならツール定義のキャッシュが読み取られるため、書き込みは system 以降の部分だけで済みます。」
+  修正案B（数値を差し替え。前回キャッシュなし・tools＋system＋依頼≒3,950、list 結果≒200、notes.md 本文≒1,350 と仮定）: `calls=3 input=18 output=262 cache_write=5,500 cache_read=8,100 total=$0.0344`（18×4＋262×20＋5,500×5＋8,100×0.2＝$0.034432）。
+- ✅ L1352「`signature`には思考の全文が暗号化して入っており、APIはこれを使って…確かめます。中身が空でも、次のターンの推論はこの署名から復元されます。」
+  thinking.md「Full thinking content is encrypted and returned in the `signature` field … The API uses the signature to verify that thinking blocks were generated by Claude」「The server decrypts the `signature` to reconstruct the original thinking for prompt construction」と一致。（文体メモ: 1文目が約70字。任意）

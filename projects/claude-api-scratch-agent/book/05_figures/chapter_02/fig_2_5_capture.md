@@ -3,14 +3,14 @@
 > 図2.5: VS Codeのインタープリター選択（第2章 2.2節「VS Codeを準備する」STEP 3）
 
 ## 撮影する画面
-VS Code（Visual Studio Code）で `agent-from-scratch` フォルダを開き、コマンドパレットから「Python: Select Interpreter」（Python: インタープリターを選択）を実行した直後の一覧。`.venv` の中のPython（Windows: `.venv\Scripts\python.exe` / macOS・Linux: `.venv/bin/python`、多くの場合「推奨」表示付き）が見えている状態。
+VS Code（Visual Studio Code）で `agent-from-scratch` フォルダーを開き、コマンドパレットから「Python: Select Interpreter」（Python: インタープリターを選択）を実行した直後の一覧。`.venv` の中のPython（Windows: `.venv\Scripts\python.exe` / macOS・Linux: `.venv/bin/python`、多くの場合「推奨」表示付き）が見えている状態。
 
 ## 事前準備
 - [ ] VS Code と Microsoft 製の「Python」拡張機能をインストール済み
 - [ ] `uv init agent-from-scratch --python 3.12 --no-package` と `uv add httpx python-dotenv` を実行済み（`.venv` が存在する）
-- [ ] VS Code で `agent-from-scratch` フォルダを開き、ワークスペースを信頼済み
+- [ ] VS Code で `agent-from-scratch` フォルダーを開き、ワークスペースを信頼済み
 - [ ] 余計な拡張機能の通知・タブを閉じ、配色テーマは印刷で見やすいライトテーマ（例: Light Modern）にする
-- [ ] プロジェクトは同期フォルダ外（例: `C:\dev\agent-from-scratch`）に置く
+- [ ] プロジェクトは同期フォルダー外（例: `C:\dev\agent-from-scratch`）に置く
 
 ## 撮影手順
 1. `Ctrl+Shift+P`（macOSは `Cmd+Shift+P`）でコマンドパレットを開く

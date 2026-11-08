@@ -1,53 +1,37 @@
-# コード検証レポート
+# コード検証レポート（再検証）
 
 対象ファイル: projects/claude-api-scratch-agent/book/03_manuscripts/chapter_05.md
-検証日: 2026-11-07
-検証環境: Python 3.12 / uv 0.13.5 / httpx 0.28.1 / 偽Claude API（tools があれば1回 tool_use を返す）/ 第4章完成版 llm_client.py / Open-Meteo（偽API＋実APIの両方）
-コードブロック数: 21個（うち出力例・説明文例の `text` 6個は判定数に含めない → 判定対象 15個）
-  ✅ 動作確認済み: 12個
-  ⚠️ 要確認: 0個（2個を2026-11-07に原稿修正済み → ✅へ移動）
-  ❌ エラーあり: 2個（原稿修正済み）
+検証日: 2026-11-08
+コードブロック数: 21個（出力例の `text` 6個は照合のみで判定数に含めない → 判定対象 15個）
+  ✅ 動作確認済み: 14個
+  ⚠️ 要確認: 0個
+  ❌ エラーあり: 0個
   🔍 構文チェックのみ: 1個
+
+## 前回からの経緯
+
+- 午前の検証（2026-11-08）は ❌0・⚠️0。その後の変更は、用語統一の一括置換と長文の分割（コードブロックの外のみ）。
+- 今回は現在の原稿からコードブロックを抽出し直した。コードの中身は午前の抽出物と1文字も変わっていないことを確認した。差分は行番号のずれだけ。
+
+## 検証方法
+
+- 環境: Python 3.12.7 / httpx 0.28.1（スクラッチパッドの隔離 venv）。実 API キーは使っていない。外部への実通信もしていない。
+- 偽 API（`httpx.MockTransport`）: 偽の Claude API は、2026-10-21 仕様に違反すると 4xx を返す。チェック項目は temperature・prefill・tool_result の欠落や順序・強制 tool_choice・ツール名など。偽の Open-Meteo（geocoding／forecast）も使った。
+- 前提: 第4章の完成版 `llm_client.py`（chapter_04.md の #36）。
+- 組み立て: 本文の手順どおり。`mkdir tools`、`touch tools/__init__.py` のあと、ダミー版の `tools/weather.py`・`one_shot_tool.py`・`agent.py` を置いた。5.4節では「`GET_WEATHER_TOOL` は残し、それより下を書き換え、`_DUMMY_WEATHER` は削除」の指示どおりに差し替えた。
+- 偽 API が記録した仕様違反: **0件**（全実行を通して）。
 
 ---
 
 ## ❌ エラーが発生したコード
 
-### コードブロック #8（L504付近）・#9（L550付近）対話モードの記録【原稿修正済み】
-
-**元のコード**:
-```text
-​```python
-# 対話モードで1行ずつ入力する（>>> はプロンプトなので入力しない）
->>> from llm_client import call_messages, get_tool_uses
-...
-```
-
-**エラー内容**:
-```text
-SyntaxError: invalid syntax
-```
-
-**原因**: `>>>` プロンプトと出力を含む REPL の記録なのに `python` ラベルになっており、Python スクリプトとしては解釈できない（コード検証・コピー実行・構文ハイライトで誤解を招く）。
-
-**修正内容**（原稿に反映済み）: 2ブロックとも言語ラベルを ` ```pycon `（Python の対話セッション用の標準ラベル）に変更。`text` ではなく `pycon` にしたのは、入力行のハイライトを保ちつつ「スクリプトではなく対話の記録」だと明示できるため。中身は変更なし。
-入力行だけを `python -i` に流して再生し、`'tool_use'` → thinking/text/tool_use ブロック → `1` → `('get_weather', {'city': 'Tokyo'})` の順に本文と同じ形で表示されることを確認（先頭の thinking ブロックは本文の NOTE で説明済み）。
+なし。
 
 ---
 
 ## ⚠️ 要確認のコード
 
-### コードブロック #14（L872 agent.py）
-**懸念点**: `main()` が `logging.basicConfig(level=logging.INFO, ...)` だけを設定し、httpx のロガーを抑えていないため、実行すると `INFO httpx: HTTP Request: POST https://api.anthropic.com/v1/messages "HTTP/1.1 200 OK"` が毎回出る（Open-Meteo 版では天気APIの GET も2行ずつ出る）。出力例（L1013・L1038・L1151）にはこの行がなく、第4章のデモ（client/retry/stream/cost）はすべて抑えているので不揃い。
-**推奨対処**: `main()` の basicConfig の直後に1行追加。
-```python
-    logging.getLogger("httpx").setLevel(logging.WARNING)  # 通信ごとのログは抑える
-```
-（第6章以降で agent.py を更新する章にも同じ行があるか確認すること）
-
-### コードブロック #20（L1145 Open-Meteo 版の実行）の出力例
-**懸念点**: 実際の Open-Meteo（`language=ja`）は東京を `"city": "東京都"` で返す（2026-11-07 実測: `{"city": "東京都", "country": "日本", ...}`、那覇は `"那覇市"`、ニューヨークは `"ニューヨーク"` / `"アメリカ"`）。出力例 L1151 は `"東京"`。
-**推奨対処**: 出力例を `"city": "東京都"` に直すか、「都市名の表記は検索結果に従う」旨を一言添える（軽微）。
+なし（Claude が1回の応答でツールを並列に呼ぶかどうかや、回答文そのものは、偽 API では再現できない）。
 
 ---
 
@@ -55,37 +39,40 @@ SyntaxError: invalid syntax
 
 | # | 位置 | 言語 | 行数 | 実行結果 |
 |---|-----|-----|-----|--------|
-| 2 | L322 `mkdir tools` / `touch` | bash | 2行 | 正常 |
-| 3 | L333 tools/__init__.py | python | 2行 | 正常 |
-| 4 | L345 tools/weather.py（ダミー版） | python | 81行 | 単体実行の出力が L479 と完全一致（36.1°F の換算も一致） |
-| 5 | L474 `uv run python -m tools.weather` | bash | 1行 | 同上 |
-| 7 | L499 `uv run python`（対話モード起動） | bash | 1行 | 正常 |
-| 11 | L646 one_shot_tool.py | python | 66行 | tool_use → tool_result → end_turn。履歴3件・`["tool_result"]`・summary 表示が本文例と同じ形（偽APIは thinking を先頭に付けるため assistant が `["thinking", "text", "tool_use"]`。本文 NOTE の範囲内） |
-| 12 | L763 実行コマンド | bash | 1行 | 正常 |
-| 15 | L1008 `uv run python agent.py` | bash | 1行 | turn=1 tool_use → turn=2 end_turn。2都市の並列 tool_use（Tokyo, Sapporo）でも tool_result を1つの user メッセージで返し、偽APIの順序・欠落チェックで違反0 |
-| 17 | L1033 `agent.py "那覇の天気は？"` | bash | 1行 | Naha を返す tool_use を注入して確認。`WARNING agent: ツール get_weather が失敗: 都市 'Naha' のデータがありません。対応都市: Tokyo, Osaka, Sapporo` が本文と完全一致し、is_error 付き tool_result で turn=2 end_turn |
-| 19 | L1068 tools/weather.py（Open-Meteo 版） | python | 63行 | ダミー版の GET_WEATHER_TOOL までを残して下を差し替え。偽API・実APIとも正常。実API: Tokyo/Naha(華氏)/New York(華氏) 取得、存在しない都市で ValueError（本文どおり） |
-| 14 | L872 agent.py | python | 107行 | ⚠️対応後、原稿から抽出して偽APIで再実行。httpx の INFO 行が消え、第4章形式の `llm_client` ログ＋`tracker.summary()` のみ表示 |
-| 20 | L1145 Open-Meteo 版の実行 | bash | 2行 | ⚠️対応後の出力例（`東京都`・第4章形式のログ・summary 行）が実行順・形式とも一致 |
+| 2 | L332 `mkdir tools`／`touch` | bash | 4行 | 空の一時ディレクトリで実行。`tools/__init__.py`（0バイト）ができた |
+| 3 | L344 tools/__init__.py | python | 2行 | 正常 |
+| 4 | L357 tools/weather.py（ダミー版） | python | 81行 | 正常 |
+| 5 | L487 `uv run python -m tools.weather` | bash | 2行 | 出力が L492 の例と完全に一致（`diff` で差分なし。36.1°F も一致） |
+| 7 | L512 `uv run python` | bash | 2行 | 対話モードの起動だけを行うブロック。#8・#9 の入力は `code.InteractiveConsole` で再生した |
+| 8 | L517 対話モード（pycon） | pycon | 12行 | `'tool_use'` のあとに thinking／text／tool_use の各ブロックを表示 |
+| 9 | L563 対話モードの続き（pycon） | pycon | 7行 | `1`、`('get_weather', {'city': 'Tokyo'})` で本文と一致 |
+| 11 | L662 one_shot_tool.py | python | 66行 | tool_use → tool_result → end_turn の順に進んだ。`[履歴] メッセージ数 = 3`、summary 行の形式も一致 |
+| 12 | L787 実行コマンド | bash | 2行 | 正常 |
+| 14 | L902 agent.py | python | 107行 | 並列の tool_use 2件（Tokyo, Sapporo）を1つの user メッセージで返し、2ターンで終了。httpx のログは出ない |
+| 15 | L1044 `uv run python agent.py` | bash | 2行 | ログの並びが L1049 の例と一致 |
+| 17 | L1069 `agent.py "那覇の天気は？"` | bash | 2行 | `WARNING agent: ツール get_weather が失敗: 都市 'Naha' のデータがありません。対応都市: Tokyo, Osaka, Sapporo` が本文と完全に一致。is_error 付きで turn=2 の end_turn |
+| 19 | L1113 tools/weather.py（Open-Meteo 版） | python | 63行 | 偽 Open-Meteo で確認。Tokyo は `東京都` になり、華氏の指定（71.8°F）も通った。存在しない都市（Atlantis）では `ValueError: 都市 'Atlantis' が見つかりません。英語表記（例: Tokyo）で指定してください。` |
+| 20 | L1192 Open-Meteo 版の実行 | bash | 3行 | `-m tools.weather` の出力形式が L1198 と一致。「那覇とニューヨーク…華氏」の依頼では `{"unit": "fahrenheit"}` の2件を並列に処理した |
+
+### 本文の「わざと間違える」実験の再現
+- assistant の追加をコメントアウトすると、2回目の呼び出しが `InvalidRequestError: [400 invalid_request_error] unexpected tool_use_id found in tool_result blocks ...` になった。
+- `tool_use_id` を `"toolu_dummy"` に変えた場合も、同じく `InvalidRequestError` になった。
 
 ## 🔍 構文チェックのみ
 
 | # | 位置 | 言語 | 結果 |
 |---|-----|-----|-----|
-| 10 | L603 tool_result の user メッセージ例 | json | 妥当。tool_use_id・content の形は facts どおり |
+| 10 | L618 tool_result の user メッセージ例 | json | `json.loads` で妥当 |
 
-## 参考
-- 第1章 L136 の agent.py 骨格（簡略版）も、本章の tools/weather.py と第4章の llm_client.py で動作することを確認済み。
-- agent.py の `run_agent` のシグネチャ・ループ（end_turn / tool_use / max_tokens / refusal / 想定外、max_turns ガード、content をそのまま追加）は codebase-spec.md の第5章仕様と一致。
+## 出力例（text）の照合
 
-## ⚠️対応（2026-11-07）
+| # | 位置 | 照合結果 |
+|---|-----|--------|
+| 1 | L300 description の悪い例・良い例 | 説明文（コードではない） |
+| 6 | L492 | 実行結果と完全に一致 |
+| 13 | L792 | 形式が一致。コストは 1,454×$4＋190×$20（/1M）＝$0.0096 で一致 |
+| 16 | L1049 | ログの形式・順序が一致。各行（$0.0055／$0.0065）と合計 $0.0120 を単価表で再計算して一致 |
+| 18 | L1074 | 同上（$0.0043／$0.0054、合計 $0.0096。in・out の合計も一致） |
+| 21 | L1198 | 同上（$0.0054／$0.0058、合計 $0.0112） |
 
-| 項目 | 対応 | 内容 |
-|-----|-----|-----|
-| #14 agent.py `main()` の httpx ログ | 修正 | `logging.basicConfig(...)` の直後に `logging.getLogger("httpx").setLevel(logging.WARNING)  # 通信ごとのログは抑える` を追加（第4章のデモと同じ行・同じコメント） |
-| #20 Open-Meteo 版の出力例 | 修正 | `"city": "東京"` → `"東京都"`（実API実測どおり）。「都市名は `東京都` のようにジオコーディングの検索結果の表記で返ります。」の1文を追加 |
-| 出力例と第4章の確定形式のずれ（追加で発見） | 修正 | L780 one_shot_tool・L1013 agent.py・L1038 那覇・L1151 Open-Meteo の4つの出力例で、プレースホルダー（`INFO llm_client: ...`／`（ここに tracker.summary() の集計が表示される）`）を第4章の実ログ形式 `request_id=... model=claude-opus-5-5 stream=False elapsed=..s stop=.. in=.. out=.. cache_write=0 cache_read=0 cost=$...` と `calls=2 input=.. output=.. cache_write=0 cache_read=0 total=$...` に置換。那覇・Open-Meteo の例には欠けていた `llm_client` の行と末尾の summary 行を追加。各 cost/total は第4章の PRICES（Opus 5.5: 入力$4・出力$20/MTok）で計算して整合を確認 |
-| L801 の説明文 | 修正 | one_shot_tool.py はログを設定しないため1回目と2回目の入力を比較できない。「入力トークンが1回目より2回目で増えていること」→「`input` が2回分の入力トークンの合計であること」に変更 |
-
-再実行（偽API、`PYTHONPATH=mock`）: 原稿から抽出した修正後の agent.py で、既定の質問・「那覇とニューヨーク、今の気温を華氏で比べて」とも `INFO llm_client: request_id=... stop=tool_use ...` → `INFO agent: turn=1` → `INFO llm_client: ... stop=end_turn ...` → `INFO agent: turn=2` → 回答 → `calls=2 input=.. output=.. cache_write=0 cache_read=0 total=$...` の順で出力され、`INFO httpx: HTTP Request:` の行が出ないことを確認。ツール失敗時の `WARNING agent:` 行は turn=1 と2回目の `llm_client` 行の間に出る（実行順どおり）。
-残件: 第6章以降で agent.py を更新する章に同じ httpx 抑制行があるかは、本対応の範囲（第0〜5章）外のため未確認。
+> ⚠️ **検証の限界**: 実 API の応答（ツール選択・並列呼び出しの有無・thinking ブロックの有無）と、実際の Open-Meteo の値は、偽 API では再現できません。公開前に実 API キーで 5.2〜5.4 の実行例を一度通してください。

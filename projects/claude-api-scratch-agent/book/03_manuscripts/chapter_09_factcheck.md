@@ -1,107 +1,130 @@
 # ファクトチェックレポート
 
 対象ファイル: projects/claude-api-scratch-agent/book/03_manuscripts/chapter_09.md
-検証日: 2026-11-07
-検証クレーム数: 24件
-  ✅ 検証済み: 21件
-  ⚠️ 要確認: 3件
+検証日: 2026-11-08
+検証クレーム数: 27件
+  ✅ 検証済み: 26件
+  ⚠️ 要確認: 1件
   ❌ 要修正: 0件
 
-参照した一次情報:
+参照した一次情報（2026-11-08 に取得）:
 - Building effective agents: https://www.anthropic.com/engineering/building-effective-agents
 - Structured outputs: https://platform.claude.com/docs/en/build-with-claude/structured-outputs.md
 - 2026-10-21 移行ガイド: https://platform.claude.com/docs/en/api/migration-2026-10-21.md
-- Prompt caching / Thinking / Effort / Pricing / Models overview（第7章のチェックで取得済みの内容を再利用）
+- Messages API リファレンス: https://platform.claude.com/docs/en/api/messages.md
+- Effort: https://platform.claude.com/docs/en/build-with-claude/effort.md
+- Prompt caching: https://platform.claude.com/docs/en/build-with-claude/prompt-caching.md
+- Pricing: https://platform.claude.com/docs/en/about-claude/pricing.md
+
+## 前回（2026-11-07）の指摘の反映状況
+
+| 前回 | 内容 | 反映状況 |
+|---|---|---|
+| ⚠️1 | 構造化出力の制約（L418 NOTE）を具体化 | ✅ 反映済み。「`minItems`は0か1」「`maxItems`・`minLength`・`maxLength`・`minimum`・`maximum`は非対応で400」と書かれ、一次情報と一致 |
+| ⚠️2 | 並列送信とキャッシュ（L1113 NOTE） | ✅ 今回、一次情報で裏付けが取れた（下記クレーム23） |
+| ⚠️3 | 「プロンプトキャッシュも効きます」（L1107） | ✅ 反映済み。「効かせられます」に改め、`cache_control` の追加が必要なことを L1108 で明示 |
+| code ❌ | evaluator_optimizer の合格判定の順序 | ✅ 反映済み（L1269-1271。合格判定が停滞判定より先） |
+| code ⚠️ | 出力例の `tracker.summary()` 形式、`aclose_client()`、Semaphore の生成位置 | ✅ 反映済み（L573・L769・L1077・L1323、L917-918・L1004、L1031-1032） |
 
 ---
 
 ## ✅ 検証済み（正確）
 
-### 1. 単純で組み合わせやすい部品から作られている（L36）
-**検証結果**: 記事「the most successful implementations weren't using complex frameworks or specialized libraries」。シンプルで組み合わせやすいパターンを使っていたと述べている。
+### クレーム1: 単純で組み合わせやすい部品（L36）
+**検証結果**: 記事「Consistently, the most successful implementations weren't using complex frameworks or specialized libraries.」
 
-### 2. 必要になるまで複雑にしない（L35, L159-161, L1454）
-**検証結果**: 記事「finding the simplest solution possible, and only increasing complexity when needed」。
+### クレーム2: 必要になるまで複雑にしない（L35, L159-161, L1455）
+**検証結果**: 記事「finding the simplest solution possible, and only increasing complexity when needed.」
 
-### 3. 拡張されたLLM（augmented LLM）が基本部品（L61-62）
-**検証結果**: 記事「The basic building block of agentic systems is an LLM enhanced with augmentations such as retrieval, tools, and memory」。
+### クレーム3: 拡張されたLLM（augmented LLM）が基本部品（L61-62）
+**検証結果**: 記事「The basic building block of agentic systems is an LLM enhanced with augmentations such as retrieval, tools, and memory.」
 
-### 4. ワークフローとエージェントの区別（L64-75, L97-99）
-**検証結果**: 記事は workflows を「orchestrated through predefined code paths」、agents を「dynamically direct their own processes and tool usage」と定義している。本書の「流れを決めるのはコードかモデルか」という基準と一致。
+### クレーム4: ワークフローとエージェントの区別（L64-75, L97-99）
+**検証結果**: 記事は、ワークフローを「orchestrated through predefined code paths」、エージェントを「dynamically direct their own processes and tool usage」と定義している。
 
-### 5. ワークフローの代表パターンは5つ（L174-175, L1481）
-**検証結果**: 記事は Prompt chaining、Routing、Parallelization、Orchestrator-workers、Evaluator-optimizer の5つを挙げ、Agents は別に扱っている。「5つ＋自律エージェント＝6つ」は正確。
+### クレーム5: ワークフローの代表パターンは5つ＋自律エージェント（L174-175, L1482）
+**検証結果**: 記事の5パターンは Prompt chaining、Routing、Parallelization、Orchestrator-workers、Evaluator-optimizer。Agents はこれとは別に扱われている。
 
-### 6. プロンプトチェーンとゲート、正確さとの交換（L179-180, L330-335）
-**検証結果**: 記事は中間段階に programmatic checks（図中の "gate"）を置けるとし、トレードオフを「trade off latency for higher accuracy」としている。
+### クレーム6: チェーンのゲートと「速さを犠牲に正確さ」（L179-180, L330-335）
+**検証結果**: 記事は、中間段階に programmatic checks（gate）を置けるとし、トレードオフを「trade off latency for higher accuracy, by making each LLM call an easier task」と述べている。
 
-### 7. ルーティング（L183-184, L604）
-**検証結果**: 記事の例は、カスタマーサービスの問い合わせを種類別の下流処理へ振り分けることと、簡単な質問を Claude Haiku のような小さいモデルへ回すこと。本書の説明と一致。
+### クレーム7: ルーティングの用途（カスタマーサポート、簡単な質問は小さいモデルへ）（L183-184, L597-604）
+**検証結果**: 記事の例は「Directing different types of customer service queries (general questions, refund requests, technical support)」と「Routing easy/common questions to smaller, cost-efficient models like Claude Haiku 4.5」。
 
-### 8. 並列化の2種類（L187-188, L814-821）
+### クレーム8: 並列化はセクショニングと投票の2種類（L187-188, L814-821）
 **検証結果**: 記事「Sectioning: Breaking a task into independent subtasks run in parallel」「Voting: Running the same task multiple times to get diverse outputs」。
 
-### 9. 評価者-最適化者と向く条件（L191-192, L1132-1136）
-**検証結果**: 記事は、明確な評価基準があり反復で効果が出るときに向くとし、目安を2つ挙げている。人間のフィードバックで応答が明確に改善すること、LLM もそのフィードバックを出せること。本書の2条件と対応している。
+### クレーム9: 投票者ごとに観点の違うプロンプトを使う（L839-842）
+**検証結果**: 記事の投票の例は「Reviewing a piece of code for vulnerabilities, where several different prompts review and flag the code」。本書の題材（脆弱性判定）と方式（観点の違うプロンプト）は、記事の例とそのまま一致する。
 
-### 10. オーケストレーター-ワーカーと並列化の違い（L195-196, L1360-1363）
+### クレーム10: 評価者-最適化者が向く2条件（L1133-1138）
+**検証結果**: 記事は2つの目安を挙げている。「LLM responses can be demonstrably improved when a human articulates their feedback」と「the LLM can provide such feedback」。
+
+### クレーム11: オーケストレーター-ワーカーと並列化の違い（L195-196, L1361-1364）
 **検証結果**: 記事「subtasks aren't pre-defined, but determined by the orchestrator based on the specific input」。
 
-### 11. 自律エージェントと、コーディングを代表例とすること（L153-154, L199）
-**検証結果**: 記事は、エージェントを必要な手順数を予測しにくい open-ended な問題向けとし、SWE-bench を解くコーディングエージェントを例に挙げている。
+### クレーム12: 自律エージェントと、その代表例としてのコーディング（L153-154, L199）
+**検証結果**: 記事は、エージェントの用途を「open-ended problems where it's difficult or impossible to predict the required number of steps」とし、例に「A coding Agent to resolve SWE-bench tasks」を挙げている。
 
-### 12. 構造化出力のリクエスト形（L249, L265-268）
-**検証結果**: Structured outputs「output_config.format」に `{"type": "json_schema", "schema": {...}}`。
+### クレーム13: 組み合わせると費用と誤りが積み重なる（L1463-1469）
+**検証結果**: 記事「The autonomous nature of agents means higher costs, and the potential for compounding errors.」。また 0.95^5 = 0.7738 なので「約77%」は正確。
 
-### 13. JSON はテキストブロックに入る（L250, L281）
-**検証結果**: 「The JSON is in the response's text content block … There is no separate JSON field in the raw API response」。
+### クレーム14: 構造化出力のリクエストの形（L249, L265-268）
+**検証結果**: Messages API リファレンス。`output_config.format` は `{"type": "json_schema", "schema": {...}}`。
 
-### 14. refusal・max_tokens では JSON がスキーマどおりとは限らない（L274-279, L312）
-**検証結果**: refusal「The output may not match your schema」、max_tokens「The output may be incomplete and may not match the schema」。
+### クレーム15: JSON はテキストブロックで返る（L250, L280-281）
+**検証結果**: Structured outputs「Claude returns valid JSON that matches your schema in the response's text content block.」
 
-### 15. additionalProperties: false と required（L377, L406, L942）
-**検証結果**: 「additionalProperties … must be set to false for objects」。入れ子のオブジェクトにも必要という本書の説明と一致。
+### クレーム16: refusal・max_tokens のときはスキーマどおりとは限らない（L274-279, L312）
+**検証結果**: Structured outputs の Invalid outputs の節（refusal・max_tokens ではスキーマに一致しない可能性がある）。`stop_details` は Messages API リファレンスで `RefusalStopDetails or null` と定義されている（L276 と一致）。
 
-### 16. enum でカテゴリーを固定できる（L610, L661-662）
-**検証結果**: 「enum (strings, numbers, booleans, or nulls only; no complex types)」は対応キーワード。
+### クレーム17: `additionalProperties: false` と `required`、入れ子にも必要（L377, L406, L942）
+**検証結果**: Structured outputs「`required` and `additionalProperties` (must be set to `false` for objects)」。
 
-### 17. 範囲（1〜5）はスキーマで制約していない（L1255, L1291）
-**検証結果**: 「Numerical constraints: minimum, maximum, multipleOf」は非対応。コード側で丸める設計は仕様と整合している。
+### クレーム18: `enum` でカテゴリーを固定できる（L610, L661-662）
+**検証結果**: Structured outputs の Supported features に「`enum` (strings, numbers, booleans, or nulls only...)」がある。
 
-### 18. temperature・top_p・top_k は400（L831）
-**検証結果**: 移行ガイド「In 2026-10-21, a request that sends temperature, top_p, or top_k returns a 400 error, even at the parameter's default value.」
+### クレーム19: 構造化出力の制約（L418 NOTE。前回の修正後）
+**検証結果**: Structured outputs の JSON Schema limitations。「Array `minItems` (only values 0 and 1 supported)」、Not supported に「Numerical constraints (such as `minimum`, `maximum`, `multipleOf`)」「String constraints (`minLength`, `maxLength`)」「Array constraints beyond `minItems` of 0 or 1」、「If you use an unsupported feature, you'll receive a 400 error with details.」。本文と完全に一致する。
 
-### 19. Opus 5.5 は adaptive thinking 常時有効、thinking は出力トークンを使う（L308, L312, L477）
-**検証結果**: Models overview「Adaptive (always on)」。Thinking「count toward max_tokens alongside the response text」。
+### クレーム20: 範囲（1〜5）はスキーマで制約していないのでコードで丸める（L1256-1257, L1291-1292）
+**検証結果**: クレーム19のとおり、`minimum`・`maximum` は非対応。設計は仕様と整合している。
 
-### 20. キャッシュは前方一致、最小長未満は作られない（L1107-1110）
-**検証結果**: Prompt caching の前方一致（tools→system→messages）と最小長（Opus 5.5・Haiku 5.5 は512）の記述と一致。
+### クレーム21: `anthropic-version: 2026-10-21` で temperature・top_p・top_k は400（L831）
+**検証結果**: 移行ガイド「In `2026-10-21`, a request that sends `temperature`, `top_p`, or `top_k` returns a 400 error, even at the parameter's default value.」
 
-### 21. 誤りの掛け算（L1467）
-**記述**: 「各段階の成功率が95%でも、5段階をつなぐと全体の成功率は約77%」
-**検証結果**: 0.95^5＝0.7738。計算は正確。
+### クレーム22: Opus 5.5 は adaptive thinking が常に有効で、思考も出力トークンに数えられる（L308, L312, L477-478）
+**検証結果**: Effort「Claude Opus 5.5 … Adaptive thinking is always on and can't be turned off」「it's a hard limit on total output (thinking plus response text)」。
 
----
+### クレーム23: 並列で同時に送った最初の群は互いのキャッシュを読めない。1件目を先に送る（L1113 NOTE）
+**検証結果**: Prompt caching「For concurrent requests, note that a cache entry only becomes available after the first response starts. If you need cache hits for parallel requests, wait for the first response before sending subsequent requests.」。前回の ⚠️ はこれで解消。
 
-## ⚠️ 要確認（補足推奨）
+### クレーム24: キャッシュは前方一致。観点ごとに変わる system を前に置くと共有できない（L1109-1110）
+**検証結果**: Prompt caching「Cache prefixes are created in the following order: `tools`, `system`, then `messages`」。前方一致で、前の階層が変わると後ろも無効になる。
 
-### 1. 構造化出力の制約の書き方（L418 NOTE）
-**記述**: 「JSON Schemaには`minItems`や`maxLength`などの制約もありますが、構造化出力でサポートされる制約には制限があります。」
-**懸念点**: 誤りではないが、具体性に欠ける。公式では `minItems` は0と1のみ対応し、`maxItems`・`minLength`・`maxLength`・`minimum`・`maximum` は非対応。非対応のキーワードを raw API に送ると、無視されるのではなく **400エラー** になる。読者がスキーマに `minItems: 2` を書いて400で詰まるおそれがある。
-**検索結果**: Structured outputs「Array minItems, only values 0 and 1」「Not supported: minimum, maximum, multipleOf / minLength, maxLength」「Unsupported features on the raw API return a 400 error」。
-**修正案**: 「JSON Schemaには`minItems`や`maxLength`などの制約もありますが、構造化出力では`minItems`は0か1しか使えず、`maxLength`や`minimum`などは非対応で、送ると400エラーになります。細かな条件はスキーマに頼らず、ゲートでコードとして検査しましょう。」
+### クレーム25: 最小キャッシュ長未満ではキャッシュが作られない（L1111）
+**検証結果**: Prompt caching の最小長は、Claude Opus 5.5・Sonnet 5.5・Haiku 5.5 で 512 tokens。
 
-### 2. 並列で同時に送るとキャッシュを読めないことがある（L1112 NOTE）
-**懸念点**: 内容は妥当で、Prompt caching の FAQ にも「batch requests can be processed concurrently … cache hits are provided on a best-effort basis」とある。ただし、通常のリクエストを同時に送ったときの挙動（最初の応答が始まってからキャッシュが使える、など）を明記した一次情報の記述は、今回取得した範囲では見つからなかった。
-**推奨対処**: 現状の「読めないことがあります」という断定しない表現で問題ない。出典を示すなら、Prompt caching ページで該当の記述を確認してから引用する。
-
-### 3. 実行例のキャッシュ値（L573, L769, L1077, L1322）
-**懸念点**: 本章の `patterns/` は `cache_control` を付けずに `call_messages()`／`acall_messages()` を呼んでいるため、`cache_write=0 cache_read=0` は整合している。一方、L1107 の「第7章のプロンプトキャッシュも効きます」は、`cache_control`（`extra` のトップレベル指定など）を追加した場合の話である。
-**推奨対処**: L1107 を「…`extra={"cache_control": {"type": "ephemeral"}}`を足せば、第7章のプロンプトキャッシュも効かせられます」とし、追加の設定が必要なことを明示する。
+### クレーム26: モデルの使い分け（抽出・翻訳・分類は Haiku 5.5、執筆は Opus 5.5）と、出力例の料金が成り立つ範囲（L346-347, L573, L769, L1077, L1096）
+**検証結果**: Pricing。Opus 5.5 は $4/$20、Haiku 5.5 は $0.10/$0.50（プロンプト10万tok以下）。chain（$0.0213）・router（$0.0335）・parallel（$0.0644、本文の「約6セント」）は、トークン数と呼び出しの内訳から計算した範囲に収まる。
 
 ---
 
-## ❌ 要修正
+## ⚠️ 要確認（古い可能性あり）
+
+### クレーム27: 評価者-最適化者の実行例の合計金額（L1323）
+**記述**: 「calls=4 input=3,215 output=2,476 cache_write=0 cache_read=0 total=$0.0611」
+**懸念点**: 4回の内訳は、生成2回（Opus 5.5）と評価2回（Haiku 5.5）。仮にトークンをすべて Opus 5.5 で使ったとしても、上限は 3,215×$4/1M + 2,476×$20/1M = $0.0624 にしかならない。$0.0611 になるには、評価2回（Haiku）の出力が合わせて約60トークン以下でなければならない。しかし評価は、4項目の点数・改善点のJSON・思考トークンを出力する。現実的な内訳（評価の入力 計1,200tok／出力 計500tok程度）で計算すると、約 $0.048 になる。chain・router・parallel の例と比べて、この例だけが内訳と合わない。
+**検索結果**: Pricing（Opus 5.5 $4/$20、Haiku 5.5 $0.10/$0.50）。
+**推奨対処**: 金額を内訳と合う値に直す。例:
+```text
+calls=4 input=3,215 output=2,476 cache_write=0 cache_read=0 total=$0.0480
+```
+（トークン数を変えずに合計だけを直す場合。実際に1回実行した値で置き換えるのが最善。）
+
+---
+
+## ❌ 要修正（誤りの可能性が高い）
 
 該当なし。
 
@@ -109,19 +132,12 @@
 
 ## 総評
 
-「Building effective agents」のパターン分類と各パターンの説明は、記事の内容と正確に対応しています。5つのワークフローと自律エージェント、ゲート、セクショニングと投票、オーケストレーター-ワーカーと並列化の違い、評価者-最適化者の適用条件のいずれも一致しました。
-temperature 等が使えない点と構造化出力の基本仕様も、一次情報と一致しています。
-要対応は、L418 NOTE を具体化することです。`minItems` は0か1のみ、`maxLength` などは非対応で、送ると400エラーになります。読者のつまずき防止のため、修正案の反映を推奨します。
-4つの判断基準（複雑さ・価値・実現性・失敗時のコスト）は「本書では」と明示した独自の整理で、記事の主張としては書かれていないため問題ありません。
+前回の ⚠️3件と、コード検証の ❌1件・⚠️2件は、すべて原稿に正しく反映されています。前回は一次情報で確かめられなかった「並列送信とキャッシュ」（L1113）も、今回 Prompt caching の記述で裏付けが取れました。
+Building effective agents の分類と説明は、記事と正確に対応しています。投票を「観点の違うプロンプト」で行う設計は、記事自身の投票の例（脆弱性レビューを複数の異なるプロンプトで行う）と同じで、temperature が使えない環境での設計として適切です。
+残るのは、L1323 の実行例の合計金額だけです。トークン数とモデルの内訳から計算すると高すぎるので、実測値か整合する値に差し替えることを推奨します。
 
----
+## 再チェック（2026-11-08・修正箇所）
 
-## 対応（2026-11-07）
+対象: `git diff` の変更1か所。
 
-| ⚠️ | 対応 | 原稿の位置（対応後） |
-|---|---|---|
-| 1. 構造化出力の制約 | NOTE を「構造化出力では`minItems`は0か1しか使えません。`maxItems`・`minLength`・`maxLength`・`minimum`・`maximum`は非対応で、送ると400エラーになります。」と具体化。ゲートでコード検査する方針はそのまま。本章のスキーマ（本文・検証用 `patterns/`）にこれらのキーワードが含まれていないことを grep で確認（個数の条件は既に `gate_facts()` などのコードで検査している） | L418 |
-| 2. 並列送信とキャッシュ | 現状の表現で問題ないため変更なし | — |
-| 3. 「プロンプトキャッシュも効きます」 | 「効かせられます」に改め、「本章の`patterns/`は`cache_control`を付けていないので、効かせるには第7章の`cached_system()`やトップレベルの`cache_control`などの設定を足す必要があります」を1文追加。コードは変更しない（実行例の `cache_write=0 cache_read=0` と整合） | L1107-1108 |
-
-コードの変更はないが、`scratchpad/verify/fix_ch07_09_11/proj2/` で偽APIにより `python -m patterns.chain|router|parallel|evaluator_optimizer` を再実行し、従来どおり動作することを確認（chain は偽APIの固定応答のため抽出ゲートで停止する。従来の検証と同じ挙動）。
+- ✅ **L1323 実行例の合計金額 `total=$0.0480`**: 生成2回は Opus 5.5（`MODEL`）、評価2回は Haiku 5.5（`FAST_MODEL`）。評価の入力 計1,200tok・出力 計500tok とすると、Opus 2,015/1,976tok×$4/$20 + Haiku 1,200/500tok×$0.10/$0.50 = $0.04795 ≒ $0.0480。トークン数とモデル内訳に整合する。chain・router・parallel の例と書式も同じ。

@@ -80,16 +80,25 @@
 | 図10.2 | FIG_10_2 | 4つのエージェントとモデル割り当て | 構造図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_10/fig_10_2.svg, fig_10_2_prompt.md |
 | 図10.3 | FIG_10_3 | 共有ストアを介したデータの流れ | 概念図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_10/fig_10_3.svg, fig_10_3_prompt.md |
 | 図10.4 | FIG_10_4 | 評価者-最適化者ループ | フロー | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_10/fig_10_4.svg, fig_10_4_prompt.md |
-| 図10.5 | FIG_10_5 | 実行後の workspace フォルダ | スクリーンショット | 📸 撮影待ち（手順書あり） | chapter_10/fig_10_5_capture.md |
+| 図10.5 | FIG_10_5 | 実行後の workspace フォルダー | スクリーンショット | 📸 撮影待ち（手順書あり） | chapter_10/fig_10_5_capture.md |
 | 図11.1 | FIG_11_1 | 間接プロンプトインジェクションの流れ | 概念図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_1.svg, fig_11_1_prompt.md |
 | 図11.2 | FIG_11_2 | 多層防御の5つの層 | 構造図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_2.svg, fig_11_2_prompt.md |
 | 図11.3 | FIG_11_3 | 入力・出力ガードレールの処理の流れ | フロー | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_3.svg, fig_11_3_prompt.md |
 | 図11.4 | FIG_11_4 | evalの回し方 | フロー | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_4.svg, fig_11_4_prompt.md |
 | 図11.5 | FIG_11_5 | トレースIDとrequest-idの関係 | 構造図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_5.svg, fig_11_5_prompt.md |
-| 図11.6 | FIG_11_6 | Claude ConsoleのUsage画面 | スクリーンショット | 📸 撮影待ち（手順書あり） | chapter_11/fig_11_6_capture.md |
+| 図11.6 | FIG_11_6 | Claude ConsoleのUsage画面とCost画面 | スクリーンショット | 📸 撮影待ち（手順書あり） | chapter_11/fig_11_6_capture.md |
 | 図11.7 | FIG_11_7 | Message Batchesのライフサイクル | フロー | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_11/fig_11_7.svg, fig_11_7_prompt.md |
 | 図12.1 | FIG_12_1 | agent-from-scratchの依存関係 | 構造図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_12/fig_12_1.svg, fig_12_1_prompt.md |
 | 図12.2 | FIG_12_2 | 本書を貫く6つの原理 | 概念図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_12/fig_12_2.svg, fig_12_2_prompt.md |
 | 図12.3 | FIG_12_3 | 実務導入チェックリストの9観点 | 比較 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_12/fig_12_3.svg, fig_12_3_prompt.md |
 | 図12.4 | FIG_12_4 | 実務導入の段階的な進め方 | フロー | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_12/fig_12_4.svg, fig_12_4_prompt.md |
 | 図12.5 | FIG_12_5 | 次に学ぶリソースの地図 | 概念図 | ✅ SVG生成済み ＋ 🎨 プロンプト生成済み | chapter_12/fig_12_5.svg, fig_12_5_prompt.md |
+
+---
+
+## 更新履歴
+
+- 2026-11-08: 原稿の修正（ファクトチェック・用語統一）に合わせて次を更新した。
+  - FIG_11_6: 撮影手順書を作り直した（Usage 画面に加えて Cost 画面も撮影し、2枚を並べる）。
+  - FIG_2_2: 撮影手順書を更新した（画面名「API keys」「Create key」、有効期限・Linked account、ワークスペースを必ず選ぶ）。
+  - FIG_10_5・FIG_11_1・FIG_11_3・FIG_1_2・FIG_2_5・FIG_6_4: 用語を統一した（フォルダー、ユーザー）。SVG の文字の幅は枠内に収まることを確認した。

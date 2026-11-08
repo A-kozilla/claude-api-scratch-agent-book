@@ -708,9 +708,13 @@ def reduce_line(line: str) -> list[str]:
         s = n
     if re.match(r"^\[!\w+\]$", s) or s.startswith(("```", "~~~")):
         return []
+    # インラインコードの中身は出力にそのまま文字として残るので、画像・リンク・タグの除去から守る
+    codes: list[str] = []
+    s = re.sub(r"(`+)(.+?)\1", lambda m: (codes.append(m.group(0)), f"\x00{len(codes) - 1}\x00")[1], s)
     s = re.sub(r"!\[[^\]]*\]\([^)]*\)", "", s)
     s = re.sub(r"\[([^\]]*)\]\([^)]*\)", r"\1", s)
     s = re.sub(r"<[^>]+>", "", s)
+    s = re.sub(r"\x00(\d+)\x00", lambda m: codes[int(m.group(1))], s)
     cells = s.split("|") if s.count("|") >= 2 else [s]  # 表は1セルずつ確認する
     return [u for u in (norm(c) for c in cells) if len(u) >= 2]
 

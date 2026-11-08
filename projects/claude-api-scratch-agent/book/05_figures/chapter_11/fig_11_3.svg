@@ -16,7 +16,7 @@
 
   <!-- 上段（入口） -->
   <rect x="15" y="40" width="100" height="62" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="65" y="67" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">利用者の</text>
+  <text x="65" y="67" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">ユーザーの</text>
   <text x="65" y="84" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">入力</text>
 
   <rect x="150" y="40" width="120" height="62" rx="6" fill="#f5f5f5" stroke="#333" stroke-width="1.2"/>
@@ -42,7 +42,7 @@
   <!-- 中段: 止める -->
   <rect x="150" y="138" width="290" height="38" rx="6" fill="#f5f5f5" stroke="#2b6cb0" stroke-width="1.3" stroke-dasharray="5,3"/>
   <text x="295" y="155" text-anchor="middle" font-size="11" fill="#2b6cb0" font-weight="bold">block / review なら止める</text>
-  <text x="295" y="170" text-anchor="middle" font-size="9" fill="#1a1a1a">利用者には定型文だけを返し、理由はログへ</text>
+  <text x="295" y="170" text-anchor="middle" font-size="9" fill="#1a1a1a">ユーザーには定型文だけを返し、理由はログへ</text>
 
   <path d="M210 102 L210 136" stroke="#2b6cb0" stroke-width="1.2" marker-end="url(#f11_3_arr11_3b)"/>
   <path d="M365 102 L365 136" stroke="#2b6cb0" stroke-width="1.2" marker-end="url(#f11_3_arr11_3b)"/>
@@ -69,7 +69,7 @@
   <text x="210" y="258" text-anchor="middle" font-size="9" fill="#1a1a1a" font-family="Consolas,monospace">redact_secrets()</text>
 
   <rect x="15" y="215" width="100" height="62" rx="6" fill="#fff" stroke="#999" stroke-width="1" stroke-dasharray="4,3"/>
-  <text x="65" y="242" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">利用者へ</text>
+  <text x="65" y="242" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">ユーザーへ</text>
   <text x="65" y="259" text-anchor="middle" font-size="12" fill="#1a1a1a" font-weight="bold">回答</text>
 
   <path d="M460 246 L427 246" stroke="#333" stroke-width="1.3" marker-end="url(#f11_3_arr11_3)"/>

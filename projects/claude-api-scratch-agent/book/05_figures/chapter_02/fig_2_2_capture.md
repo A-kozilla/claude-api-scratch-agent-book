@@ -3,10 +3,10 @@
 > 図2.2: APIキーの作成画面（第2章 2.1節「APIキーを発行する」STEP 2〜4）
 
 ## 撮影する画面
-Claude Console（https://platform.claude.com）の「API Keys」画面で、キーの作成（Create Key）を選んだ後の画面。
+Claude Console（https://platform.claude.com）の「API keys」画面で、キーの作成（Create key）を選んだ後の画面。
 本文に合わせて、次の2枚を撮影する（本文で使うのは原則②。①は差し替え用の予備）。
 
-1. **① 作成ダイアログ**: キー名に `laptop-book-study`、ワークスペースに `agent-from-scratch` を選んだ状態
+1. **① 作成ダイアログ**: キー名に `laptop-book-study`、ワークスペースに `agent-from-scratch` を選び、有効期限（Expiration）に学習期間（例: 30日）、Linked account に自分のアカウントを選んだ状態。本文 STEP 3 のとおり、ワークスペースが**選ばれていること**が読み取れるように撮る
 2. **② 作成完了ダイアログ**: `sk-ant-` で始まるキーが表示され、「作成直後の一度だけ表示される」旨の注意文が見えている状態
 
 ## 事前準備
@@ -17,8 +17,8 @@ Claude Console（https://platform.claude.com）の「API Keys」画面で、キ�
 - [ ] ブラウザの表示言語・Console の表示を本文の説明（英語メニュー名）と合わせる
 
 ## 撮影手順
-1. Console にログインし、設定（Settings）→「API Keys」を開く
-2. 「Create Key」を選び、キー名に `laptop-book-study` を入力、ワークスペースに `agent-from-scratch` を選ぶ（ここで①を撮影）
+1. Console にログインし、設定（Settings）→「API keys」を開く
+2. 「Create key」を選び、キー名に `laptop-book-study` を入力、ワークスペースに `agent-from-scratch` を選ぶ。有効期限は例として30日、Linked account は自分のままにする（ここで①を撮影）
 3. 作成を実行し、キーが表示された完了ダイアログで②を撮影する
 4. macOS: Cmd+Shift+4 / Windows: Win+Shift+S
 5. 撮影後、すぐに Console でこのキーを削除（または無効化）する
@@ -26,7 +26,7 @@ Claude Console（https://platform.claude.com）の「API Keys」画面で、キ�
 ## サイズ・クロップ指示
 - 推奨解像度: 1440×900以上（高DPIディスプレイ推奨）
 - 書籍掲載サイズ: 横160mm（605px）に縮小
-- クロップ範囲: ダイアログ全体＋背後の「API Keys」見出しが少し入る範囲。サイドバーは不要
+- クロップ範囲: ダイアログ全体＋背後の「API keys」見出しが少し入る範囲。サイドバーは不要
 - 隠すもの（必須）:
   - **APIキー本体**: `sk-ant-` の後ろをすべてぼかし（またはダミー文字列 `sk-ant-xxxx…` に置き換え）。撮影後に削除するキーでも必ず隠す
   - **メールアドレス**（画面右上のアカウント表示など）
@@ -35,7 +35,7 @@ Claude Console（https://platform.claude.com）の「API Keys」画面で、キ�
 
 ## 仕上げチェック
 - [ ] APIキー・メールアドレス・組織名が判読できないか（拡大して確認）
-- [ ] キー名 `laptop-book-study` とワークスペース `agent-from-scratch` が読めるか
+- [ ] キー名 `laptop-book-study`、ワークスペース `agent-from-scratch`、有効期限が読めるか
 - [ ] 撮影に使ったキーを Console で削除したか
 - [ ] 拡大時に文字が読めるか
 - [ ] ファイル名: fig_2_2_capture.png で保存
